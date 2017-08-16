@@ -1,0 +1,14 @@
+---
+
+- include: install.yml
+  tags: [patroni, patroni-install]
+
+- include: configure.yml
+  tags: [patroni, patroni-configure]
+
+- name: Ensure patroni is running
+  service:
+    name: patroni
+    state: started
+    enabled: yes
+  tags: [patroni]    

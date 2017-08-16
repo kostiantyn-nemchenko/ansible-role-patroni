@@ -1,0 +1,124 @@
+---
+
+postgresql_version: 9.6
+patroni_config_dir: /etc/patroni
+patroni_system_user: postgres
+patroni_system_group: postgres
+
+patroni_replication_username: replicator
+patroni_replication_password: repuserpasswd
+patroni_superuser_username: postgres
+patroni_superuser_password: supersecretpostgrespasswd
+patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
+patroni_name: "{{ inventory_hostname }}"
+patroni_namespace: /service/
+patroni_scope: main
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
+patroni_restapi_connect_address: 127.0.0.1:8008
+patroni_restapi_listen: 0.0.0.0:8008
+patroni_restapi_certfile:
+patroni_restapi_keyfile:
+patroni_restapi_username:
+patroni_restapi_password:
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
+patroni_etcd_host: 127.0.0.1:2379 # the host:port for the etcd endpoint
+#TODO
+#patroni_etcd_url:
+#patroni_etcd_proxy:
+#patroni_etcd_srv:
+#patroni_etcd_protocol: http
+#patroni_etcd_username:
+#patroni_etcd_password:
+#patroni_etcd_cacert:
+#patroni_etcd_cert:
+#patroni_etcd_key:
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
+patroni_bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+#    master_start_timeout: 300
+#    synchronous_mode: false
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+#        hba_file: "{{ patroni_postgresql_config_dir }}/pg_hba.conf"
+#        config_file: "{{ patroni_postgresql_config_dir }}/postgresql.conf"
+        max_connections: 1000
+        max_locks_per_transaction: 64
+        max_worker_processes: 8
+        max_prepared_transactions: 0
+        wal_level: "'replica'"
+        wal_log_hints: "'on'"
+        track_commit_timestamp: "'off'"
+        max_wal_senders: 5
+        max_replication_slots: 5
+        wal_keep_segments: 0
+#      recovery_conf:
+#        restore_command: "cp ../wal_archive/%f %p"
+#  method:
+  initdb:
+    - encoding: UTF8
+    - locale: UTF8
+    - pgdata: "{{ patroni_postgresql_data_dir }}"
+    - data-checksums: true
+  pg_hba:
+    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+  users:
+    - { name: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}",   options: [] }
+    - { name: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}", options: ['replication'] }
+  post_bootstrap:
+  post_init:
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#postgresql
+patroni_postgresql:
+  authentication:
+    superuser:
+      username: "{{ patroni_superuser_username }}"
+      password: "{{ patroni_superuser_password }}"
+    replication:
+      username: "{{ patroni_replication_username }}"
+      password: "{{ patroni_replication_password }}"
+  callbacks:
+    on_restart: /scripts/callback_role.py
+    on_role_change: /scripts/callback_role.py
+    on_start: /scripts/callback_role.py
+    on_stop: /scripts/callback_role.py
+  connect_address: 127.0.0.1:5432
+  create_replica_methods: basebackup #wal_e
+  data_dir: "{{ patroni_postgresql_data_dir }}"
+  config_dir: "{{ patroni_postgresql_config_dir }}"
+  bin_dir: "{{ patroni_postgresql_bin_dir }}"
+  listen: 0.0.0.0:5432
+  use_unix_socket: true
+  pgpass: ~postgres/.pgpass
+#  recovery_conf:
+#    restore_command: "cp ../wal_archive/%f %p"
+  custom_conf: "{{ patroni_postgresql_config_dir }}/postgresql.conf"
+  parameters:
+    unix_socket_directories: /var/run/postgresql
+  pg_hba:
+    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+  pg_ctl_timeout: 60
+  use_pg_rewind: true
+  remove_data_directory_on_rewind_failure: false
+#  replica_method:
+
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
+# http://patroni.readthedocs.io/en/latest/watchdog.html
+patroni_watchdog:
+  mode: off
+  device: /dev/watchdog
+  safety_margin: -1

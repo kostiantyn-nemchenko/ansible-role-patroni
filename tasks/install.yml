@@ -1,0 +1,21 @@
+---
+
+- name: Install python packages
+  apt:
+    pkg: "{{ item.pkg }}"
+    state: "{{ item.state }}"
+    update_cache: yes
+    cache_valid_time: 600
+  with_items:
+    - { pkg: "python-psycopg2", state: "present" }
+    - { pkg: "python-pip",      state: "present" }
+    - { pkg: "python-yaml",     state: "present" }
+
+- name: Install setuptools
+  pip:
+    name: setuptools
+    state: latest
+
+- name: Install patroni
+  pip:
+    name: patroni

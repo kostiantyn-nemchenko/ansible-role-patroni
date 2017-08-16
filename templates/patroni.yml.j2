@@ -1,0 +1,157 @@
+#jinja2: lstrip_blocks: "True"
+scope: {{ patroni_scope | default('main') }}
+namespace: {{ patroni_namespace | default('/service/') }}
+name: {{ patroni_name | default(inventory_hostname) }}
+
+restapi:
+  listen: {{ patroni_restapi_listen | default('0.0.0.0:8008') }}
+  connect_address: {{ patroni_restapi_connect_address | default('127.0.0.1:8008') }}
+  certfile: {{ patroni_restapi_certfile | default('') }}
+  keyfile: {{ patroni_restapi_keyfile | default('') }}
+{% if not( (patroni_restapi_username is undefined) or (patroni_restapi_username is none) or (patroni_restapi_username | trim == '') ) and not( (patroni_restapi_password is undefined) or (patroni_restapi_password is none) or (patroni_restapi_password | trim == '') ) %}
+  authentication:
+    username: {{ patroni_restapi_username }}
+    password: {{ patroni_restapi_password }}
+{% endif %}
+
+etcd:
+  host: {{ patroni_etcd_host | default('127.0.0.1:2379') }}
+
+bootstrap:
+  # this section will be written into Etcd:/<namespace>/<scope>/config after initializing new cluster
+  # and all other cluster members will use it as a `global configuration`
+  dcs:
+    ttl: {{ patroni_bootstrap.dcs.ttl | default(30) }}
+    loop_wait: {{ patroni_bootstrap.dcs.loop_wait | default(10) }}
+    retry_timeout: {{ patroni_bootstrap.dcs.retry_timeout | default(10) }}
+    maximum_lag_on_failover: {{ patroni_bootstrap.dcs.maximum_lag_on_failover | default(1048576) }}
+{% if not( (patroni_bootstrap.dcs.master_start_timeout is undefined) or (patroni_bootstrap.dcs.master_start_timeout is none) or (patroni_bootstrap.dcs.master_start_timeout | trim == '') ) %}
+    master_start_timeout: {{ patroni_bootstrap.dcs.master_start_timeout }}
+{% endif %}
+{% if not( (patroni_bootstrap.dcs.synchronous_mode is undefined) or (patroni_bootstrap.dcs.synchronous_mode is none) or (patroni_bootstrap.dcs.synchronous_mode | trim == '') ) %}
+    synchronous_mode: {{ patroni_bootstrap.dcs.synchronous_mode }}
+{% endif %}
+{% if not( (patroni_bootstrap.dcs.postgresql is undefined) or (patroni_bootstrap.dcs.postgresql is none) or (patroni_bootstrap.dcs.postgresql | trim == '') ) %}
+    postgresql:
+    {% for k,v in patroni_bootstrap.dcs.postgresql.items() %}
+    {% if k == 'parameters' %}
+      parameters:
+      {% for item in v %}
+        {{ item }}: {{ v[item] }}
+      {% endfor %}
+    {% elif k == 'recovery_conf' %}
+      recovery_conf:
+      {% for item in v %}
+        {{ item }}: {{ v[item] }}
+      {% endfor %}
+    {% else %}
+      {{ k }}: {{ v }}
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if not( (patroni_bootstrap.initdb is undefined) or (patroni_bootstrap.initdb is none) or (patroni_bootstrap.initdb | trim == '') ) %}
+  # some desired options for 'initdb'
+  initdb: # Note: It needs to be a list (some options need values, others are switches)
+  {% for option in patroni_bootstrap.initdb %}
+  {% for k,v in option.items() %}
+    {% if v == true %}
+    - {{ k }}
+    {% else %}
+    - {{ k }}: {{ v }}
+    {% endif %}
+  {% endfor %}
+  {% endfor %}
+{% endif %}
+
+{% if not( (patroni_bootstrap.pg_hba is undefined) or (patroni_bootstrap.pg_hba is none) or (patroni_bootstrap.pg_hba | trim == '') ) %}
+  pg_hba:  # Add following lines to pg_hba.conf after running 'initdb'
+  {% for item in patroni_bootstrap.pg_hba %}
+    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address }} {{ item.method }}
+  {% endfor %}
+{% endif %}
+
+{% if not( (patroni_bootstrap.users is undefined) or (patroni_bootstrap.users is none) or (patroni_bootstrap.users | trim == '') ) %}
+  # Some additional users users which needs to be created after initializing new cluster
+  users:
+  {% for user in patroni_bootstrap.users %}
+    {{ user.name }}:
+      password: {{ user.password }}
+    {% if user.options|length > 0 %}
+      options:
+      {% for option in user.options %}
+        - {{ option }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if not( (patroni_bootstrap.post_init is undefined) or (patroni_bootstrap.post_init is none) or (patroni_bootstrap.post_init | trim == '') ) %}
+  # Additional script to be launched after initial cluster creation (will be passed the connection URL as parameter)
+  post_init: {{ patroni_bootstrap.post_init }}
+{% endif %}
+
+postgresql:
+{% if not( (patroni_postgresql.authentication is undefined) or (patroni_postgresql.authentication is none) or (patroni_postgresql.authentication | trim == '') ) %}
+  authentication:
+  {% for k,v in patroni_postgresql.authentication.items() %}
+    {{ k }}:
+      {% for item in v %}
+        {{ item }}: {{ v[item] }}
+      {% endfor %}
+  {% endfor %}
+{% endif %}
+{% if not( (patroni_postgresql.callbacks is undefined) or (patroni_postgresql.callbacks is none) or (patroni_postgresql.callbacks | trim == '') ) %}
+  callbacks:
+    on_restart: {{ patroni_postgresql.callbacks.on_restart }}
+    on_role_change: {{ patroni_postgresql.callbacks.on_role_change }}
+    on_start: {{ patroni_postgresql.callbacks.on_start }}
+    on_stop: {{ patroni_postgresql.callbacks.on_stop }}
+{% endif %}    
+  connect_address: {{ patroni_postgresql.connect_address }}
+  create_replica_methods:
+    - {{ patroni_postgresql.create_replica_methods }}
+  data_dir: {{ patroni_postgresql.data_dir }}
+  config_dir: {{ patroni_postgresql.config_dir }}
+  bin_dir: {{ patroni_postgresql.bin_dir }}
+  listen: {{ patroni_postgresql.listen }}
+  use_unix_socket: {{ patroni_postgresql.use_unix_socket }}
+  pgpass: {{ patroni_postgresql.pgpass }}
+{% if not( (patroni_postgresql.recovery_conf is undefined) or (patroni_postgresql.recovery_conf is none) or (patroni_postgresql.recovery_conf | trim == '') ) %}
+  recovery_conf:
+{% endif %}  
+  custom_conf: {{ patroni_postgresql.config_dir }}/postgresql.conf
+{% if not( (patroni_postgresql.parameters is undefined) or (patroni_postgresql.parameters is none) or (patroni_postgresql.parameters | trim == '') ) %}
+  parameters:
+    unix_socket_directories: /var/run/postgresql
+{% endif %}    
+{% if not( (patroni_postgresql.pg_hba is undefined) or (patroni_postgresql.pg_hba is none) or (patroni_postgresql.pg_hba | trim == '') ) %}
+  pg_hba:
+  {% for item in patroni_postgresql.pg_hba %}
+    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address }} {{ item.method }}
+  {% endfor %}
+{% endif %}
+  pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout }}
+{% if patroni_postgresql.use_pg_rewind and not( (patroni_postgresql.pg_rewind is undefined) or (patroni_postgresql.pg_rewind is none) or (patroni_postgresql.pg_rewind | trim == '') ) %}
+  use_pg_rewind: true  
+  pg_rewind:
+    username: {{ patroni_superuser_username }}
+    password: {{ patroni_superuser_password }}
+{% endif %}    
+  remove_data_directory_on_rewind_failure: {{ patroni_postgresql.remove_data_directory_on_rewind_failure }}
+{% if not( (patroni_postgresql.replica_method is undefined) or (patroni_postgresql.replica_method is none) or (patroni_postgresql.replica_method | trim == '') ) %}
+  replica_method: {{ patroni_postgresql.replica_method }}
+{% endif %}  
+
+{% if patroni_watchdog.mode in ('automatic', 'required') %}
+watchdog:
+  mode: {{ patroni_watchdog.mode }} # Allowed values: off, automatic, required
+  device: {{ patroni_watchdog.device }}
+  safety_margin: {{ patroni_watchdog.safety_margin }}
+{% endif %}
+
+tags:
+    nofailover: false
+    noloadbalance: false
+    clonefrom: false
+    nosync: false

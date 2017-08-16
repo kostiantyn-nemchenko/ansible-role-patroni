@@ -1,0 +1,9 @@
+---
+
+- name: reload systemd
+  command: systemctl daemon-reload
+
+- name: restart patroni
+  service:
+    name: patroni
+    enabled: yes

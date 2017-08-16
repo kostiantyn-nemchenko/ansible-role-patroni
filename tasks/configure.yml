@@ -1,0 +1,50 @@
+---
+
+- name: Create patroni directories
+  file: 
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { path: "{{ patroni_config_dir }}", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0700" }
+
+- block:
+    - name: Add the softdog kernel module
+      modprobe:
+        name: softdog
+
+    - name: Add permissions to "{{ patroni_system_user }}"
+      file:
+        path: /dev/watchdog
+        state: file
+        owner: "{{ patroni_system_user }}"
+        group: "{{ patroni_system_group }}"
+  when: patroni_watchdog.mode in ('automatic', 'required')
+
+- name: Create patroni config file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
+  notify:
+    - restart patroni
+
+- name: Create patroni service file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "patroni.service.j2", dest: "/etc/systemd/system/patroni.service", owner: "root", group: "root", mode: "0644" }
+  notify:
+    - reload systemd
+
+- meta: flush_handlers # Let systemd know about patroni's service file changes
