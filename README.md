@@ -1,6 +1,6 @@
 # Ansible Role for Patroni
 
-An Ansible role which installs and configures Patroni service on Ubuntu servers.
+An Ansible role which installs and configures [Patroni](https://github.com/zalando/patroni/) service on Ubuntu servers.
 
 ## Requirements
 
