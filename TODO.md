@@ -16,5 +16,5 @@ Known Issues
 
 * PostgreSQL service is required to be disabled at boot time while controlled via patroni.
 * No support of rpm-based Linux distros and Ubuntu < 16.04.
-* tags, replica_method, recovery_conf, callbacks, post_init, post_bootstrap, patroni_etcd_* parameters are not setting properly.
+* tags, postgresql.replica_method, postgresql.parameters, postgresql.recovery_conf, postgresql.callbacks, bootstrap.post_init, bootstrap.post_bootstrap, bootstrap.dcs.postgresql.recovery_conf, etcd.patroni_etcd_* parameters are not setting properly.
 * Current patroni config doesn't allow to initialize postgresql cluster from scratch.
