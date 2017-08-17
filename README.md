@@ -5,6 +5,7 @@ An Ansible role which installs and configures [Patroni](https://github.com/zalan
 ## Requirements
 
 - **Ubuntu 16+**
+
   _As for now, this role works only on Ubuntu 16.04+ and above._
 
 - **root access**
