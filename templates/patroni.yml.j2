@@ -106,6 +106,7 @@ postgresql:
 {% endif %}
 {% if not( (patroni_postgresql.callbacks is undefined) or (patroni_postgresql.callbacks is none) or (patroni_postgresql.callbacks | trim == '') ) %}
   callbacks:
+    on_reload: {{ patroni_postgresql.callbacks.on_reload }}
     on_restart: {{ patroni_postgresql.callbacks.on_restart }}
     on_role_change: {{ patroni_postgresql.callbacks.on_role_change }}
     on_start: {{ patroni_postgresql.callbacks.on_start }}
