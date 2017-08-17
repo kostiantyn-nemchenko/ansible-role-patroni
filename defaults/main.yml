@@ -91,10 +91,10 @@ patroni_postgresql:
       username: "{{ patroni_replication_username }}"
       password: "{{ patroni_replication_password }}"
   callbacks:
-    on_restart: /scripts/callback_role.py
-    on_role_change: /scripts/callback_role.py
-    on_start: /scripts/callback_role.py
-    on_stop: /scripts/callback_role.py
+    on_restart:
+    on_role_change:
+    on_start:
+    on_stop:
   connect_address: 127.0.0.1:5432
   create_replica_methods: basebackup #wal_e
   data_dir: "{{ patroni_postgresql_data_dir }}"
