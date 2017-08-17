@@ -86,6 +86,9 @@ bootstrap:
   {% endfor %}
 {% endif %}
 
+{% if not( (patroni_bootstrap.post_bootstrap is undefined) or (patroni_bootstrap.post_bootstrap is none) or (patroni_bootstrap.post_bootstrap | trim == '') ) %}
+  post_bootstrap: {{ patroni_bootstrap.post_bootstrap }}
+{% endif %}
 {% if not( (patroni_bootstrap.post_init is undefined) or (patroni_bootstrap.post_init is none) or (patroni_bootstrap.post_init | trim == '') ) %}
   # Additional script to be launched after initial cluster creation (will be passed the connection URL as parameter)
   post_init: {{ patroni_bootstrap.post_init }}
