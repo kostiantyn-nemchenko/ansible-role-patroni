@@ -143,7 +143,7 @@ postgresql:
     - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address|default(None) }} {{ item.method }}
   {% endfor %}
 {% endif %}
-  pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout }}
+  pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout | default(60) }}
 {% if patroni_postgresql.use_pg_rewind and not( (patroni_postgresql.pg_rewind is undefined) or (patroni_postgresql.pg_rewind is none) or (patroni_postgresql.pg_rewind | trim == '') ) %}
   use_pg_rewind: true  
   pg_rewind:
