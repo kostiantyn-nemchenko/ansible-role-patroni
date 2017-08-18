@@ -62,7 +62,7 @@ bootstrap:
 {% if not( (patroni_bootstrap.pg_hba is undefined) or (patroni_bootstrap.pg_hba is none) or (patroni_bootstrap.pg_hba | trim == '') ) %}
   pg_hba:  # Add following lines to pg_hba.conf after running 'initdb'
   {% for item in patroni_bootstrap.pg_hba %}
-    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address }} {{ item.method }}
+    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address|default(None) }} {{ item.method }}
   {% endfor %}
 {% endif %}
 
@@ -135,7 +135,7 @@ postgresql:
 {% if not( (patroni_postgresql.pg_hba is undefined) or (patroni_postgresql.pg_hba is none) or (patroni_postgresql.pg_hba | trim == '') ) %}
   pg_hba:
   {% for item in patroni_postgresql.pg_hba %}
-    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address }} {{ item.method }}
+    - {{ item.type }} {{ item.database }} {{ item.user }} {{ item.address|default(None) }} {{ item.method }}
   {% endfor %}
 {% endif %}
   pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout }}
