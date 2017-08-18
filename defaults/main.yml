@@ -68,7 +68,7 @@ patroni_bootstrap:
       recovery_conf:
         standby_mode: "on"
 #        restore_command: "cp ../wal_archive/%f %p"
-#  method:
+#  method: #TODO
   initdb:
     - encoding: UTF8
     - locale: UTF8
