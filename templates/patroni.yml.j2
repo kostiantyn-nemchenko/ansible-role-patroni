@@ -26,9 +26,7 @@ bootstrap:
     retry_timeout: {{ patroni_bootstrap.dcs.retry_timeout | default(10) }}
     maximum_lag_on_failover: {{ patroni_bootstrap.dcs.maximum_lag_on_failover | default(1048576) }}
     master_start_timeout: {{ patroni_bootstrap.dcs.master_start_timeout | default(300) }}
-{% if not( (patroni_bootstrap.dcs.synchronous_mode is undefined) or (patroni_bootstrap.dcs.synchronous_mode is none) or (patroni_bootstrap.dcs.synchronous_mode | trim == '') ) %}
-    synchronous_mode: {{ patroni_bootstrap.dcs.synchronous_mode }}
-{% endif %}
+    synchronous_mode: {{ patroni_bootstrap.dcs.synchronous_mode | default('false') }}
 {% if not( (patroni_bootstrap.dcs.postgresql is undefined) or (patroni_bootstrap.dcs.postgresql is none) or (patroni_bootstrap.dcs.postgresql | trim == '') ) %}
     postgresql:
     {% for k,v in patroni_bootstrap.dcs.postgresql.items() %}
