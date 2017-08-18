@@ -145,12 +145,12 @@ postgresql:
 {% endif %}
   pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout | default(60) }}
 {% if patroni_postgresql.use_pg_rewind and not( (patroni_postgresql.pg_rewind is undefined) or (patroni_postgresql.pg_rewind is none) or (patroni_postgresql.pg_rewind | trim == '') ) %}
-  use_pg_rewind: true  
+  use_pg_rewind: true
   pg_rewind:
     username: {{ patroni_superuser_username }}
     password: {{ patroni_superuser_password }}
-{% endif %}    
   remove_data_directory_on_rewind_failure: {{ patroni_postgresql.remove_data_directory_on_rewind_failure }}
+{% endif %}    
 {% if not( (patroni_postgresql.replica_method is undefined) or (patroni_postgresql.replica_method is none) or (patroni_postgresql.replica_method | trim == '') ) %}
   replica_method: {{ patroni_postgresql.replica_method }}
 {% endif %}  
