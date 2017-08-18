@@ -130,11 +130,13 @@ postgresql:
 {% endif %}
 {% if not( (patroni_postgresql.custom_conf is none) or (patroni_postgresql.custom_conf | trim == '') ) %}
   custom_conf: {{ patroni_postgresql.custom_conf }}
-{% endif %}  
+{% endif %}
 {% if not( (patroni_postgresql.parameters is undefined) or (patroni_postgresql.parameters is none) or (patroni_postgresql.parameters | trim == '') ) %}
   parameters:
-    unix_socket_directories: /var/run/postgresql
-{% endif %}    
+  {% for k,v in patroni_postgresql.parameters.items() %}
+    {{ k }}: {{ v }}
+  {% endfor %}
+{% endif %}
 {% if not( (patroni_postgresql.pg_hba is undefined) or (patroni_postgresql.pg_hba is none) or (patroni_postgresql.pg_hba | trim == '') ) %}
   pg_hba:
   {% for item in patroni_postgresql.pg_hba %}
