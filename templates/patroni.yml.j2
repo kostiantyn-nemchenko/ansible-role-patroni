@@ -33,7 +33,9 @@ bootstrap:
     {% if (v is iterable) and (v is not string) %}
       {{ k }}:
       {% for item in v %}
+        {% if not( (v[item] is none) or (v[item] | trim == '') ) %}
         {{ item }}: {{ v[item] }}
+        {% endif %}
       {% endfor %}
     {% else %}
       {{ k }}: {{ v }}
@@ -120,8 +122,11 @@ postgresql:
   listen: {{ patroni_postgresql.listen }}
   use_unix_socket: {{ patroni_postgresql.use_unix_socket }}
   pgpass: {{ patroni_postgresql.pgpass }}
-{% if not( (patroni_postgresql.recovery_conf is undefined) or (patroni_postgresql.recovery_conf is none) or (patroni_postgresql.recovery_conf | trim == '') ) %}
+{% if not( (patroni_postgresql.recovery_conf is none) or (patroni_postgresql.recovery_conf | trim == '') ) %}
   recovery_conf:
+  {% for k,v in patroni_postgresql.recovery_conf.items() %}
+    {{ k }}: {{ v }}
+  {% endfor %}
 {% endif %}  
   custom_conf: {{ patroni_postgresql.config_dir }}/postgresql.conf
 {% if not( (patroni_postgresql.parameters is undefined) or (patroni_postgresql.parameters is none) or (patroni_postgresql.parameters | trim == '') ) %}

@@ -65,7 +65,8 @@ patroni_bootstrap:
         max_wal_senders: 5
         max_replication_slots: 5
         wal_keep_segments: 0
-#      recovery_conf:
+      recovery_conf:
+        standby_mode: "on"
 #        restore_command: "cp ../wal_archive/%f %p"
 #  method:
   initdb:
@@ -105,7 +106,8 @@ patroni_postgresql:
   listen: 0.0.0.0:5432
   use_unix_socket: true
   pgpass: ~postgres/.pgpass
-#  recovery_conf:
+  recovery_conf:
+    standby_mode: "on"
 #    restore_command: "cp ../wal_archive/%f %p"
   custom_conf: "{{ patroni_postgresql_config_dir }}/postgresql.conf"
   parameters:
