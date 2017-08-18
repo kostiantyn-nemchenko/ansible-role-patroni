@@ -25,9 +25,7 @@ bootstrap:
     loop_wait: {{ patroni_bootstrap.dcs.loop_wait | default(10) }}
     retry_timeout: {{ patroni_bootstrap.dcs.retry_timeout | default(10) }}
     maximum_lag_on_failover: {{ patroni_bootstrap.dcs.maximum_lag_on_failover | default(1048576) }}
-{% if not( (patroni_bootstrap.dcs.master_start_timeout is undefined) or (patroni_bootstrap.dcs.master_start_timeout is none) or (patroni_bootstrap.dcs.master_start_timeout | trim == '') ) %}
-    master_start_timeout: {{ patroni_bootstrap.dcs.master_start_timeout }}
-{% endif %}
+    master_start_timeout: {{ patroni_bootstrap.dcs.master_start_timeout | default(300) }}
 {% if not( (patroni_bootstrap.dcs.synchronous_mode is undefined) or (patroni_bootstrap.dcs.synchronous_mode is none) or (patroni_bootstrap.dcs.synchronous_mode | trim == '') ) %}
     synchronous_mode: {{ patroni_bootstrap.dcs.synchronous_mode }}
 {% endif %}
