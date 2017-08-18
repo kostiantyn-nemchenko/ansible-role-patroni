@@ -144,7 +144,7 @@ postgresql:
   {% endfor %}
 {% endif %}
   pg_ctl_timeout: {{ patroni_postgresql.pg_ctl_timeout | default(60) }}
-{% if patroni_postgresql.use_pg_rewind and not( (patroni_postgresql.pg_rewind is undefined) or (patroni_postgresql.pg_rewind is none) or (patroni_postgresql.pg_rewind | trim == '') ) %}
+{% if patroni_postgresql.use_pg_rewind %}
   use_pg_rewind: true
   pg_rewind:
     username: {{ patroni_superuser_username }}
