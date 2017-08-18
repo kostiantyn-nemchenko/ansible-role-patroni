@@ -80,8 +80,8 @@ patroni_bootstrap:
   users:
     - { name: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}",   options: [] }
     - { name: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}", options: ['replication'] }
-  post_bootstrap:
-  post_init:
+  post_bootstrap: #TODO
+  post_init: #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#postgresql
 patroni_postgresql:
@@ -118,7 +118,7 @@ patroni_postgresql:
   pg_ctl_timeout: 60
   use_pg_rewind: true
   remove_data_directory_on_rewind_failure: false
-#  replica_method:
+#  replica_method: #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
 # http://patroni.readthedocs.io/en/latest/watchdog.html
