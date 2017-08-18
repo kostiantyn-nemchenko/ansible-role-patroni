@@ -34,13 +34,8 @@ bootstrap:
 {% if not( (patroni_bootstrap.dcs.postgresql is undefined) or (patroni_bootstrap.dcs.postgresql is none) or (patroni_bootstrap.dcs.postgresql | trim == '') ) %}
     postgresql:
     {% for k,v in patroni_bootstrap.dcs.postgresql.items() %}
-    {% if k == 'parameters' %}
-      parameters:
-      {% for item in v %}
-        {{ item }}: {{ v[item] }}
-      {% endfor %}
-    {% elif k == 'recovery_conf' %}
-      recovery_conf:
+    {% if (v is iterable) and (v is not string) %}
+      {{ k }}:
       {% for item in v %}
         {{ item }}: {{ v[item] }}
       {% endfor %}
