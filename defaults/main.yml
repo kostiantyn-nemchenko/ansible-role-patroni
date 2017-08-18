@@ -28,7 +28,7 @@ patroni_restapi_password:
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
 patroni_etcd:
-  host: 127.0.0.1:2379 # the host:port for the etcd endpoint
+  host: 127.0.0.1:2379
 #TODO
 #  etcd_url:
 #  proxy:
