@@ -15,7 +15,7 @@ restapi:
 {% endif %}
 
 etcd:
-  host: {{ patroni_etcd_host | default('127.0.0.1:2379') }}
+  host: {{ patroni_etcd.host | default('127.0.0.1:2379') }}
 
 bootstrap:
   # this section will be written into Etcd:/<namespace>/<scope>/config after initializing new cluster

@@ -27,17 +27,18 @@ patroni_restapi_username:
 patroni_restapi_password:
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
-patroni_etcd_host: 127.0.0.1:2379 # the host:port for the etcd endpoint
+patroni_etcd:
+  host: 127.0.0.1:2379 # the host:port for the etcd endpoint
 #TODO
-#patroni_etcd_url:
-#patroni_etcd_proxy:
-#patroni_etcd_srv:
-#patroni_etcd_protocol: http
-#patroni_etcd_username:
-#patroni_etcd_password:
-#patroni_etcd_cacert:
-#patroni_etcd_cert:
-#patroni_etcd_key:
+#  etcd_url:
+#  proxy:
+#  srv:
+#  protocol: http
+#  username:
+#  password:
+#  cacert:
+#  cert:
+#  key:
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap:
