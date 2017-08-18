@@ -104,14 +104,22 @@ postgresql:
       {% endfor %}
   {% endfor %}
 {% endif %}
-{% if not( (patroni_postgresql.callbacks is undefined) or (patroni_postgresql.callbacks is none) or (patroni_postgresql.callbacks | trim == '') ) %}
+{% if not( (patroni_postgresql.callbacks is none) or (patroni_postgresql.callbacks | trim == '') ) and
+      (
+        not( (patroni_postgresql.callbacks.on_reload is none)      or (patroni_postgresql.callbacks.on_reload | trim == '')      ) or
+        not( (patroni_postgresql.callbacks.on_restart is none)     or (patroni_postgresql.callbacks.on_restart | trim == '')     ) or
+        not( (patroni_postgresql.callbacks.on_role_change is none) or (patroni_postgresql.callbacks.on_role_change | trim == '') ) or
+        not( (patroni_postgresql.callbacks.on_start is none)       or (patroni_postgresql.callbacks.on_start | trim == '')       ) or
+        not( (patroni_postgresql.callbacks.on_stop is none)        or (patroni_postgresql.callbacks.on_stop | trim == '')        )
+      )
+%}
   callbacks:
-    on_reload: {{ patroni_postgresql.callbacks.on_reload }}
-    on_restart: {{ patroni_postgresql.callbacks.on_restart }}
-    on_role_change: {{ patroni_postgresql.callbacks.on_role_change }}
-    on_start: {{ patroni_postgresql.callbacks.on_start }}
-    on_stop: {{ patroni_postgresql.callbacks.on_stop }}
-{% endif %}    
+  {% for k,v in patroni_postgresql.callbacks.items() %}
+    {% if not( (v is none) or (v | trim == '') ) %}
+    {{ k }}: {{ v }}
+    {% endif %}
+  {% endfor %}
+{% endif %}
   connect_address: {{ patroni_postgresql.connect_address }}
   create_replica_methods:
     - {{ patroni_postgresql.create_replica_methods }}
