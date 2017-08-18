@@ -127,8 +127,10 @@ postgresql:
   {% for k,v in patroni_postgresql.recovery_conf.items() %}
     {{ k }}: {{ v }}
   {% endfor %}
-{% endif %}  
+{% endif %}
+{% if not( (patroni_postgresql.custom_conf is none) or (patroni_postgresql.custom_conf | trim == '') ) %}
   custom_conf: {{ patroni_postgresql.config_dir }}/postgresql.conf
+{% endif %}  
 {% if not( (patroni_postgresql.parameters is undefined) or (patroni_postgresql.parameters is none) or (patroni_postgresql.parameters | trim == '') ) %}
   parameters:
     unix_socket_directories: /var/run/postgresql
