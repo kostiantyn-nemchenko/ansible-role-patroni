@@ -74,9 +74,9 @@ patroni_bootstrap:
     - locale: UTF8
     - pgdata: "{{ patroni_postgresql_data_dir }}"
     - data-checksums: true
-  pg_hba:
-    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
-    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+#  pg_hba:
+#    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+#    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
   users:
     - { name: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}",   options: [] }
     - { name: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}", options: ['replication'] }
@@ -98,7 +98,7 @@ patroni_postgresql:
     on_role_change: #TODO
     on_start: #TODO
     on_stop: #TODO
-  connect_address: 127.0.0.1:5432
+  connect_address: "{{ ansible_host }}:5432"
   create_replica_methods: basebackup #wal_e
   data_dir: "{{ patroni_postgresql_data_dir }}"
   config_dir: "{{ patroni_postgresql_config_dir }}"
@@ -112,9 +112,9 @@ patroni_postgresql:
   custom_conf: #"{{ patroni_postgresql_config_dir }}/postgresql.conf"
   parameters:
     unix_socket_directories: /var/run/postgresql
-  pg_hba:
-    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
-    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+#  pg_hba:
+#    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+#    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
   pg_ctl_timeout: 60
   use_pg_rewind: true
   remove_data_directory_on_rewind_failure: false
