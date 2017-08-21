@@ -109,7 +109,7 @@ patroni_postgresql:
   recovery_conf:
     standby_mode: "on"
 #    restore_command: "cp ../wal_archive/%f %p"
-  custom_conf: "{{ patroni_postgresql_config_dir }}/postgresql.conf"
+  custom_conf: #"{{ patroni_postgresql_config_dir }}/postgresql.conf"
   parameters:
     unix_socket_directories: /var/run/postgresql
   pg_hba:
