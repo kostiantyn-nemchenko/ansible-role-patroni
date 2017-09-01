@@ -9,9 +9,6 @@ patroni_replication_username: replicator
 patroni_replication_password: repuserpasswd
 patroni_superuser_username: postgres
 patroni_superuser_password: supersecretpostgrespasswd
-patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
-patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
-patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
 patroni_name: "{{ inventory_hostname }}"
@@ -73,8 +70,7 @@ patroni_bootstrap_initdb:
   - { option: "encoding",        value: "UTF8" }
   - { option: "locale",          value: "UTF8" }
   - { option: "pgdata",          value: "{{ patroni_postgresql_data_dir }}" }
-  - { option: "data-checksums1", value: "true" }
-  - { option: "data-checksums2" }
+  - { option: "data-checksums" }
 
 patroni_bootstrap_pg_hba: []
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
@@ -101,9 +97,9 @@ patroni_postgresql_callbacks:
 
 patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
 patroni_postgresql_create_replica_methods: basebackup #wal_e
-patroni_postgresql_data_dir: "{{ patroni_postgresql_data_dir }}"
-patroni_postgresql_config_dir: "{{ patroni_postgresql_config_dir }}"
-patroni_postgresql_bin_dir: "{{ patroni_postgresql_bin_dir }}"
+patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
 patroni_postgresql_listen: 0.0.0.0:5432
 patroni_postgresql_use_unix_socket: true
 patroni_postgresql_pgpass: ~postgres/.pgpass
