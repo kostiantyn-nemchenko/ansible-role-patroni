@@ -52,9 +52,9 @@ bootstrap:
   initdb: # Note: It needs to be a list (some options need values, others are switches)
   {% for item in patroni_bootstrap_initdb %}
     {% if item.value is undefined %}
-    {{ item.option }}
+    - {{ item.option }}
     {% else %}
-    {{ item.option }}: {{ item.value}}
+    - {{ item.option }}: {{ item.value}}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -78,7 +78,7 @@ bootstrap:
         - {{ option }}
       {% endfor %}
     {% endif %}
-  {% endif %}
+  {% endfor %}
 {% endif %}
 
 {% if not( (patroni_bootstrap_post_bootstrap is none) or (patroni_bootstrap_post_bootstrap | trim == '') ) %}
