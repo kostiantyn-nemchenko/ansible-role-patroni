@@ -21,108 +21,119 @@ patroni_scope: main
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
 patroni_restapi_connect_address: 127.0.0.1:8008
 patroni_restapi_listen: 0.0.0.0:8008
-patroni_restapi_certfile:
-patroni_restapi_keyfile:
-patroni_restapi_username:
-patroni_restapi_password:
+patroni_restapi_certfile: ""
+patroni_restapi_keyfile: ""
+patroni_restapi_username: ""
+patroni_restapi_password: ""
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
-patroni_etcd:
-  host: 127.0.0.1:2379
+patroni_etcd_host: 127.0.0.1:2379
 #TODO
-#  etcd_url:
-#  proxy:
-#  srv:
-#  protocol: http
-#  username:
-#  password:
-#  cacert:
-#  cert:
-#  key:
+#patroni_etcd_etcd_url: ""
+#patroni_etcd_proxy: " "
+#patroni_etcd_srv: ""
+#patroni_etcd_protocol: http
+#patroni_etcd_username: ""
+#patroni_etcd_password: ""
+#patroni_etcd_cacert: ""
+#patroni_etcd_cert: ""
+#patroni_etcd_key: ""
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
-patroni_bootstrap:
-  dcs:
-    ttl: 30
-    loop_wait: 10
-    retry_timeout: 10
-    maximum_lag_on_failover: 1048576
-    master_start_timeout: 300
-    synchronous_mode: false
-    postgresql:
-      use_pg_rewind: true
-      use_slots: true
-      parameters:
-#        hba_file: "{{ patroni_postgresql_config_dir }}/pg_hba.conf"
-#        config_file: "{{ patroni_postgresql_config_dir }}/postgresql.conf"
-        max_connections: 1000
-        max_locks_per_transaction: 64
-        max_worker_processes: 8
-        max_prepared_transactions: 0
-        wal_level: "'replica'"
-        wal_log_hints: "'on'"
-        track_commit_timestamp: "'off'"
-        max_wal_senders: 5
-        max_replication_slots: 5
-        wal_keep_segments: 0
-      recovery_conf:
-        standby_mode: "on"
-#        restore_command: "cp ../wal_archive/%f %p"
-#  method: #TODO
-  initdb:
-    - encoding: UTF8
-    - locale: UTF8
-    - pgdata: "{{ patroni_postgresql_data_dir }}"
-    - data-checksums: true
-#  pg_hba:
-#    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
-#    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
-  users:
-    - { name: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}",   options: [] }
-    - { name: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}", options: ['replication'] }
-  post_bootstrap: #TODO
-  post_init: #TODO
+patroni_bootstrap_dcs_ttl: 30
+patroni_bootstrap_dcs_loop_wait: 10
+patroni_bootstrap_dcs_retry_timeout: 10
+patroni_bootstrap_dcs_maximum_lag_on_failover: 1048576
+patroni_bootstrap_dcs_master_start_timeout: 300
+patroni_bootstrap_dcs_synchronous_mode: false
+patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
+patroni_bootstrap_dcs_postgresql_use_slots: true
+
+patroni_bootstrap_dcs_postgresql_parameters:
+# - { option: "hba_file",                  value: "{{ patroni_postgresql_config_dir }}/pg_hba.conf" }
+# - { option: "config_file",               value: "{{ patroni_postgresql_config_dir }}/postgresql.conf" }
+  - { option: "max_connections",           value: "1000" }
+  - { option: "max_locks_per_transaction", value: "64" }
+  - { option: "max_worker_processes",      value: "8" }
+  - { option: "max_prepared_transactions", value: "0" }
+  - { option: "wal_level",                 value: "'replica'" }
+  - { option: "wal_log_hints",             value: "'on'" }
+  - { option: "track_commit_timestamp",    value: "'off'" }
+  - { option: "max_wal_senders",           value: "5" }
+  - { option: "max_replication_slots",     value: "5" }
+  - { option: "wal_keep_segments",         value: "0" }
+
+patroni_bootstrap_dcs_postgresql_recovery_conf: []
+# - { option: "standby_mode",    value: "on" }
+# - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
+
+patroni_bootstrap_method: "" #TODO
+
+patroni_bootstrap_initdb:
+  - { option: "encoding",        value: "UTF8" }
+  - { option: "locale",          value: "UTF8" }
+  - { option: "pgdata",          value: "{{ patroni_postgresql_data_dir }}" }
+  - { option: "data-checksums1", value: "true" }
+  - { option: "data-checksums2" }
+
+patroni_bootstrap_pg_hba: []
+#  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+#  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+
+patroni_bootstrap_users:
+  - { name: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}",   options: [] }
+  - { name: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}", options: ['replication'] }
+
+patroni_bootstrap_post_bootstrap: "" #TODO
+patroni_bootstrap_post_init: "" #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#postgresql
-patroni_postgresql:
-  authentication:
-    superuser:
-      username: "{{ patroni_superuser_username }}"
-      password: "{{ patroni_superuser_password }}"
-    replication:
-      username: "{{ patroni_replication_username }}"
-      password: "{{ patroni_replication_password }}"
-  callbacks:
-    on_reload: #TODO
-    on_restart: #TODO
-    on_role_change: #TODO
-    on_start: #TODO
-    on_stop: #TODO
-  connect_address: "{{ ansible_host }}:5432"
-  create_replica_methods: basebackup #wal_e
-  data_dir: "{{ patroni_postgresql_data_dir }}"
-  config_dir: "{{ patroni_postgresql_config_dir }}"
-  bin_dir: "{{ patroni_postgresql_bin_dir }}"
-  listen: 0.0.0.0:5432
-  use_unix_socket: true
-  pgpass: ~postgres/.pgpass
-  recovery_conf:
-    standby_mode: "on"
-#    restore_command: "cp ../wal_archive/%f %p"
-  custom_conf: #"{{ patroni_postgresql_config_dir }}/postgresql.conf"
-  parameters:
-    unix_socket_directories: /var/run/postgresql
-#  pg_hba:
-#    - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
-#    - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
-  pg_ctl_timeout: 60
-  use_pg_rewind: true
-  remove_data_directory_on_rewind_failure: false
-#  replica_method: #TODO
+patroni_postgresql_authentication:
+  - { type: "superuser",   username: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}"   }
+  - { type: "replication", username: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}" }
+
+patroni_postgresql_callbacks:
+  - { event: "on_reload",      script: "" } #TODO
+  - { event: "on_restart",     script: "" } #TODO
+  - { event: "on_role_change", script: "" } #TODO
+  - { event: "on_start",       script: "" } #TODO
+  - { event: "on_stop",        script: "" } #TODO
+
+patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
+patroni_postgresql_create_replica_methods: basebackup #wal_e
+patroni_postgresql_data_dir: "{{ patroni_postgresql_data_dir }}"
+patroni_postgresql_config_dir: "{{ patroni_postgresql_config_dir }}"
+patroni_postgresql_bin_dir: "{{ patroni_postgresql_bin_dir }}"
+patroni_postgresql_listen: 0.0.0.0:5432
+patroni_postgresql_use_unix_socket: true
+patroni_postgresql_pgpass: ~postgres/.pgpass
+
+patroni_postgresql_recovery_conf: []
+# - { option: "standby_mode",    value: "on" }
+# - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
+
+patroni_postgresql_custom_conf: "" #"{{ patroni_postgresql_config_dir }}/postgresql.conf"
+
+patroni_postgresql_parameters:
+  - { option: "unix_socket_directories", value: "/var/run/postgresql" }
+
+patroni_postgresql_pg_hba: []
+#  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
+#  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
+
+patroni_postgresql_pg_ctl_timeout: 60
+patroni_postgresql_use_pg_rewind: true
+patroni_postgresql_remove_data_directory_on_rewind_failure: false
+patroni_postgresql_replica_method: "" #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
 # http://patroni.readthedocs.io/en/latest/watchdog.html
-patroni_watchdog:
-  mode: off
-  device: /dev/watchdog
-  safety_margin: -1
+patroni_watchdog_mode: off
+patroni_watchdog_device: /dev/watchdog
+patroni_watchdog_safety_margin: -1
+
+patroni_tags:
+  - { name: "nofailover",    value: "false" }
+  - { name: "noloadbalance", value: "false" }
+  - { name: "clonefrom",     value: "false" }
+  - { name: "nosync",        value: "false" }

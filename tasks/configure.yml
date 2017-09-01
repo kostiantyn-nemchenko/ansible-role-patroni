@@ -21,7 +21,7 @@
         state: file
         owner: "{{ patroni_system_user }}"
         group: "{{ patroni_system_group }}"
-  when: patroni_watchdog.mode in ('automatic', 'required')
+  when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Create patroni config file
   template:
