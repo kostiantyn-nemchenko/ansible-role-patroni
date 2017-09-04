@@ -94,7 +94,8 @@ postgresql:
   authentication:
   {% for item in patroni_postgresql_authentication %}
     {{ item.type }}:
-      {{ item.username }}: {{ item.password }}
+      username: {{ item.username }}
+      password: {{ item.password }}
   {% endfor %}
 {% endif %}
 {% if patroni_postgresql_callbacks | length > 0 %}
@@ -145,7 +146,7 @@ postgresql:
 {% endif %}    
 {% if not( (patroni_postgresql_replica_method is none) or (patroni_postgresql_replica_method | trim == '') ) %}
   replica_method: {{ patroni_postgresql_replica_method }}
-{% endif %}  
+{% endif -%}  
 
 {% if patroni_watchdog_mode in ('automatic', 'required') %}
 watchdog:
