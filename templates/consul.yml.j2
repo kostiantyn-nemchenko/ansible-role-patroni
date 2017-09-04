@@ -1,0 +1,24 @@
+consul:
+  host: {{ patroni_consul_host | default('127.0.0.1:' ~ (patroni_consul_port | default(8500))) }}
+  port: {{ patroni_consul_port | default(8500) }}
+{% if not( (patroni_consul_url is undefined) or (patroni_consul_url is none) or (patroni_consul_url | trim == '') ) %}
+  url: {{ patroni_consul_url }}
+{% endif %}
+{% if not( (patroni_consul_scheme is undefined) or (patroni_consul_scheme is none) or (patroni_consul_scheme | trim == '') ) %}
+  scheme: {{ patroni_consul_scheme }}
+{% endif %}
+{% if not( (patroni_consul_token is undefined) or (patroni_consul_token is none) or (patroni_consul_token | trim == '') ) %}
+  token: {{ patroni_consul_token }}
+{% endif %}
+{% if not( (patroni_consul_verify is undefined) or (patroni_consul_verify is none) or (patroni_consul_verify | trim == '') ) %}
+  verify: {{ patroni_consul_verify }}
+{% endif %}
+{% if not( (patroni_consul_cacert is undefined) or (patroni_consul_cacert is none) or (patroni_consul_cacert | trim == '') ) %}
+  cacert: {{ patroni_consul_cacert }}
+{% endif %}
+{% if not( (patroni_consul_cert is undefined) or (patroni_consul_cert is none) or (patroni_consul_cert | trim == '') ) %}
+  cert: {{ patroni_consul_cert }}
+{% endif %}
+{% if not( (patroni_consul_key is undefined) or (patroni_consul_key is none) or (patroni_consul_key | trim == '') ) %}
+  key: {{ patroni_consul_key }}
+{% endif %}

@@ -14,8 +14,7 @@ restapi:
     password: {{ patroni_restapi_password }}
 {% endif %}
 
-etcd:
-  host: {{ patroni_etcd_host | default('127.0.0.1:2379') }}
+{% include patroni_dcs + '.yml.j2' %}
 
 bootstrap:
   # this section will be written into Etcd:/<namespace>/<scope>/config after initializing new cluster
