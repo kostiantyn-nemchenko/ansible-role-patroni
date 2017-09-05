@@ -1,0 +1,13 @@
+---
+
+# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
+patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"
+patroni_consul_port: 8500
+#TODO
+patroni_consul_url: ""
+patroni_consul_scheme: http
+patroni_consul_token: ""
+patroni_consul_verify: ""
+patroni_consul_cacert: ""
+patroni_consul_cert: ""
+patroni_consul_key: ""

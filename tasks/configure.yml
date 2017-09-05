@@ -23,6 +23,9 @@
         group: "{{ patroni_system_group }}"
   when: patroni_watchdog_mode in ('automatic', 'required')
 
+- name: Include DCS-specific variables
+  include_vars: "vars/{{ patroni_dcs | default('etcd') }}.yml"
+
 - name: Create patroni config file
   template:
     src: "{{ item.src }}"
@@ -33,7 +36,7 @@
   with_items:
     - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
   notify:
-    - reload patroni
+    - restart patroni
 
 - name: Create patroni service file
   template:

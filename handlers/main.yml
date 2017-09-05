@@ -3,8 +3,8 @@
 - name: reload systemd
   command: systemctl daemon-reload
 
-- name: reload patroni
+- name: restart patroni
   service:
     name: patroni
-    state: reloaded
+    state: restarted
     enabled: yes

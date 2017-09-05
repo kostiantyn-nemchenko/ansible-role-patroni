@@ -1,2 +1,29 @@
 etcd:
   host: {{ patroni_etcd_host | default('127.0.0.1:2379') }}
+{% if not( (patroni_etcd_url is none) or (patroni_etcd_url | trim == '') ) %}
+  url: {{ patroni_etcd_url }}
+{% endif %}
+{% if not( (patroni_etcd_proxy is none) or (patroni_etcd_proxy | trim == '') ) %}
+  proxy: {{ patroni_etcd_proxy }}
+{% endif %}
+{% if not( (patroni_etcd_srv is none) or (patroni_etcd_srv | trim == '') ) %}
+  srv: {{ patroni_etcd_srv }}
+{% endif %}
+{% if not( (patroni_etcd_protocol is none) or (patroni_etcd_protocol | trim == '') ) %}
+  protocol: {{ patroni_etcd_protocol }}
+{% endif %}
+{% if not( (patroni_etcd_username is none) or (patroni_etcd_username | trim == '') ) %}
+  username: {{ patroni_etcd_username }}
+{% endif %}
+{% if not( (patroni_etcd_password is none) or (patroni_etcd_password | trim == '') ) %}
+  password: {{ patroni_etcd_password }}
+{% endif %}
+{% if not( (patroni_etcd_cacert is none) or (patroni_etcd_cacert | trim == '') ) %}
+  cacert: {{ patroni_etcd_cacert }}
+{% endif %}
+{% if not( (patroni_etcd_cert is none) or (patroni_etcd_cert | trim == '') ) %}
+  cert: {{ patroni_etcd_cert }}
+{% endif %}
+{% if not( (patroni_etcd_key is none) or (patroni_etcd_key | trim == '') ) %}
+  key: {{ patroni_etcd_key }}
+{% endif %}
