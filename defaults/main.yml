@@ -23,7 +23,7 @@ patroni_restapi_keyfile: ""
 patroni_restapi_username: ""
 patroni_restapi_password: ""
 
-patroni_dcs: consul
+patroni_dcs: etcd
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap_dcs_ttl: 30
