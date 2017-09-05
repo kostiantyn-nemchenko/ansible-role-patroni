@@ -26,9 +26,8 @@ Coming soon.
 
 ## Dependencies
 
-* retr0h.etcd
-
-_Note: It doesn't really matter which ansible role you use for setting up etcd. However, it is assumed that you have already installed etcd cluster and it is up and running._
+* **retr0h.etcd** - If you want to leave etcd as default distributed configuration store
+* **brianshumate.consul** - If you prefer to use consul as distributed configuration store
 
 ## Example Playbook
 
