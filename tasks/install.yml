@@ -1,6 +1,6 @@
 ---
 
-- name: Install python packages
+- name: Install packages
   apt:
     pkg: "{{ item.pkg }}"
     state: "{{ item.state }}"
@@ -10,6 +10,7 @@
     - { pkg: "python-psycopg2", state: "present" }
     - { pkg: "python-pip",      state: "present" }
     - { pkg: "python-yaml",     state: "present" }
+    - { pkg: "jq",              state: "present" }
 
 - name: Install setuptools
   pip:
