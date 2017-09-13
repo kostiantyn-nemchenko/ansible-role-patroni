@@ -32,7 +32,7 @@ bootstrap:
     {% if patroni_bootstrap_dcs_postgresql_parameters | length > 0 %}
       parameters:
       {% for guc in patroni_bootstrap_dcs_postgresql_parameters %}
-        {{ guc.option }}: '{{ guc.value}}'
+        {{ guc.option }}: {{ guc.value}}
       {% endfor %}
     {% endif %}
     {% if patroni_bootstrap_dcs_postgresql_recovery_conf | length > 0 %}
