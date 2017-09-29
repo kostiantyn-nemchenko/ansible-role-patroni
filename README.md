@@ -12,9 +12,9 @@ An Ansible role which installs and configures [Patroni](https://github.com/zalan
 
   _This role requires root privileges, so tell ansible to use `become: true` in any [convenient way](http://docs.ansible.com/ansible/latest/become.html) for you._
 
-- **etcd endpoint**
+- **etcd or consul endpoint**
 
-  _This role temporary supports only etcd as distributed configuration store. Integration with other DCSs like Consul or ZooKeeper is on the way._
+  _Temporary there is no support of ZooKeeper as distributed configuration store._
 
 - **PostgreSQL server**
 
@@ -26,8 +26,8 @@ Coming soon.
 
 ## Dependencies
 
-* **retr0h.etcd** - If you want to leave etcd as default distributed configuration store
-* **brianshumate.consul** - If you prefer to use consul as distributed configuration store
+* [**retr0h.etcd**](https://github.com/retr0h/ansible-etcd) - If you want to leave etcd as default distributed configuration store
+* [**brianshumate.consul**](https://github.com/brianshumate/ansible-consul) - If you prefer to use consul as distributed configuration store
 
 ## Example Playbook
 
