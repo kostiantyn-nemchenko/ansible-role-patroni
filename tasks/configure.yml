@@ -26,18 +26,6 @@
 - name: Include DCS-specific variables
   include_vars: "vars/{{ patroni_dcs | default('etcd') }}.yml"
 
-- name: Create patroni config file
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
-  with_items:
-    - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
-  notify:
-    - restart patroni
-
 - name: Create patroni service file
   template:
     src: "{{ item.src }}"
@@ -51,3 +39,15 @@
     - reload systemd
 
 - meta: flush_handlers # Let systemd know about patroni's service file changes
+
+- name: Create patroni config file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
+  notify:
+    - restart patroni
