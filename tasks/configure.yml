@@ -10,17 +10,7 @@
   with_items:
     - { path: "{{ patroni_config_dir }}", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0700" }
 
-- block:
-    - name: Add the softdog kernel module
-      modprobe:
-        name: softdog
-
-    - name: Add permissions to "{{ patroni_system_user }}"
-      file:
-        path: /dev/watchdog
-        state: file
-        owner: "{{ patroni_system_user }}"
-        group: "{{ patroni_system_group }}"
+- include: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Include DCS-specific variables
@@ -51,3 +41,4 @@
     - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
   notify:
     - restart patroni
+
