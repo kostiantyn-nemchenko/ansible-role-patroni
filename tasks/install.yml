@@ -7,9 +7,7 @@
     update_cache: yes
     cache_valid_time: 600
   with_items:
-    - { pkg: "python-psycopg2", state: "present" }
     - { pkg: "python-pip",      state: "present" }
-    - { pkg: "python-yaml",     state: "present" }
     - { pkg: "jq",              state: "present" }
 
 - name: Install patroni
