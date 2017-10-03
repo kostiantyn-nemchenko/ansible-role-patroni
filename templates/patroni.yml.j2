@@ -113,7 +113,7 @@ postgresql:
   bin_dir: {{ patroni_postgresql_bin_dir }}
   listen: {{ patroni_postgresql_listen | default('0.0.0.0:5432') }}
   use_unix_socket: {{ patroni_postgresql_use_unix_socket | default('true') }}
-  pgpass: {{ patroni_postgresql_pgpass | default('~postgres/.pgpass') }}
+  pgpass: {{ patroni_postgresql_pgpass | default('/var/lib/postgresql/.pgpass') }}
 {% if patroni_postgresql_recovery_conf | length > 0 %}
   recovery_conf:
   {% for item in patroni_postgresql_recovery_conf %}
