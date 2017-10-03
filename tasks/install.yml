@@ -12,11 +12,10 @@
     - { pkg: "python-yaml",     state: "present" }
     - { pkg: "jq",              state: "present" }
 
-- name: Install setuptools
-  pip:
-    name: setuptools
-    state: latest
-
 - name: Install patroni
   pip:
-    name: patroni
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items:
+    - { name: "setuptools", state: "latest" }
+    - { name: "patroni",    state: "present" }
