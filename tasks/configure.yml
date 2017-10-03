@@ -13,9 +13,6 @@
 - include: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
-- name: Include DCS-specific variables
-  include_vars: "vars/{{ patroni_dcs | default('etcd') }}.yml"
-
 - name: Create patroni service file
   template:
     src: "{{ item.src }}"

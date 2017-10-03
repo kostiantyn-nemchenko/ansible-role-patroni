@@ -25,6 +25,31 @@ patroni_restapi_password: ""
 
 patroni_dcs: etcd
 
+# http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
+patroni_etcd_host: 127.0.0.1:2379
+#TODO
+patroni_etcd_url: ""
+patroni_etcd_proxy: ""
+patroni_etcd_srv: ""
+patroni_etcd_protocol: http
+patroni_etcd_username: ""
+patroni_etcd_password: ""
+patroni_etcd_cacert: ""
+patroni_etcd_cert: ""
+patroni_etcd_key: ""
+
+# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
+patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"
+patroni_consul_port: 8500
+#TODO
+patroni_consul_url: ""
+patroni_consul_scheme: http
+patroni_consul_token: ""
+patroni_consul_verify: ""
+patroni_consul_cacert: ""
+patroni_consul_cert: ""
+patroni_consul_key: ""
+
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap_dcs_ttl: 30
 patroni_bootstrap_dcs_loop_wait: 10
