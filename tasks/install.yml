@@ -1,6 +1,6 @@
 ---
 
-- name: Install packages
+- name: Install apt packages
   apt:
     pkg: "{{ item.pkg }}"
     state: "{{ item.state }}"

@@ -8,7 +8,7 @@
   modprobe:
     name: softdog
 
-- name: Add permissions to "{{ patroni_system_user }}"
+- name: Change device permissions
   file:
     path: /dev/watchdog
     state: file
@@ -20,4 +20,3 @@
     name: watchdog
     enabled: yes
     state: started
-

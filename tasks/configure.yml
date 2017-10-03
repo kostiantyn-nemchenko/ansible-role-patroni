@@ -41,4 +41,3 @@
     - { src: "patroni.yml.j2", dest: "{{ patroni_config_dir }}/{{ patroni_node_name|default(inventory_hostname) }}.yml", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0600" }
   notify:
     - restart patroni
-
