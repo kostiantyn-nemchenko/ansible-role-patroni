@@ -50,6 +50,13 @@ patroni_consul_cacert: ""
 patroni_consul_cert: ""
 patroni_consul_key: ""
 
+# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
+patroni_zookeeper_hosts: 127.0.0.1:2181
+#TODO
+# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#exhibitor
+patroni_exhibitor_hosts: ""
+patroni_exhibitor_port: ""
+
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap_dcs_ttl: 30
 patroni_bootstrap_dcs_loop_wait: 10
