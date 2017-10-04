@@ -1,6 +1,6 @@
 # Ansible Role for Patroni
 
-An Ansible role which installs and configures [Patroni](https://github.com/zalando/patroni/) service on Ubuntu servers.
+An Ansible role which installs and configures [Patroni](https://github.com/zalando/patroni/) - HA solution for PostgreSQL.
 
 ## Requirements
 
@@ -12,22 +12,16 @@ An Ansible role which installs and configures [Patroni](https://github.com/zalan
 
   _This role requires root privileges, so tell ansible to use `become: true` in any [convenient way](http://docs.ansible.com/ansible/latest/become.html) for you._
 
-- **etcd or consul endpoint**
-
-  _Temporary there is no support of ZooKeeper as distributed configuration store._
-
-- **PostgreSQL server**
-
-  _Currently this role relies on already installed postgresql server. An opportunity to initialize new cluster if it does not exist will be added in the near future._
-
 ## Role Variables
 
 Coming soon.
 
 ## Dependencies
 
-* [**retr0h.etcd**](https://github.com/retr0h/ansible-etcd) - If you want to leave etcd as default distributed configuration store
-* [**brianshumate.consul**](https://github.com/brianshumate/ansible-consul) - If you prefer to use consul as distributed configuration store
+  _Depending on your preferences, you can use one of the following Ansible roles to setup etcd, Consul or ZooKeeper cluster:_
+* [**retr0h.etcd**](https://github.com/retr0h/ansible-etcd)
+* [**brianshumate.consul**](https://github.com/brianshumate/ansible-consul)
+* [**AnsibleShipyard.ansible-zookeeper**](https://github.com/AnsibleShipyard/ansible-zookeeper)
 
 ## Example Playbook
 
