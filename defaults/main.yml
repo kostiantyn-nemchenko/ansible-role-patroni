@@ -68,8 +68,6 @@ patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
 patroni_bootstrap_dcs_postgresql_use_slots: true
 
 patroni_bootstrap_dcs_postgresql_parameters:
-# - { option: "hba_file",                  value: "{{ patroni_postgresql_config_dir }}/pg_hba.conf" }
-# - { option: "config_file",               value: "{{ patroni_postgresql_config_dir }}/postgresql.conf" }
   - { option: "max_connections",           value: "1000" }
   - { option: "max_locks_per_transaction", value: "64" }
   - { option: "max_worker_processes",      value: "8" }
@@ -126,8 +124,8 @@ patroni_postgresql_use_unix_socket: true
 patroni_postgresql_pgpass: /var/lib/postgresql/.pgpass
 
 patroni_postgresql_recovery_conf: []
-# - { option: "standby_mode",    value: "on" }
-# - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
+#  - { option: "standby_mode",    value: "on" }
+#  - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
 
 patroni_postgresql_custom_conf: "" #"{{ patroni_postgresql_config_dir }}/postgresql.conf"
 
