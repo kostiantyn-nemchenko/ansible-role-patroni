@@ -10,9 +10,6 @@
   with_items:
     - { path: "{{ patroni_config_dir }}", owner: "{{ patroni_system_user }}", group: "{{ patroni_system_group }}", mode: "0700" }
 
-- include: watchdog.yml
-  when: patroni_watchdog_mode in ('automatic', 'required')
-
 - name: Create patroni service file
   template:
     src: "{{ item.src }}"
