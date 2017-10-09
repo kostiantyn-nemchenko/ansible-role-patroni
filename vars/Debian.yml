@@ -1,0 +1,12 @@
+---
+
+patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
+patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
+patroni_postgresql_pgpass: /var/lib/postgresql/.pgpass
+patroni_pkg_dependencies:
+  - { name: "python-pip",                                  state: "present" }
+  - { name: "jq",                                          state: "present" }
+  - { name: "postgresql-{{ postgresql_version }}",         state: "present" }
+  - { name: "postgresql-client-{{ postgresql_version }}",  state: "present" }
+  - { name: "postgresql-contrib-{{ postgresql_version }}", state: "present" }

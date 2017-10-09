@@ -2,13 +2,24 @@
 
 - name: Install apt packages
   apt:
-    pkg: "{{ item.pkg }}"
+    name: "{{ item.name }}"
     state: "{{ item.state }}"
     update_cache: yes
     cache_valid_time: 600
   with_items:
-    - { pkg: "python-pip",      state: "present" }
-    - { pkg: "jq",              state: "present" }
+    - "{{ patroni_pkg_dependencies }}"
+  when: ansible_os_family == "Debian"
+
+- name: Install rpm packages
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items:
+    - "{{ patroni_pkg_dependencies }}"
+  when: ansible_os_family == "RedHat"
+
+- include: watchdog.yml
+  when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Install patroni
   pip:
