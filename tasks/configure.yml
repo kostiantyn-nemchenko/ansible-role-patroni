@@ -1,5 +1,7 @@
 ---
 
+- include: user.yml
+
 - name: Create patroni directories
   file: 
     path: "{{ item.path }}"
