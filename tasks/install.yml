@@ -1,14 +1,28 @@
 ---
 
+- set_fact:
+    patroni_dependencies:
+      - { name: "python-pip", state: "present" }
+      - { name: "jq",         state: "present" }
+      - "{{ postgresql_packages }}"
+
 - name: Install apt packages
   apt:
-    pkg: "{{ item.pkg }}"
+    name: "{{ item.name }}"
     state: "{{ item.state }}"
     update_cache: yes
     cache_valid_time: 600
-  with_items:
-    - { pkg: "python-pip",      state: "present" }
-    - { pkg: "jq",              state: "present" }
+  with_flattened:
+    - "{{ patroni_dependencies }}"
+  when: ansible_os_family == "Debian"
+
+- name: Install rpm packages
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_flattened:
+    - "{{ patroni_dependencies }}"
+  when: ansible_os_family == "RedHat"
 
 - name: Install patroni
   pip:

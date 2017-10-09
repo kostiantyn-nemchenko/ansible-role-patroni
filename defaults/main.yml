@@ -116,12 +116,8 @@ patroni_postgresql_callbacks:
 
 patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
 patroni_postgresql_create_replica_methods: basebackup #wal_e
-patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
-patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
-patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
 patroni_postgresql_listen: 0.0.0.0:5432
 patroni_postgresql_use_unix_socket: true
-patroni_postgresql_pgpass: /var/lib/postgresql/.pgpass
 
 patroni_postgresql_recovery_conf: []
 #  - { option: "standby_mode",    value: "on" }

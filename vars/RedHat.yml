@@ -1,0 +1,10 @@
+---
+
+patroni_postgresql_data_dir: "/var/lib/pgsql/{{ postgresql_version }}/data"
+patroni_postgresql_config_dir: "/var/lib/pgsql/{{ postgresql_version }}/data"
+patroni_postgresql_bin_dir: "/usr/pgsql-{{ postgresql_version }}/bin"
+patroni_postgresql_pgpass: /var/lib/pgsql/.pgpass
+postgresql_packages:
+  - { name: "postgresql{{ postgresql_version|replace('.','') }}",         state: "present" }
+  - { name: "postgresql{{ postgresql_version|replace('.','') }}-server",  state: "present" }
+  - { name: "postgresql{{ postgresql_version|replace('.','') }}-contrib", state: "present" }
