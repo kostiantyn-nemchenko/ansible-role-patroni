@@ -6,7 +6,7 @@
     state: "{{ item.state }}"
     update_cache: yes
     cache_valid_time: 600
-  with_flattened:
+  with_items:
     - "{{ patroni_pkg_dependencies }}"
   when: ansible_os_family == "Debian"
 
@@ -14,7 +14,7 @@
   package:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
-  with_flattened:
+  with_items:
     - "{{ patroni_pkg_dependencies }}"
   when: ansible_os_family == "RedHat"
 
