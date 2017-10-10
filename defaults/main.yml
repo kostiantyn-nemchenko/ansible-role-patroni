@@ -108,11 +108,11 @@ patroni_postgresql_authentication:
   - { type: "replication", username: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}" }
 
 patroni_postgresql_callbacks:
-  - { event: "on_reload",      script: "" } #TODO
-  - { event: "on_restart",     script: "" } #TODO
-  - { event: "on_role_change", script: "" } #TODO
-  - { event: "on_start",       script: "" } #TODO
-  - { event: "on_stop",        script: "" } #TODO
+  - { event: "on_reload",      script: "" }
+  - { event: "on_restart",     script: "" }
+  - { event: "on_role_change", script: "" }
+  - { event: "on_start",       script: "" }
+  - { event: "on_stop",        script: "" }
 
 patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
 patroni_postgresql_create_replica_methods: basebackup #wal_e
