@@ -10,6 +10,18 @@
     group: "{{ patroni_system_group }}"
     mode: 0750
 
+- name: Prepare callback scripts
+  copy:
+    src: "callbacks/{{ item.event }}"
+    dest: "{{ item.script }}"
+    owner: "{{ patroni_system_user }}"
+    group: "{{ patroni_system_group }}"
+    mode: 0750
+    backup: yes
+  with_items:
+    - "{{ patroni_postgresql_callbacks }}"
+  when: not( (item.script is none) or (item.script | trim == '') )
+
 - name: Create patroni service file
   template:
     src: patroni.service.j2
