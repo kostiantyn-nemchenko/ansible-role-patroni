@@ -1,29 +1,28 @@
 ---
 
-sudo: required
-dist: xenial
+services: docker
 
-language: python
-python: "2.7"
+env:
+  - DISTRIBUTION: ubuntu
+    DISTRIBUTION_VERSION: 16.04
+    ANSIBLE_VERSION: 2.4.0.0
 
-branches:
-  only:
-    - master
-
-addons:
-  apt:
-    packages:
-      - python-pip
+before_install:
+  - docker run -d -v "${PWD}/tests":/tmp/tests --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} /lib/systemd/systemd
+  - sleep 1
+  - docker ps -a
 
 install:
-  - pip install ansible ansible-lint
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "apt update -qq && apt install python-pip git -y -qq && pip install --upgrade pip && pip install ansible==${ANSIBLE_VERSION} ansible-lint"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "python --version; ansible --version"
 
 script:
-  - ansible-galaxy install -r tests/requirements.yml
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-galaxy install -r /tmp/tests/requirements.yml"
 
-#  - ansible-lint tests/test.yml
+# - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-lint /tmp/tests/test.yml"
 
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml --syntax-check"
 
-  - ansible-playbook -i tests/inventory tests/test.yml
-  
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv"
+
+  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
