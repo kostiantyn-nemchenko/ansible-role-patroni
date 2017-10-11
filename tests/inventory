@@ -1,1 +1,6 @@
+[patroni]
 localhost
+
+[etcd]
+localhost
+
