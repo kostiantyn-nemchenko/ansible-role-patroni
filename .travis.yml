@@ -20,9 +20,9 @@ install:
 script:
   - ansible-galaxy install -r tests/requirements.yml
 
-  - ansible-lint tests/test.yml
+#  - ansible-lint tests/test.yml
 
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
 
-#  - ansible-playbook -i tests/inventory tests/test.yml
+  - ansible-playbook -i tests/inventory tests/test.yml
   
