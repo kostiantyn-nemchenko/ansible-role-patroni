@@ -8,14 +8,12 @@ env:
     ANSIBLE_VERSION: 2.4.0.0
 
 before_install:
-  - docker run -d -v "${PWD}/tests":/tmp/tests --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} /lib/systemd/systemd
+  - docker run -d -v "${PWD}/tests":/tmp/tests -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} /lib/systemd/systemd
   - sleep 1
   - docker ps -a
 
 install:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "apt update -qq && apt install python-pip git -y -qq && pip install --upgrade pip && pip install ansible==${ANSIBLE_VERSION} ansible-lint"
-# Workaround to fix "Failed to find required executable modprobe in paths" while adding softdog kernel module for watchdog
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "apt install --reinstall linux-image-`uname -r` -qq -y"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "python --version; ansible --version"
 
 script:
