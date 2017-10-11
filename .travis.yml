@@ -1,0 +1,28 @@
+---
+
+sudo: required
+
+language: python
+python: "2.7"
+
+branches:
+  only:
+    - master
+
+addons:
+  apt:
+    packages:
+      - python-pip
+
+install:
+  - pip install ansible ansible-lint
+
+script:
+  - ansible-galaxy install -r tests/requirements.yml
+
+#  - ansible-lint tests/test.yml
+
+  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
+
+#  - ansible-playbook -i tests/inventory tests/test.yml
+  
