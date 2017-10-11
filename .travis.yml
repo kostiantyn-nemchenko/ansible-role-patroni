@@ -8,6 +8,7 @@ env:
     ANSIBLE_VERSION: 2.4.0.0
 
 before_install:
+  - modprobe softdog
   - docker run -d -v "${PWD}/tests":/tmp/tests -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} /lib/systemd/systemd
   - sleep 1
   - docker ps -a
