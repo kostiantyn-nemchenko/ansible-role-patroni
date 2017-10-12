@@ -4,7 +4,6 @@ dependencies:
   - role: brianshumate.consul
     when: patroni_dcs == "consul"
   - role: retr0h.etcd
-    etcd_listen_client_urls: "{{ etcd_client_url_scheme }}://{{ hostvars[inventory_hostname]['ansible_' + etcd_client_interface]['ipv4']['address'] }}:{{ etcd_client_port }},{{ etcd_client_url_scheme }}://localhost:{{ etcd_client_port }}"
     etcd_version: v3.2.5
     etcd_checksum: 44a05f6d392a754329086f7a5356d1727d5fb19f331f48fd8109a8b24ef9616c
     when: patroni_dcs == "etcd"
