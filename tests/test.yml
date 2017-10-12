@@ -1,7 +1,6 @@
 ---
 
 - hosts: patroni
-  connection: local
   become: yes
   roles:
     - patroni
