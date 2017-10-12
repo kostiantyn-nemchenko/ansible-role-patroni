@@ -36,7 +36,7 @@ before_install:
     fi
 
 install:
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "${PACKAGE_MANAGER} update -y -q && ${PACKAGE_MANAGER} install ${PACKAGES} -y && pip install --upgrade pip && pip install ansible==${ANSIBLE_VERSION}"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "${PACKAGE_MANAGER} update -y -q && ${PACKAGE_MANAGER} install ${PACKAGES} -y && pip install --upgrade pip && pip install ansible==${ANSIBLE_VERSION} netaddr"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible --version"
 
 script:
@@ -45,7 +45,7 @@ script:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
   - sleep 5
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "patronictl -c /etc/patroni/*.yml list main"
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "curl -s 127.0.0.1:8008 | jq '.state'"
+  - docker exec --user=postgres -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "psql -Atc \"SELECT 1\""
   - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
 
 after_failure:
