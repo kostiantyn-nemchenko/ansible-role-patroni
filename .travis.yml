@@ -47,7 +47,10 @@ script:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "patronictl -c /etc/patroni/*.yml list main"
   - set +e
   - docker exec --user=postgres -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "psql -Atc \"SELECT 1\""
+
+after_success:
   - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
 
 after_failure:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "journalctl -u $DCS -u patroni -n100 --no-pager"
+  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
