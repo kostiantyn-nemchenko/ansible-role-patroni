@@ -15,7 +15,7 @@ Group={{ patroni_system_group }}
 # This is normally controlled by the global default set by systemd
 # StandardOutput=syslog
 
-ExecStart=/usr/local/bin/patroni {{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml
+ExecStart={{ patroni_bin_dir }}/patroni {{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml
 
 # only kill the patroni process, not it's children, so it will gracefully stop postgres
 KillMode=process
