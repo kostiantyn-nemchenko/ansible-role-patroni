@@ -1,0 +1,37 @@
+---
+
+sudo: required
+
+services: docker
+
+env:
+  - DISTRIBUTION: ubuntu
+    DISTRIBUTION_VERSION: 16.04
+    ANSIBLE_VERSION: 2.4.0.0
+    PACKAGE_MANAGER: apt
+    DOCKER_INIT: /lib/systemd/systemd
+    DCS: etcd
+
+before_install:
+  - |
+    set -e 
+  
+    sudo modprobe softdog
+    docker run -d -v "${PWD}/tests":/tmp/tests -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} ${DOCKER_INIT}
+    sleep 1
+    docker exec ${DISTRIBUTION}-${DISTRIBUTION_VERSION} true
+install:
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "${PACKAGE_MANAGER} update -q && ${PACKAGE_MANAGER} install python-pip git curl -y && pip install --upgrade pip && pip install ansible==${ANSIBLE_VERSION}"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible --version"
+
+script:
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-galaxy install -r /tmp/tests/requirements.yml"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml --syntax-check"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "patronictl -c /etc/patroni/*.yml list main"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "curl -s 127.0.0.1:8008 | jq '.state'"
+  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
+
+after_failure:
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "journalctl -u $DCS -u patroni -n100 --no-pager"
+  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}

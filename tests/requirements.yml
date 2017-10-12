@@ -1,0 +1,11 @@
+---
+
+- src: brianshumate.consul
+
+- src: retr0h.etcd
+
+- src: AnsibleShipyard.ansible-zookeeper
+
+- src: https://github.com/kostiantyn-nemchenko/ansible-role-patroni
+  version: master
+  name: patroni
