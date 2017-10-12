@@ -20,7 +20,7 @@ env:
 
 before_install:
   - |
-    set -e 
+    set -e
   
     sudo modprobe softdog
     docker run -d -v "${PWD}/tests":/tmp/tests -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} ${DOCKER_INIT}
@@ -45,9 +45,9 @@ script:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
   - sleep 5
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "patronictl -c /etc/patroni/*.yml list main"
+  - set +e
   - docker exec --user=postgres -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "psql -Atc \"SELECT 1\""
   - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
 
 after_failure:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "journalctl -u $DCS -u patroni -n100 --no-pager"
-  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
