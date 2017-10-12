@@ -1,6 +1,5 @@
 [patroni]
-localhost
+node01 ansible_host=localhost
 
 [etcd]
-localhost
-
+node01 ansible_host=localhost
