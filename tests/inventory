@@ -1,5 +1,11 @@
+[all:vars]
+ansible_connection=local
+
 [patroni]
-node01 ansible_host=127.0.0.1 ansible_connection=local
+node01 ansible_host=127.0.0.1
 
 [etcd]
-node01 ansible_host=127.0.0.1 ansible_connection=local
+node01 ansible_host=127.0.0.1
+
+[consul_instances]
+node01 ansible_host=127.0.0.1 consul_node_role=bootstrap
