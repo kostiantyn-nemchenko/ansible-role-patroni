@@ -91,7 +91,6 @@ patroni_bootstrap_method: "" #TODO
 patroni_bootstrap_initdb:
   - { option: "encoding",        value: "UTF8" }
   - { option: "locale",          value: "en_US.UTF-8" }
-  - { option: "pgdata",          value: "{{ patroni_postgresql_data_dir }}" }
   - { option: "data-checksums" }
 
 patroni_bootstrap_pg_hba: []
