@@ -29,8 +29,6 @@ script:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-galaxy install -r /tmp/tests/requirements.yml"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml --syntax-check"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
-  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
-
-after_success:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "patronictl -c /etc/patroni/*.yml list main"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "curl -s 127.0.0.1:8008 | jq '.state'"
+  - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
