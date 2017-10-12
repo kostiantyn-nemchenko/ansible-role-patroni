@@ -11,6 +11,12 @@ env:
     PACKAGE_MANAGER: apt
     DOCKER_INIT: /lib/systemd/systemd
     DCS: etcd
+  - DISTRIBUTION: centos
+    DISTRIBUTION_VERSION: 7
+    ANSIBLE_VERSION: 2.4.0.0
+    PACKAGE_MANAGER: yum
+    DOCKER_INIT: /usr/lib/systemd/systemd
+    DCS: consul
 
 before_install:
   - |
