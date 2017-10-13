@@ -6,7 +6,6 @@ Requested Features
 - [ ] Support of user-defined scripts to bootstrap new clusters (bootstrap.method configuration setting).
 - [ ] Manage SSL certificates for Patroni REST API.
 - [ ] Support of different PostgreSQL replication modes (synchronous/cascading replication).
-- [ ] Integrate with [Travis CI](https://travis-ci.org/).
 - [ ] Support of custom replica creation methods via 3rd party tools like Barman, WAL-E, pgBackRest.
 
 Known Issues
