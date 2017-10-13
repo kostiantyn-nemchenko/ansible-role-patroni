@@ -30,15 +30,15 @@ before_install:
     if [[ ${DISTRIBUTION} == "ubuntu" ]]; then
       PACKAGES="python-pip git curl"
       docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} \
-      /bin/sh -c "${PACKAGE_MANAGER} -qq update && ${PACKAGE_MANAGER} -qq install -y postgresql-common && sed -i 's/#start_conf = 'auto'/start_conf = 'manual'/g' /etc/postgresql-common/createcluster.conf"
+      /bin/sh -c "{ ${PACKAGE_MANAGER} -qq update && ${PACKAGE_MANAGER} -qq install -y postgresql-common } > /dev/null && sed -i 's/#start_conf = 'auto'/start_conf = 'manual'/g' /etc/postgresql-common/createcluster.conf"
     elif [[ ${DISTRIBUTION} == "centos" ]]; then
       docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} \
-      /bin/sh -c "${PACKAGE_MANAGER} -q install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-${DISTRIBUTION_VERSION}.noarch.rpm https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-${DISTRIBUTION_VERSION}-`uname -m`/pgdg-centos96-9.6-3.noarch.rpm";
+      /bin/sh -c "{ ${PACKAGE_MANAGER} -q install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-${DISTRIBUTION_VERSION}.noarch.rpm https://download.postgresql.org/pub/repos/yum/9.6/redhat/rhel-${DISTRIBUTION_VERSION}-`uname -m`/pgdg-centos96-9.6-3.noarch.rpm } > /dev/null";
       PACKAGES="python-devel gcc python-pip git curl iproute"
     fi
 
 install:
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "${PACKAGE_MANAGER} -q update -y && ${PACKAGE_MANAGER} -q install ${PACKAGES} -y && pip install --upgrade pip -q && pip install ansible==${ANSIBLE_VERSION} netaddr -q"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "{ ${PACKAGE_MANAGER} -q update -y && ${PACKAGE_MANAGER} -q install ${PACKAGES} -y } > /dev/null && pip install --upgrade pip -q && pip install ansible==${ANSIBLE_VERSION} netaddr -q"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible --version"
 
 script:
@@ -55,3 +55,6 @@ after_success:
 after_failure:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "journalctl -u $DCS -u patroni -n1000 --no-pager"
   - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/  
