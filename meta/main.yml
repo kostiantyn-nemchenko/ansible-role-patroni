@@ -22,9 +22,11 @@ galaxy_info:
   - failover
 dependencies:
   - role: brianshumate.consul
+    when: patroni_dcs == "consul"
   - role: retr0h.etcd
     etcd_version: v3.2.5
     etcd_checksum: 44a05f6d392a754329086f7a5356d1727d5fb19f331f48fd8109a8b24ef9616c
+    when: patroni_dcs == "etcd"
   - role: AnsibleShipyard.ansible-zookeeper
     zookeeper_hosts: "
       {%- set ips = [] %}
@@ -32,3 +34,4 @@ dependencies:
       {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_host'])) }}
       {%- endfor %}
       {{- ips -}}"
+    when: patroni_dcs == "zookeeper"
