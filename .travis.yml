@@ -38,7 +38,7 @@ before_install:
     fi
 
 install:
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "{ ${PACKAGE_MANAGER} -q update -y && ${PACKAGE_MANAGER} -q install ${PACKAGES} -y } > /dev/null && pip install --upgrade pip -q && pip install ansible==${ANSIBLE_VERSION} netaddr -q"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "( ${PACKAGE_MANAGER} -q update -y && ${PACKAGE_MANAGER} -q install ${PACKAGES} -y )> /dev/null && pip install --upgrade pip -q && pip install ansible==${ANSIBLE_VERSION} netaddr -q"
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible --version"
 
 script:
