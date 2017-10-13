@@ -18,7 +18,7 @@ galaxy_info:
   - clustering
   - postgresql
   - patroni
-  - high-availability
+  - availability
   - failover
 dependencies:
   - role: brianshumate.consul
