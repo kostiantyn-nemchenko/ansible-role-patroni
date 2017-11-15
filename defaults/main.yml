@@ -52,6 +52,8 @@ patroni_consul_verify: ""
 patroni_consul_cacert: ""
 patroni_consul_cert: ""
 patroni_consul_key: ""
+patroni_consul_dc: ""
+patroni_consul_checks: ""
 
 # http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
 patroni_zookeeper_hosts: 127.0.0.1:2181

@@ -22,3 +22,9 @@ consul:
 {% if not( (patroni_consul_key is none) or (patroni_consul_key | trim == '') ) %}
   key: {{ patroni_consul_key }}
 {% endif %}
+{% if not( (patroni_consul_dc is none) or (patroni_consul_dc | trim == '') ) %}
+  dc: {{ patroni_consul_dc }}
+{% endif %}
+{% if not( (patroni_consul_checks is none) or (patroni_consul_checks | trim == '') ) %}
+  checks: {{ patroni_consul_checks }}
+{% endif %}
