@@ -1,6 +1,6 @@
 ---
 
-postgresql_version: 9.6
+postgresql_version: 10
 postgresql_apt_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 postgresql_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
 
@@ -82,8 +82,8 @@ patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "wal_level",                 value: "'replica'" }
   - { option: "wal_log_hints",             value: "'on'" }
   - { option: "track_commit_timestamp",    value: "'off'" }
-  - { option: "max_wal_senders",           value: "5" }
-  - { option: "max_replication_slots",     value: "5" }
+  - { option: "max_wal_senders",           value: "10" }
+  - { option: "max_replication_slots",     value: "10" }
   - { option: "wal_keep_segments",         value: "0" }
 
 patroni_bootstrap_dcs_postgresql_recovery_conf: []
