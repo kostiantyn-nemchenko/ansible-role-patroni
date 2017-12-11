@@ -1,5 +1,4 @@
 ---
-
 sudo: required
 
 services: docker
@@ -23,7 +22,7 @@ before_install:
     set -e
   
     sudo modprobe softdog
-    docker run -d -v "${PWD}/tests":/tmp/tests -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} ${DOCKER_INIT}
+    docker run -d -v "${PWD}":/tmp/patroni -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name="${DISTRIBUTION}-${DISTRIBUTION_VERSION}" --privileged ${DISTRIBUTION}:${DISTRIBUTION_VERSION} ${DOCKER_INIT}
     sleep 1
     docker exec ${DISTRIBUTION}-${DISTRIBUTION_VERSION} true
     
@@ -42,9 +41,9 @@ install:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible --version"
 
 script:
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-galaxy install -r /tmp/tests/requirements.yml"
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml --syntax-check"
-  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/tests/inventory /tmp/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-galaxy install -r /tmp/patroni/tests/requirements.yml"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/patroni/tests/inventory /tmp/patroni/tests/test.yml --syntax-check"
+  - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "ansible-playbook -i /tmp/patroni/tests/inventory /tmp/patroni/tests/test.yml -Dvv --extra-vars patroni_dcs=$DCS"
   - sleep 15
 
 after_success:

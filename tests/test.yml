@@ -1,6 +1,5 @@
 ---
-
 - hosts: patroni
   become: yes
   roles:
-    - patroni
+    - ../../patroni

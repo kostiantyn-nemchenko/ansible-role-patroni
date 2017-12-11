@@ -1,5 +1,7 @@
 ---
+- src: brianshumate.consul
+  version: v1.28.1
 
-- src: https://github.com/kostiantyn-nemchenko/ansible-role-patroni
-  version: master
-  name: patroni
+- src: retr0h.etcd
+
+- src: AnsibleShipyard.ansible-zookeeper
