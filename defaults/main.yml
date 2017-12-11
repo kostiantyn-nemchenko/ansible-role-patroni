@@ -13,6 +13,8 @@ patroni_replication_password: repuserpasswd
 patroni_superuser_username: postgres
 patroni_superuser_password: supersecretpostgrespasswd
 
+patroni_logformat: "%(asctime)s %(levelname)s: %(message)s"
+
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
 patroni_name: "{{ inventory_hostname }}"
 patroni_namespace: /service/
