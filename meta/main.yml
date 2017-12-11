@@ -22,6 +22,7 @@ galaxy_info:
   - failover
 dependencies:
   - role: brianshumate.consul
+    version: v1.28.1
     when: patroni_dcs == "consul"
   - role: retr0h.etcd
     etcd_version: v3.2.5
