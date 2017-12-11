@@ -56,5 +56,5 @@ after_failure:
   - docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} /bin/sh -c "journalctl -u $DCS -u patroni -n1000 --no-pager"
   - docker rm -f ${DISTRIBUTION}-${DISTRIBUTION_VERSION}
 
-notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/  
+#notifications:
+#  webhooks: https://galaxy.ansible.com/api/v1/notifications/
