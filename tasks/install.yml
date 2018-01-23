@@ -38,4 +38,4 @@
     state: "{{ item.state }}"
   with_items:
     - { name: "setuptools", state: "latest" }
-    - { name: "patroni",    state: "present" }
+    - { name: "patroni[{{ patroni_dcs }}]",    state: "present" }
