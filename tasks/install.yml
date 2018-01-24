@@ -36,6 +36,7 @@
   pip:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
+    umask: "0022"
   with_items:
     - { name: "setuptools", state: "latest" }
     - { name: "patroni[{{ patroni_dcs }}]",    state: "present" }
