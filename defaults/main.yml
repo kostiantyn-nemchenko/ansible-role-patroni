@@ -1,8 +1,6 @@
 ---
 
 postgresql_version: 10
-postgresql_apt_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
-postgresql_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
 
 patroni_config_dir: /etc/patroni
 patroni_system_user: postgres
@@ -32,7 +30,6 @@ patroni_dcs: etcd
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
 patroni_etcd_host: 127.0.0.1:2379
-#TODO
 patroni_etcd_url: ""
 patroni_etcd_proxy: ""
 patroni_etcd_srv: ""
@@ -46,7 +43,6 @@ patroni_etcd_key: ""
 # http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
 patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"
 patroni_consul_port: 8500
-#TODO
 patroni_consul_url: ""
 patroni_consul_scheme: http
 patroni_consul_token: ""

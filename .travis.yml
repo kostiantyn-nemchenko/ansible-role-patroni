@@ -32,7 +32,7 @@ before_install:
       /bin/sh -c "( ${PACKAGE_MANAGER} -qq update && ${PACKAGE_MANAGER} -qq install -y postgresql-common )> /dev/null && sed -i 's/#start_conf = 'auto'/start_conf = 'manual'/g' /etc/postgresql-common/createcluster.conf"
     elif [[ ${DISTRIBUTION} == "centos" ]]; then
       docker exec -t ${DISTRIBUTION}-${DISTRIBUTION_VERSION} \
-      /bin/sh -c "( ${PACKAGE_MANAGER} -q install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-${DISTRIBUTION_VERSION}.noarch.rpm https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-${DISTRIBUTION_VERSION}-`uname -m`/pgdg-redhat10-10-2.noarch.rpm)> /dev/null";
+      /bin/sh -c "( ${PACKAGE_MANAGER} -q install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-${DISTRIBUTION_VERSION}.noarch.rpm )> /dev/null";
       PACKAGES="python-devel gcc python-pip git curl iproute"
     fi
 

@@ -1,10 +1,14 @@
 ---
 
+postgresql_apt_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+postgresql_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
+
 patroni_postgresql_data_dir: "/var/lib/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
 patroni_postgresql_config_dir: "/etc/postgresql/{{ postgresql_version }}/{{ patroni_scope }}"
 patroni_postgresql_bin_dir: "/usr/lib/postgresql/{{ postgresql_version }}/bin"
 patroni_postgresql_pgpass: /var/lib/postgresql/.pgpass
 patroni_bin_dir: /usr/local/bin
+
 patroni_pkg_dependencies:
   - { name: "python-pip",                                  state: "present" }
   - { name: "jq",                                          state: "present" }

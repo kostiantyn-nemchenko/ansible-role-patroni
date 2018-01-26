@@ -1,17 +1,17 @@
 ---
 
 - block:
-    - name: Configure PostgreSQL APT key
+    - name: Configure PostgreSQL repository key
       apt_key: 
         url: "{{ postgresql_apt_key_url }}" 
         state: present
 
-    - name: Configure PostgreSQL APT repository
+    - name: Configure PostgreSQL repository
       apt_repository: 
         repo: "{{ postgresql_apt_repo }}"
         state: present
 
-    - name: Install apt packages
+    - name: Install packages
       apt:
         name: "{{ item.name }}"
         state: "{{ item.state }}"
@@ -21,12 +21,17 @@
         - "{{ patroni_pkg_dependencies }}"
   when: ansible_os_family == "Debian"
 
-- name: Install rpm packages
-  package:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-  with_items:
-    - "{{ patroni_pkg_dependencies }}"
+- block:
+    - name: Configure PostgreSQL repository
+      package:
+        name: "{{ postgresql_yum_repo_url }}"
+
+    - name: Install packages
+      package:
+        name: "{{ item.name }}"
+        state: "{{ item.state }}"
+      with_items:
+        - "{{ patroni_pkg_dependencies }}"
   when: ansible_os_family == "RedHat"
 
 - include: watchdog.yml
@@ -39,4 +44,4 @@
     umask: "0022"
   with_items:
     - { name: "setuptools", state: "latest" }
-    - { name: "patroni[{{ patroni_dcs }}]",    state: "present" }
+    - { name: "patroni[{{ patroni_dcs }}]", state: "present" }
