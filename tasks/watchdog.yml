@@ -1,14 +1,9 @@
 ---
 
 - name: Install watchdog
-  apt:
-    name: watchdog
-  when: ansible_os_family == "Debian"
-
-- name: Install watchdog
   package:
     name: watchdog
-  when: ansible_os_family == "RedHat"
+    update_cache: yes
 
 - name: Add the softdog kernel module
   modprobe:
