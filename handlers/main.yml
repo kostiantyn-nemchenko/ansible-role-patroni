@@ -1,11 +1,9 @@
 ---
 
-- name: reload systemd
-  systemd: 
-    daemon_reload: yes
-
 - name: restart patroni
-  service:
-    name: patroni
+  systemd:
+    name: patroni.service
     state: restarted
+    daemon_reload: yes
     enabled: yes
+

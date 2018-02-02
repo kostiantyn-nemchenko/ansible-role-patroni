@@ -29,10 +29,6 @@
     owner: root
     group: root
     mode: 0644
-  notify:
-    - reload systemd
-
-- meta: flush_handlers # Let systemd know about patroni's service file changes
 
 - name: Create patroni config file
   template:
