@@ -10,29 +10,20 @@
       apt_repository: 
         repo: "{{ postgresql_apt_repo }}"
         state: present
-
-    - name: Install packages
-      apt:
-        name: "{{ item.name }}"
-        state: "{{ item.state }}"
-        update_cache: yes
-        cache_valid_time: 600
-      with_items:
-        - "{{ patroni_pkg_dependencies }}"
   when: ansible_os_family == "Debian"
 
-- block:
-    - name: Configure PostgreSQL repository
-      package:
-        name: "{{ postgresql_yum_repo_url }}"
-
-    - name: Install packages
-      package:
-        name: "{{ item.name }}"
-        state: "{{ item.state }}"
-      with_items:
-        - "{{ patroni_pkg_dependencies }}"
+- name: Configure PostgreSQL repository
+  package:
+    name: "{{ postgresql_yum_repo_url }}"
   when: ansible_os_family == "RedHat"
+
+- name: Install packages
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_cache: yes
+  with_items:
+    - "{{ patroni_pkg_dependencies }}"
 
 - include: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
