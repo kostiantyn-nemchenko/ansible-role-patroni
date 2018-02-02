@@ -5,7 +5,7 @@ galaxy_info:
   description: An Ansible role which installs and configures Patroni - HA solution for PostgreSQL
   company:
   license: MIT
-  min_ansible_version: 2.2.0.0
+  min_ansible_version: 2.4
   platforms:
   - name: EL
     versions:

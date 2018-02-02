@@ -1,7 +1,8 @@
 ---
 
 - name: reload systemd
-  command: systemctl daemon-reload
+  systemd: 
+    daemon_reload: yes
 
 - name: restart patroni
   service:
