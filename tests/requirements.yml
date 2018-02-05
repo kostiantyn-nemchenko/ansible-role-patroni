@@ -1,6 +1,5 @@
 ---
 - src: brianshumate.consul
-  version: v1.28.1
 
 - src: retr0h.etcd
 
