@@ -19,7 +19,7 @@ patroni_namespace: /service/
 patroni_scope: main
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
-patroni_restapi_connect_address: 127.0.0.1:8008
+patroni_restapi_connect_address: "{{ ansible_host }}:8008"
 patroni_restapi_listen: 0.0.0.0:8008
 patroni_restapi_certfile: ""
 patroni_restapi_keyfile: ""
