@@ -142,7 +142,7 @@ patroni_postgresql_replica_method: "" #TODO
 # http://patroni.readthedocs.io/en/latest/watchdog.html
 patroni_watchdog_mode: automatic
 patroni_watchdog_device: /dev/watchdog
-patroni_watchdog_safety_margin: -1
+patroni_watchdog_safety_margin: 5
 
 patroni_tags:
   - { name: "nofailover",    value: "false" }
