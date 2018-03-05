@@ -16,6 +16,8 @@ Group={{ patroni_system_group }}
 # StandardOutput=syslog
 
 Environment='PATRONI_LOGFORMAT={{ patroni_logformat }}'
+Environment='PATRONI_LOGLEVEL={{ patroni_loglevel }}'
+Environment='PATRONI_REQUESTS_LOGLEVEL={{ patroni_requests_loglevel }}'
 
 ExecStart={{ patroni_bin_dir }}/patroni {{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml
 
