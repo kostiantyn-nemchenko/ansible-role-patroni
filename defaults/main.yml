@@ -12,6 +12,8 @@ patroni_superuser_username: postgres
 patroni_superuser_password: supersecretpostgrespasswd
 
 patroni_logformat: "%(asctime)s %(levelname)s: %(message)s"
+patroni_loglevel: INFO
+patroni_requests_loglevel: WARNING
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
 patroni_name: "{{ inventory_hostname }}"
