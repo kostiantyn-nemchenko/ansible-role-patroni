@@ -42,8 +42,17 @@ bootstrap:
       {% endfor %}
     {% endif %}
 
-{% if not( (patroni_bootstrap_method is none) or (patroni_bootstrap_method | trim == '') ) %}
-  method: {{ patroni_bootstrap_method }}
+{% if not( (patroni_bootstrap_method_name is none) or (patroni_bootstrap_method_name | trim == '') ) and not( (patroni_bootstrap_method_command is none) or (patroni_bootstrap_method_command | trim == '') ) %}
+  method: {{ patroni_bootstrap_method_name }}
+  {{ patroni_bootstrap_method_name }}:
+    command: {{ patroni_bootstrap_method_command }}
+    keep_existing_recovery_conf: {{ patroni_bootstrap_method_keep_existing_recovery_conf }}
+  {% if patroni_bootstrap_method_recovery_conf | length > 0 %}
+    recovery_conf:
+    {% for item in patroni_bootstrap_method_recovery_conf %}
+      {{ item.option }}: {{ item.value }}
+    {% endfor %}
+  {% endif %}
 {% endif %}
 
 {% if patroni_bootstrap_initdb | length > 0 %}
