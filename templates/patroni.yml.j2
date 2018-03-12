@@ -101,7 +101,7 @@ postgresql:
       password: {{ item.password }}
   {% endfor %}
 {% endif %}
-{% if patroni_postgresql_callbacks | length > 0 %}
+{% if patroni_postgresql_callbacks | map(attribute='script') | join() | trim | length  > 0 %}
   callbacks:
   {% for callback in patroni_postgresql_callbacks %}
     {% if not( (callback.script is none) or (callback.script | trim == '') ) %}
