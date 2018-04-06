@@ -7,9 +7,7 @@ An Ansible role which installs and configures [Patroni](https://github.com/zalan
 
 ## Requirements
 
-- **root access**
-
-  _This role requires root privileges, so tell ansible to use `become: true` in any [convenient way](http://docs.ansible.com/ansible/latest/become.html) for you._
+This role requires root privileges, so tell ansible to use `become: true` in any [convenient way](http://docs.ansible.com/ansible/latest/become.html) for you.
 
 ## Role Variables
 
