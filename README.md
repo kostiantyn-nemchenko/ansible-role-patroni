@@ -27,4 +27,11 @@ Coming soon.
     - hosts: postgresql-servers
       become: yes
       roles:
-        - patroni
+        - kostiantyn-nemchenko.patroni
+
+## License
+
+MIT
+
+## Author Information
+Kostiantyn Nemchenko <kostiantyn.nemchenko@gmail.com>
