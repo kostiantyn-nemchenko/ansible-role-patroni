@@ -38,4 +38,4 @@
     group: "{{ patroni_system_group }}"
     mode: 0600
   notify:
-    - restart patroni
+    - reload patroni
