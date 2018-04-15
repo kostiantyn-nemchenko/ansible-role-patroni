@@ -1,6 +1,6 @@
 ---
 
-- include: user.yml
+- import_tasks: user.yml
 
 - name: Create patroni config directory
   file: 

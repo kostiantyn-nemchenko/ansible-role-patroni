@@ -4,10 +4,10 @@
   include_vars: "{{ ansible_os_family }}.yml"
   tags: [patroni, patroni-install, patroni-configure]
 
-- include: install.yml
+- import_tasks: install.yml
   tags: [patroni, patroni-install]
 
-- include: configure.yml
+- import_tasks: configure.yml
   tags: [patroni, patroni-configure]
 
 - name: Ensure patroni is running

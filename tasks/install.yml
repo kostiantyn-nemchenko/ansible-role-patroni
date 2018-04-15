@@ -25,7 +25,7 @@
   with_items:
     - "{{ patroni_pkg_dependencies }}"
 
-- include: watchdog.yml
+- import_tasks: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Install patroni
