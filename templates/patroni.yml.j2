@@ -5,7 +5,7 @@ name: {{ patroni_name | default(inventory_hostname) }}
 
 restapi:
   listen: {{ patroni_restapi_listen | default('0.0.0.0:8008') }}
-  connect_address: {{ patroni_restapi_connect_address | default('127.0.0.1:8008') }}
+  connect_address: {{ patroni_restapi_connect_address | default(ansible_host + ':8008') }}
   certfile: {{ patroni_restapi_certfile | default(None) }}
   keyfile: {{ patroni_restapi_keyfile | default(None) }}
 {% if not( (patroni_restapi_username is none) or (patroni_restapi_username | trim == '') ) and not( (patroni_restapi_password is none) or (patroni_restapi_password | trim == '') ) %}
@@ -17,8 +17,6 @@ restapi:
 {% include (patroni_dcs | default('etcd')) + '.yml.j2' %}
 
 bootstrap:
-  # this section will be written into Etcd:/<namespace>/<scope>/config after initializing new cluster
-  # and all other cluster members will use it as a `global configuration`
   dcs:
     ttl: {{ patroni_bootstrap_dcs_ttl | default(30) }}
     loop_wait: {{ patroni_bootstrap_dcs_loop_wait | default(10) }}
@@ -32,13 +30,13 @@ bootstrap:
     {% if patroni_bootstrap_dcs_postgresql_parameters | length > 0 %}
       parameters:
       {% for guc in patroni_bootstrap_dcs_postgresql_parameters %}
-        {{ guc.option }}: {{ guc.value}}
+        {{ guc.option }}: {{ guc.value }}
       {% endfor %}
     {% endif %}
     {% if patroni_bootstrap_dcs_postgresql_recovery_conf | length > 0 %}
       recovery_conf:
       {% for item in patroni_bootstrap_dcs_postgresql_recovery_conf %}
-        {{ item.option }}: {{ item.value}}
+        {{ item.option }}: {{ item.value }}
       {% endfor %}
     {% endif %}
 
@@ -56,26 +54,24 @@ bootstrap:
 {% endif %}
 
 {% if patroni_bootstrap_initdb | length > 0 %}
-  # some desired options for 'initdb'
-  initdb: # Note: It needs to be a list (some options need values, others are switches)
+  initdb:
   {% for item in patroni_bootstrap_initdb %}
     {% if item.value is undefined %}
     - {{ item.option }}
     {% else %}
-    - {{ item.option }}: {{ item.value}}
+    - {{ item.option }}: {{ item.value }}
     {% endif %}
   {% endfor %}
 {% endif %}
 
 {% if patroni_bootstrap_pg_hba | length > 0 %}
-  pg_hba:  # Add following lines to pg_hba.conf after running 'initdb'
+  pg_hba:
   {% for client in patroni_bootstrap_pg_hba %}
     - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address|default(None) }} {{ client.method }}
   {% endfor %}
 {% endif %}
 
 {% if patroni_bootstrap_users | length > 0 %}
-  # Some additional users users which needs to be created after initializing new cluster
   users:
   {% for user in patroni_bootstrap_users %}
     {{ user.name }}:
@@ -93,7 +89,6 @@ bootstrap:
   post_bootstrap: {{ patroni_bootstrap_post_bootstrap }}
 {% endif %}
 {% if not( (patroni_bootstrap_post_init is none) or (patroni_bootstrap_post_init | trim == '') ) %}
-  # Additional script to be launched after initial cluster creation (will be passed the connection URL as parameter)
   post_init: {{ patroni_bootstrap_post_init }}
 {% endif %}
 
@@ -106,7 +101,7 @@ postgresql:
       password: {{ item.password }}
   {% endfor %}
 {% endif %}
-{% if patroni_postgresql_callbacks | length > 0 %}
+{% if patroni_postgresql_callbacks | map(attribute='script') | join() | trim | length > 0 %}
   callbacks:
   {% for callback in patroni_postgresql_callbacks %}
     {% if not( (callback.script is none) or (callback.script | trim == '') ) %}
@@ -126,7 +121,7 @@ postgresql:
 {% if patroni_postgresql_recovery_conf | length > 0 %}
   recovery_conf:
   {% for item in patroni_postgresql_recovery_conf %}
-    {{ item.option }}: {{ item.value}}
+    {{ item.option }}: {{ item.value }}
   {% endfor %}
 {% endif %}
 {% if not( (patroni_postgresql_custom_conf is none) or (patroni_postgresql_custom_conf | trim == '') ) %}
@@ -135,7 +130,7 @@ postgresql:
 {% if patroni_postgresql_parameters | length > 0 %}
   parameters:
   {% for guc in patroni_postgresql_parameters %}
-    {{ guc.option }}: '{{ guc.value}}'
+    {{ guc.option }}: '{{ guc.value }}'
   {% endfor %}
 {% endif %}
 {% if patroni_postgresql_pg_hba | length > 0 %}
@@ -151,14 +146,14 @@ postgresql:
     username: {{ patroni_superuser_username }}
     password: {{ patroni_superuser_password }}
   remove_data_directory_on_rewind_failure: {{ patroni_postgresql_remove_data_directory_on_rewind_failure | default('false') }}
-{% endif %}    
+{% endif %}
 {% if not( (patroni_postgresql_replica_method is none) or (patroni_postgresql_replica_method | trim == '') ) %}
   replica_method: {{ patroni_postgresql_replica_method }}
-{% endif -%}  
+{% endif -%}
 
 {% if patroni_watchdog_mode in ('automatic', 'required') %}
 watchdog:
-  mode: {{ patroni_watchdog_mode }} # Allowed values: off, automatic, required
+  mode: {{ patroni_watchdog_mode }}
   device: {{ patroni_watchdog_device }}
   safety_margin: {{ patroni_watchdog_safety_margin }}
 {% endif %}
