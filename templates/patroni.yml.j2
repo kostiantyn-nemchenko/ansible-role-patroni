@@ -30,13 +30,13 @@ bootstrap:
     {% if patroni_bootstrap_dcs_postgresql_parameters | length > 0 %}
       parameters:
       {% for guc in patroni_bootstrap_dcs_postgresql_parameters %}
-        {{ guc.option }}: {{ guc.value}}
+        {{ guc.option }}: {{ guc.value }}
       {% endfor %}
     {% endif %}
     {% if patroni_bootstrap_dcs_postgresql_recovery_conf | length > 0 %}
       recovery_conf:
       {% for item in patroni_bootstrap_dcs_postgresql_recovery_conf %}
-        {{ item.option }}: {{ item.value}}
+        {{ item.option }}: {{ item.value }}
       {% endfor %}
     {% endif %}
 
@@ -50,7 +50,7 @@ bootstrap:
     {% if item.value is undefined %}
     - {{ item.option }}
     {% else %}
-    - {{ item.option }}: {{ item.value}}
+    - {{ item.option }}: {{ item.value }}
     {% endif %}
   {% endfor %}
 {% endif %}
@@ -112,7 +112,7 @@ postgresql:
 {% if patroni_postgresql_recovery_conf | length > 0 %}
   recovery_conf:
   {% for item in patroni_postgresql_recovery_conf %}
-    {{ item.option }}: {{ item.value}}
+    {{ item.option }}: {{ item.value }}
   {% endfor %}
 {% endif %}
 {% if not( (patroni_postgresql_custom_conf is none) or (patroni_postgresql_custom_conf | trim == '') ) %}
@@ -121,7 +121,7 @@ postgresql:
 {% if patroni_postgresql_parameters | length > 0 %}
   parameters:
   {% for guc in patroni_postgresql_parameters %}
-    {{ guc.option }}: '{{ guc.value}}'
+    {{ guc.option }}: '{{ guc.value }}'
   {% endfor %}
 {% endif %}
 {% if patroni_postgresql_pg_hba | length > 0 %}
