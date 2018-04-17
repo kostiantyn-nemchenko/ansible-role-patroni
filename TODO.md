@@ -15,4 +15,3 @@ Known Issues
 - [ ] No support of Ubuntu < 16.04.
 - [ ] Unable to start PostgreSQL after bootstrapping if its configuration files are missing.
 - [ ] Check that patroni_system_user has all needed permissions to patroni_postgresql_data_dir, patroni_postgresql_config_dir, patroni_postgresql_bin_dir, patroni_postgresql_pgpass.
-- [ ] Remove callbacks configuration section if there are no scripts specified.
