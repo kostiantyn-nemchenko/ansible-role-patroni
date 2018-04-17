@@ -5,7 +5,7 @@ name: {{ patroni_name | default(inventory_hostname) }}
 
 restapi:
   listen: {{ patroni_restapi_listen | default('0.0.0.0:8008') }}
-  connect_address: {{ patroni_restapi_connect_address | default('127.0.0.1:8008') }}
+  connect_address: {{ patroni_restapi_connect_address | default(ansible_host + ':8008') }}
   certfile: {{ patroni_restapi_certfile | default(None) }}
   keyfile: {{ patroni_restapi_keyfile | default(None) }}
 {% if not( (patroni_restapi_username is none) or (patroni_restapi_username | trim == '') ) and not( (patroni_restapi_password is none) or (patroni_restapi_password | trim == '') ) %}
