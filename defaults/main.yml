@@ -31,7 +31,8 @@ patroni_restapi_password: ""
 patroni_dcs: etcd
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
-patroni_etcd_host: 127.0.0.1:2379
+patroni_etcd_host: ""
+patroni_etcd_hosts: 127.0.0.1:2379
 patroni_etcd_url: ""
 patroni_etcd_proxy: ""
 patroni_etcd_srv: ""
