@@ -29,6 +29,7 @@ patroni_restapi_username: ""
 patroni_restapi_password: ""
 
 patroni_dcs: etcd
+patroni_dcs_exists: false
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
 patroni_etcd_host: ""
