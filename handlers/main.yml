@@ -7,3 +7,17 @@
     daemon_reload: yes
     enabled: yes
 
+- name: restart patroni-watchdog
+  systemd:
+    name: patroni-watchdog
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  notify:
+    - restart watchdog
+
+- name: restart watchdog
+  systemd:
+    name: watchdog
+    state: restarted
+    enabled: yes

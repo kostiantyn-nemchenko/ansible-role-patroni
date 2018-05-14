@@ -5,19 +5,14 @@
     name: watchdog
     update_cache: yes
 
-- name: Add the softdog kernel module
-  modprobe:
-    name: softdog
+- name: Make kernel watchdog device available for patroni
+  template:
+    src: patroni-watchdog.service.j2
+    dest: /etc/systemd/system/patroni-watchdog.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart patroni-watchdog
 
-- name: Change device permissions
-  file:
-    path: /dev/watchdog
-    state: file
-    owner: "{{ patroni_system_user }}"
-    group: "{{ patroni_system_group }}"
-
-- name: Ensure watchdog is running
-  service:
-    name: watchdog
-    enabled: yes
-    state: started
+- meta: flush_handlers
