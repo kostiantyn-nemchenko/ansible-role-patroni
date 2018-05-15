@@ -15,4 +15,10 @@
   notify:
     - restart patroni-watchdog
 
-- meta: flush_handlers
+# Dirty hack. See https://bugs.launchpad.net/ubuntu/+source/watchdog/+bug/1448924
+- name: Enable watchdog daemon to start on boot
+  file:
+    src: /lib/systemd/system/watchdog.service
+    dest: /etc/systemd/system/default.target.wants/watchdog.service
+    state: link
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
