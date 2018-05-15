@@ -11,8 +11,9 @@
   tags: [patroni, patroni-configure]
 
 - name: Ensure patroni is running
-  service:
-    name: patroni
+  systemd:
+    name: patroni.service
     state: started
+    daemon_reload: yes
     enabled: yes
   tags: [patroni]
