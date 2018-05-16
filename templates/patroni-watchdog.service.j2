@@ -1,0 +1,14 @@
+# "borrowed" from https://github.com/cybertec-postgresql/patroni-packaging/blob/master/RPM/patroni-watchdog.service
+
+[Unit]
+Description=Makes kernel watchdog device available for Patroni
+Before=patroni.service
+
+[Service]
+Type=oneshot
+
+ExecStart=/sbin/modprobe softdog
+ExecStart=/bin/chown {{ patroni_system_user }}:{{ patroni_system_group }} {{ patroni_watchdog_device }}
+
+[Install]
+WantedBy=multi-user.target
