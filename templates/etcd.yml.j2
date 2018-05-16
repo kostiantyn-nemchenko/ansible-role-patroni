@@ -1,5 +1,10 @@
 etcd:
-  host: {{ patroni_etcd_host | default('127.0.0.1:2379') }}
+{% if not( (patroni_etcd_host is none) or (patroni_etcd_host | trim == '') ) %}
+  host: {{ patroni_etcd_host }}
+{% endif %}
+{% if not( (patroni_etcd_hosts is none) or (patroni_etcd_hosts | trim == '') ) %}
+  hosts: {{ patroni_etcd_hosts }}
+{% endif %}
 {% if not( (patroni_etcd_url is none) or (patroni_etcd_url | trim == '') ) %}
   url: {{ patroni_etcd_url }}
 {% endif %}

@@ -1,13 +1,15 @@
 ---
 
+- import_tasks: user.yml
+
 - block:
     - name: Configure PostgreSQL repository key
-      apt_key: 
-        url: "{{ postgresql_apt_key_url }}" 
+      apt_key:
+        url: "{{ postgresql_apt_key_url }}"
         state: present
 
     - name: Configure PostgreSQL repository
-      apt_repository: 
+      apt_repository:
         repo: "{{ postgresql_apt_repo }}"
         state: present
   when: ansible_os_family == "Debian"
