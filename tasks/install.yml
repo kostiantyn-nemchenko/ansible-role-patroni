@@ -2,22 +2,11 @@
 
 - import_tasks: user.yml
 
-- block:
-    - name: Configure PostgreSQL repository key
-      apt_key:
-        url: "{{ postgresql_apt_key_url }}"
-        state: present
+- import_tasks: postgresql.yml
+  when: not patroni_postgresql_exists
 
-    - name: Configure PostgreSQL repository
-      apt_repository:
-        repo: "{{ postgresql_apt_repo }}"
-        state: present
-  when: ansible_os_family == "Debian"
-
-- name: Configure PostgreSQL repository
-  package:
-    name: "{{ postgresql_yum_repo_url }}"
-  when: ansible_os_family == "RedHat"
+- import_tasks: watchdog.yml
+  when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Install packages
   package:
@@ -26,9 +15,6 @@
     update_cache: yes
   with_items:
     - "{{ patroni_pkg_dependencies }}"
-
-- import_tasks: watchdog.yml
-  when: patroni_watchdog_mode in ('automatic', 'required')
 
 - name: Install patroni
   pip:
