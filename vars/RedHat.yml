@@ -15,3 +15,4 @@ patroni_pkg_dependencies:
   - { name: "postgresql{{ postgresql_version|replace('.','') }}",         state: "present" }
   - { name: "postgresql{{ postgresql_version|replace('.','') }}-server",  state: "present" }
   - { name: "postgresql{{ postgresql_version|replace('.','') }}-contrib", state: "present" }
+  - { name: "postgresql{{ postgresql_version|replace('.','') }}-devel",   state: "present" }

@@ -10,8 +10,10 @@ patroni_postgresql_pgpass: /var/lib/postgresql/.pgpass
 patroni_bin_dir: /usr/local/bin
 
 patroni_pkg_dependencies:
-  - { name: "python-pip",                                  state: "present" }
-  - { name: "jq",                                          state: "present" }
-  - { name: "postgresql-{{ postgresql_version }}",         state: "present" }
-  - { name: "postgresql-client-{{ postgresql_version }}",  state: "present" }
-  - { name: "postgresql-contrib-{{ postgresql_version }}", state: "present" }
+  - { name: "python-pip",                                     state: "present" }
+  - { name: "jq",                                             state: "present" }
+  - { name: "postgresql-{{ postgresql_version }}",            state: "present" }
+  - { name: "postgresql-client-{{ postgresql_version }}",     state: "present" }
+  - { name: "postgresql-contrib-{{ postgresql_version }}",    state: "present" }
+  - { name: "postgresql-server-dev-{{ postgresql_version }}", state: "present" }
+
