@@ -22,7 +22,6 @@
         path: /etc/postgresql-common/createcluster.conf
         replace: create_main_cluster = false
         regexp: ^#?create_main_cluster.*$
-        state: present
   when: ansible_os_family == "Debian"
 
 - name: Configure PostgreSQL repository
