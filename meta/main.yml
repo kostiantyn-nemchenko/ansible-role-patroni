@@ -14,6 +14,7 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - xenial
+    - bionic
   galaxy_tags:
   - clustering
   - postgresql
@@ -22,9 +23,11 @@ galaxy_info:
   - failover
 dependencies:
   - role: brianshumate.consul
-    when: patroni_dcs == "consul"
+    when: patroni_dcs == "consul" and
+          not patroni_dcs_exists
   - role: retr0h.etcd
-    when: patroni_dcs == "etcd"
+    when: patroni_dcs == "etcd" and
+          not patroni_dcs_exists
   - role: AnsibleShipyard.ansible-zookeeper
     zookeeper_hosts: "
       {%- set ips = [] %}
@@ -32,4 +35,5 @@ dependencies:
       {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_host'])) }}
       {%- endfor %}
       {{- ips -}}"
-    when: patroni_dcs == "zookeeper"
+    when: patroni_dcs == "zookeeper" and
+          not patroni_dcs_exists

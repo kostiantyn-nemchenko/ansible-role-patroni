@@ -1,9 +1,7 @@
 ---
 
-- import_tasks: user.yml
-
 - name: Create patroni config directory
-  file: 
+  file:
     path: "{{ patroni_config_dir }}"
     state: directory
     owner: "{{ patroni_system_user }}"
