@@ -10,6 +10,8 @@
 - import_tasks: configure.yml
   tags: [patroni, patroni-configure]
 
+- meta: flush_handlers
+
 - name: Ensure patroni is running
   systemd:
     name: patroni.service

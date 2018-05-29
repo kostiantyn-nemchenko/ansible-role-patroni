@@ -1,17 +1,16 @@
 ---
 
-postgresql_yum_repo_url: "https://yum.postgresql.org/{{ postgresql_version }}/{{ 'fedora' if ansible_distribution|lower == 'fedora' else 'redhat' }}/{{ 'fedora' if ansible_distribution|lower == 'fedora' else 'rhel' }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}/{{ postgresql_yum_repo_pkg_name }}"
+postgresql_yum_repo_url: "https://yum.postgresql.org/{{ patroni_postgresql_version }}/{{ 'fedora' if ansible_distribution|lower == 'fedora' else 'redhat' }}/{{ 'fedora' if ansible_distribution|lower == 'fedora' else 'rhel' }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}/{{ postgresql_yum_repo_pkg_name }}"
 postgresql_yum_repo_pkg_name: pgdg-redhat10-10-2.noarch.rpm #TODO: remove hardcode
 
-patroni_postgresql_data_dir: "/var/lib/pgsql/{{ postgresql_version }}/data"
-patroni_postgresql_config_dir: "/var/lib/pgsql/{{ postgresql_version }}/data"
-patroni_postgresql_bin_dir: "/usr/pgsql-{{ postgresql_version }}/bin"
+patroni_postgresql_data_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/data"
+patroni_postgresql_config_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/data"
+patroni_postgresql_bin_dir: "/usr/pgsql-{{ patroni_postgresql_version }}/bin"
 patroni_postgresql_pgpass: /var/lib/pgsql/.pgpass
 patroni_bin_dir: /usr/bin
 
-patroni_pkg_dependencies:
-  - { name: "python-pip",                                                 state: "present" }
-  - { name: "jq",                                                         state: "present" }
-  - { name: "postgresql{{ postgresql_version|replace('.','') }}",         state: "present" }
-  - { name: "postgresql{{ postgresql_version|replace('.','') }}-server",  state: "present" }
-  - { name: "postgresql{{ postgresql_version|replace('.','') }}-contrib", state: "present" }
+patroni_postgresql_packages:
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}",         state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-server",  state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-contrib", state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel",   state: "present" }

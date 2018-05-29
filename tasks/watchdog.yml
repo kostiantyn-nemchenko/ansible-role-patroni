@@ -19,6 +19,7 @@
 - name: Enable watchdog daemon to start on boot
   file:
     src: /lib/systemd/system/watchdog.service
-    dest: /etc/systemd/system/default.target.wants/watchdog.service
+    dest: /etc/systemd/system/multi-user.target.wants/watchdog.service
     state: link
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+  when: ansible_distribution in ('Ubuntu', 'Debian') and
+        ansible_distribution_release in ('xenial', 'jessie')
