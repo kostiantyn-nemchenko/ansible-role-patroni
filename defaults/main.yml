@@ -11,6 +11,10 @@ patroni_system_packages:
   - { name: "python-pip", state: "present" }
   - { name: "jq",         state: "present" }
 
+patroni_pip_packages:
+  - { name: "setuptools",                 state: "latest",  umask: "0022" }
+  - { name: "patroni[{{ patroni_dcs }}]", state: "present", umask: "0022" }
+
 patroni_replication_username: replicator
 patroni_replication_password: repuserpasswd
 patroni_superuser_username: postgres
