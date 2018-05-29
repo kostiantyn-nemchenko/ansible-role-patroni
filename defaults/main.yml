@@ -88,10 +88,16 @@ patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "wal_keep_segments",         value: "0" }
 
 patroni_bootstrap_dcs_postgresql_recovery_conf: []
-# - { option: "standby_mode",    value: "on" }
-# - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
+#  - { option: "standby_mode",    value: "on" }
+#  - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
 
-patroni_bootstrap_method: "" #TODO
+# http://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
+patroni_bootstrap_method_name: ""
+patroni_bootstrap_method_command: ""
+patroni_bootstrap_method_keep_existing_recovery_conf: false
+patroni_bootstrap_method_recovery_conf: []
+#  - { option: "standby_mode",    value: "on" }
+#  - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
 
 patroni_bootstrap_initdb:
   - { option: "encoding", value: "UTF8" }

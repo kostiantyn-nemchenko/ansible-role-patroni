@@ -3,7 +3,6 @@ Requested Features
 
 - [ ] Add support of Exhibitor (ZooKeeper) and Kubernetes.
 - [ ] Support of post init/bootstrap scripts that will be executed after initializing the cluster.
-- [ ] Support of user-defined scripts to bootstrap new clusters (bootstrap.method configuration setting).
 - [ ] Manage SSL certificates for Patroni REST API.
 - [ ] Support of different PostgreSQL replication modes (synchronous/cascading replication).
 - [ ] Support of custom replica creation methods via 3rd party tools like Barman, WAL-E, pgBackRest.
