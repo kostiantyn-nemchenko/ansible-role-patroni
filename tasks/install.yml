@@ -14,7 +14,7 @@
     state: "{{ item.state }}"
     update_cache: yes
   with_items:
-    - "{{ patroni_pkg_dependencies }}"
+    - "{{ patroni_system_packages }}"
 
 - name: Install patroni
   pip:
