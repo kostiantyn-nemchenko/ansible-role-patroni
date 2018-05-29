@@ -20,7 +20,7 @@
     - "{{ patroni_postgresql_callbacks }}"
   when: not( (item.script is none) or (item.script | trim == '') )
 
-- name: Create patroni service file
+- name: Create patroni unit file
   template:
     src: patroni.service.j2
     dest: /etc/systemd/system/patroni.service
@@ -28,7 +28,7 @@
     group: root
     mode: 0644
 
-- name: Create patroni config file
+- name: Create patroni configuration file
   template:
     src: patroni.yml.j2
     dest: "{{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml"
