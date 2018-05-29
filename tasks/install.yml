@@ -8,7 +8,7 @@
 - import_tasks: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
-- name: Install system packages for Patroni
+- name: Install system packages for patroni
   package:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
@@ -16,7 +16,7 @@
   with_items:
     - "{{ patroni_system_packages }}"
 
-- name: Install pip packages for Patroni
+- name: Install pip packages for patroni
   pip:
     name: "{{ item.name }}"
     state: "{{ item.state }}"

@@ -1,32 +1,32 @@
 ---
 
 - block:
-    - name: Configure PostgreSQL repository key
+    - name: Configure postgresql repository key
       apt_key:
         url: "{{ postgresql_apt_key_url }}"
 
-    - name: Configure PostgreSQL repository
+    - name: Configure postgresql repository
       apt_repository:
         repo: "{{ postgresql_apt_repo }}"
 
-    - name: Ensure PostgreSQL database-cluster manager package
+    - name: Ensure postgresql database-cluster manager package
       package:
         name: postgresql-common
         update_cache: yes
 
-    - name: Disable initializing of a default PostgreSQL cluster
+    - name: Disable initializing of a default postgresql cluster
       replace:
         path: /etc/postgresql-common/createcluster.conf
         replace: create_main_cluster = false
         regexp: ^#?create_main_cluster.*$
   when: ansible_os_family == "Debian"
 
-- name: Configure PostgreSQL repository
+- name: Configure postgresql repository
   package:
     name: "{{ postgresql_yum_repo_url }}"
   when: ansible_os_family == "RedHat"
 
-- name: Install packages for PostgreSQL
+- name: Install postgresql packages
   package:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
