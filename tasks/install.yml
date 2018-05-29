@@ -20,7 +20,6 @@
   pip:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
-    umask: "0022"
+    umask: "{{ item.umask }}"
   with_items:
-    - { name: "setuptools", state: "latest" }
-    - { name: "patroni[{{ patroni_dcs }}]", state: "present" }
+    - "{{ patroni_pip_packages }}"
