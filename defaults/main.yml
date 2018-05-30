@@ -148,6 +148,11 @@ patroni_postgresql_custom_conf: "" #"{{ patroni_postgresql_config_dir }}/postgre
 patroni_postgresql_parameters:
   - { option: "unix_socket_directories", value: "/var/run/postgresql" }
 
+patroni_postgresql_basebackup: []
+#  - { option: "checkpoint", value: "fast" }
+#  - { option: "max-rate",   value: "100M" }
+#  - { option: "verbose" }
+
 patroni_postgresql_pg_hba: []
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
 #  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
