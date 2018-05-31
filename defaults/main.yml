@@ -84,7 +84,7 @@ patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
 patroni_bootstrap_dcs_postgresql_use_slots: true
 
 patroni_bootstrap_dcs_postgresql_parameters:
-  - { option: "max_connections",           value: "1000" }
+  - { option: "max_connections",           value: "100" }
   - { option: "max_locks_per_transaction", value: "64" }
   - { option: "max_worker_processes",      value: "8" }
   - { option: "max_prepared_transactions", value: "0" }
