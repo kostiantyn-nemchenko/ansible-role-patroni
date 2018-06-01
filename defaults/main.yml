@@ -88,9 +88,9 @@ patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "max_locks_per_transaction", value: "64" }
   - { option: "max_worker_processes",      value: "8" }
   - { option: "max_prepared_transactions", value: "0" }
-  - { option: "wal_level",                 value: "'replica'" }
-  - { option: "wal_log_hints",             value: "'on'" }
-  - { option: "track_commit_timestamp",    value: "'off'" }
+  - { option: "wal_level",                 value: "replica" }
+  - { option: "wal_log_hints",             value: "on" }
+  - { option: "track_commit_timestamp",    value: "off" }
   - { option: "max_wal_senders",           value: "10" }
   - { option: "max_replication_slots",     value: "10" }
   - { option: "wal_keep_segments",         value: "0" }
@@ -164,7 +164,7 @@ patroni_postgresql_replica_method: "" #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
 # http://patroni.readthedocs.io/en/latest/watchdog.html
-patroni_watchdog_mode: automatic
+patroni_watchdog_mode: automatic # use quotes for 'off' value
 patroni_watchdog_device: /dev/watchdog
 patroni_watchdog_safety_margin: 5
 
