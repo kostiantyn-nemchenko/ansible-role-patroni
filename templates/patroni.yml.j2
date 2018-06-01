@@ -103,8 +103,8 @@ postgresql:
   {% endfor %}
 {% endif %}
   connect_address: {{ patroni_postgresql_connect_address |d(ansible_host + ':5432', true) }}
-  create_replica_methods:
-    - {{ patroni_postgresql_create_replica_methods |d('basebackup', true) }}
+  create_replica_method:
+    - {{ patroni_postgresql_create_replica_method |d('basebackup', true) }}
 {% if patroni_postgresql_basebackup |d([], true) |length > 0 %}
   basebackup:
   {% for item in patroni_postgresql_basebackup %}

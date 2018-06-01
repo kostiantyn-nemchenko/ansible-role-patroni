@@ -135,7 +135,7 @@ patroni_postgresql_callbacks:
   - { event: "on_stop",        script: "" }
 
 patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
-patroni_postgresql_create_replica_methods: basebackup #wal_e
+patroni_postgresql_create_replica_method: basebackup #wal_e
 patroni_postgresql_listen: 0.0.0.0:5432
 patroni_postgresql_use_unix_socket: true
 
@@ -160,7 +160,6 @@ patroni_postgresql_pg_hba: []
 patroni_postgresql_pg_ctl_timeout: 60
 patroni_postgresql_use_pg_rewind: true
 patroni_postgresql_remove_data_directory_on_rewind_failure: false
-patroni_postgresql_replica_method: "" #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
 # http://patroni.readthedocs.io/en/latest/watchdog.html
