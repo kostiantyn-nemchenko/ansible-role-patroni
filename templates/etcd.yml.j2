@@ -1,34 +1,34 @@
 etcd:
-{% if not( (patroni_etcd_host is none) or (patroni_etcd_host | trim == '') ) %}
+{% if patroni_etcd_host |d(None, true) %}
   host: {{ patroni_etcd_host }}
 {% endif %}
-{% if not( (patroni_etcd_hosts is none) or (patroni_etcd_hosts | trim == '') ) %}
+{% if patroni_etcd_hosts |d(None, true) %}
   hosts: {{ patroni_etcd_hosts }}
 {% endif %}
-{% if not( (patroni_etcd_url is none) or (patroni_etcd_url | trim == '') ) %}
+{% if patroni_etcd_url |d(None, true) %}
   url: {{ patroni_etcd_url }}
 {% endif %}
-{% if not( (patroni_etcd_proxy is none) or (patroni_etcd_proxy | trim == '') ) %}
+{% if patroni_etcd_proxy |d(None, true) %}
   proxy: {{ patroni_etcd_proxy }}
 {% endif %}
-{% if not( (patroni_etcd_srv is none) or (patroni_etcd_srv | trim == '') ) %}
+{% if patroni_etcd_srv |d(None, true) %}
   srv: {{ patroni_etcd_srv }}
 {% endif %}
-{% if not( (patroni_etcd_protocol is none) or (patroni_etcd_protocol | trim == '') ) %}
+{% if patroni_etcd_protocol |d(None, true) %}
   protocol: {{ patroni_etcd_protocol }}
 {% endif %}
-{% if not( (patroni_etcd_username is none) or (patroni_etcd_username | trim == '') ) %}
+{% if patroni_etcd_username |d(None, true) %}
   username: {{ patroni_etcd_username }}
 {% endif %}
-{% if not( (patroni_etcd_password is none) or (patroni_etcd_password | trim == '') ) %}
+{% if patroni_etcd_password |d(None, true) %}
   password: {{ patroni_etcd_password }}
 {% endif %}
-{% if not( (patroni_etcd_cacert is none) or (patroni_etcd_cacert | trim == '') ) %}
+{% if patroni_etcd_cacert |d(None, true) %}
   cacert: {{ patroni_etcd_cacert }}
 {% endif %}
-{% if not( (patroni_etcd_cert is none) or (patroni_etcd_cert | trim == '') ) %}
+{% if patroni_etcd_cert |d(None, true) %}
   cert: {{ patroni_etcd_cert }}
 {% endif %}
-{% if not( (patroni_etcd_key is none) or (patroni_etcd_key | trim == '') ) %}
+{% if patroni_etcd_key |d(None, true) %}
   key: {{ patroni_etcd_key }}
 {% endif %}
