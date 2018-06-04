@@ -68,10 +68,11 @@ patroni_consul_checks: ""
 
 # http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
 patroni_zookeeper_hosts: 127.0.0.1:2181
-#TODO
+
 # http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#exhibitor
-patroni_exhibitor_hosts: ""
-patroni_exhibitor_port: ""
+patroni_exhibitor_hosts: "" #TODO
+patroni_exhibitor_port: "" #TODO
+patroni_exhibitor_poll_interval: 300 #TODO
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap_dcs_ttl: 30
