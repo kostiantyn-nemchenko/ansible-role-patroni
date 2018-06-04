@@ -164,9 +164,6 @@ postgresql:
   {% endif %}
   remove_data_directory_on_rewind_failure: {{ patroni_postgresql_remove_data_directory_on_rewind_failure |d(false, true) |lower }}
 {% endif %}
-{% if patroni_postgresql_replica_method |d(None, true) %}
-  replica_method: {{ patroni_postgresql_replica_method }}
-{% endif %}
 
 watchdog:
   mode: {{ patroni_watchdog_mode |d('automatic', true) |lower }}
