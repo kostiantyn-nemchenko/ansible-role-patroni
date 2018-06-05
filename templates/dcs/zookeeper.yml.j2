@@ -1,0 +1,2 @@
+zookeeper:
+  hosts: {{ "%s\n" |format(patroni_zookeeper_hosts |d('127.0.0.1:2181', true)) }}

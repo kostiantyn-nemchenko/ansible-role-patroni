@@ -1,0 +1,34 @@
+etcd:
+{% if patroni_etcd_host |d(None, true) %}
+  host: {{ patroni_etcd_host }}
+{% endif %}
+{% if patroni_etcd_hosts |d(None, true) %}
+  hosts: {{ patroni_etcd_hosts }}
+{% endif %}
+{% if patroni_etcd_url |d(None, true) %}
+  url: {{ patroni_etcd_url }}
+{% endif %}
+{% if patroni_etcd_proxy |d(None, true) %}
+  proxy: {{ patroni_etcd_proxy }}
+{% endif %}
+{% if patroni_etcd_srv |d(None, true) %}
+  srv: {{ patroni_etcd_srv }}
+{% endif %}
+{% if patroni_etcd_protocol |d(None, true) %}
+  protocol: {{ patroni_etcd_protocol }}
+{% endif %}
+{% if patroni_etcd_username |d(None, true) %}
+  username: {{ patroni_etcd_username }}
+{% endif %}
+{% if patroni_etcd_password |d(None, true) %}
+  password: {{ patroni_etcd_password }}
+{% endif %}
+{% if patroni_etcd_cacert |d(None, true) %}
+  cacert: {{ patroni_etcd_cacert }}
+{% endif %}
+{% if patroni_etcd_cert |d(None, true) %}
+  cert: {{ patroni_etcd_cert }}
+{% endif %}
+{% if patroni_etcd_key |d(None, true) %}
+  key: {{ patroni_etcd_key }}
+{% endif %}
