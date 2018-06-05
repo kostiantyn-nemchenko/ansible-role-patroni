@@ -27,8 +27,8 @@ bootstrap:
     master_start_timeout: {{ patroni_bootstrap_dcs_master_start_timeout |d(300, true) |int }}
     synchronous_mode: {{ patroni_bootstrap_dcs_synchronous_mode |d(false, true) |lower }}
     postgresql:
-      use_pg_rewind: {{ patroni_bootstrap_dcs_postgresql_use_pg_rewind |replace(None, true) |d(true) |lower }}
-      use_slots: {{ patroni_bootstrap_dcs_postgresql_use_slots |replace(None, true) |d(true) |lower }}
+      use_pg_rewind: {{ patroni_bootstrap_dcs_postgresql_use_pg_rewind |string |d(true, true) |replace(None, true) |lower }}
+      use_slots: {{ patroni_bootstrap_dcs_postgresql_use_slots |string |d(true, true) |replace(None, true) |lower }}
     {% if patroni_bootstrap_dcs_postgresql_parameters |d([], true) |length > 0 %}
       parameters:
       {% for guc in patroni_bootstrap_dcs_postgresql_parameters %}
@@ -90,7 +90,7 @@ bootstrap:
 {% endif %}
 
 postgresql:
-  use_unix_socket: {{ patroni_postgresql_use_unix_socket |replace(None, true) |d(true) |lower }}
+  use_unix_socket: {{ patroni_postgresql_use_unix_socket |string |d(true, true) |replace(None, true) |lower }}
   listen: {{ patroni_postgresql_listen |d('0.0.0.0:5432', true) }}
   connect_address: {{ patroni_postgresql_connect_address |d(ansible_host + ':5432', true) }}
 {% if patroni_postgresql_data_dir |d(None, true) %}
