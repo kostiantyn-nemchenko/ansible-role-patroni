@@ -8,6 +8,12 @@
 - import_tasks: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
+- name: Install EPEL for system packages
+  package:
+    name: epel-release
+    state: present
+    update_cache: yes
+
 - name: Install system packages for patroni
   package:
     name: "{{ item.name }}"
