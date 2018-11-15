@@ -8,11 +8,13 @@
 - import_tasks: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
 
-- name: Install EPEL for system packages
+- name: Install EL for system packages
   package:
-    name: epel-release
-    state: present
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
     update_cache: yes
+  with_items:
+    - "{{ patroni_el_packages }}"
   when: ansible_os_family == "RedHat"
 
 - name: Install system packages for patroni
