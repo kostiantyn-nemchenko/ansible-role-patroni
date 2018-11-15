@@ -28,6 +28,18 @@ Coming soon.
       roles:
         - kostiantyn-nemchenko.patroni
 
+## Example Inventory
+
+      [patroni]
+      patroni1 ansible_host=192.168.0.1
+      patroni2 ansible_host=192.168.0.2
+      patroni3 ansible_host=192.168.0.3
+
+      [etcd]
+      patroni1 ansible_host=192.168.0.1
+      patroni2 ansible_host=192.168.0.2
+      patroni3 ansible_host=192.168.0.3
+
 ## License
 
 MIT
