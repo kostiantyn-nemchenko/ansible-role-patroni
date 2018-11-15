@@ -13,6 +13,7 @@
     name: epel-release
     state: present
     update_cache: yes
+  when: ansible_os_family == "RedHat"
 
 - name: Install system packages for patroni
   package:
