@@ -7,6 +7,11 @@ patroni_config_dir: /etc/patroni
 patroni_system_user: postgres
 patroni_system_group: postgres
 
+patroni_el_packages:
+  - { name: "epel-release", state: "present" }
+  - { name: "gcc",          state: "present" }
+  - { name: "python-devel", state: "present" }
+
 patroni_system_packages:
   - { name: "python-pip", state: "present" }
   - { name: "jq",         state: "present" }
