@@ -30,15 +30,25 @@ Coming soon.
 
 ## Example Inventory
 
+      [all]
+      patroni1 ansible_host=192.168.88.160
+      patroni2 ansible_host=192.168.88.159
+      patroni3 ansible_host=192.168.88.158
+
       [patroni]
-      patroni1 ansible_host=192.168.0.1
-      patroni2 ansible_host=192.168.0.2
-      patroni3 ansible_host=192.168.0.3
+      patroni1
+      patroni2
+      patroni3
 
       [etcd]
-      patroni1 ansible_host=192.168.0.1
-      patroni2 ansible_host=192.168.0.2
-      patroni3 ansible_host=192.168.0.3
+      patroni1
+      patroni2
+      patroni3
+
+      [etcd-master]
+      patroni1
+      patroni2
+      patroni3
 
 ## License
 
