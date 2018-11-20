@@ -63,12 +63,10 @@ bootstrap:
     {% endif %}
   {% endfor %}
 {% endif %}
-{% if patroni_bootstrap_pg_hba |d([], true) |length > 0 %}
   pg_hba:
-  {% for client in patroni_bootstrap_pg_hba %}
-    - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address|d(None) }} {{ client.method }}
+  {% for host in groups['patroni'] %}
+    - host replication {{ patroni_replication_username }} {{ hostvars[host]['ansible_default_ipv4']['address'] }}/32 md5
   {% endfor %}
-{% endif %}
 {% if patroni_bootstrap_post_bootstrap |d(None, true) %}
   post_bootstrap: {{ patroni_bootstrap_post_bootstrap }}
 {% endif %}

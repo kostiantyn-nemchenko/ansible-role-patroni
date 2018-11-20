@@ -1,12 +1,33 @@
 ---
 
-- import_tasks: user.yml
+- name: Check presence of fastestmirror.conf
+  stat:
+    path: /etc/yum/pluginconf.d/fastestmirror.conf
+  register: fastestmirror
+
+# fastestmirror plugin actually slows down Ansible deployments
+- name: Disable fastestmirror plugin
+  lineinfile:
+    dest: /etc/yum/pluginconf.d/fastestmirror.conf
+    regexp: "^enabled=.*"
+    line: "enabled=0"
+    state: present
+  when: fastestmirror.stat.exists
 
 - import_tasks: postgresql.yml
   when: not patroni_postgresql_exists
 
 - import_tasks: watchdog.yml
   when: patroni_watchdog_mode in ('automatic', 'required')
+
+- name: Install EL for system packages
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_cache: yes
+  with_items:
+    - "{{ patroni_el_packages }}"
+  when: ansible_os_family == "RedHat"
 
 - name: Install system packages for patroni
   package:

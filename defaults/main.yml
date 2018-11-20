@@ -7,9 +7,15 @@ patroni_config_dir: /etc/patroni
 patroni_system_user: postgres
 patroni_system_group: postgres
 
+patroni_el_packages:
+  - { name: "epel-release", state: "present" }
+  - { name: "gcc",          state: "present" }
+  - { name: "python-devel", state: "present" }
+
 patroni_system_packages:
-  - { name: "python-pip", state: "present" }
-  - { name: "jq",         state: "present" }
+  - { name: "python-pip",      state: "present" }
+  - { name: "jq",              state: "present" }
+  - { name: "python-psycopg2", state: "present" }
 
 patroni_pip_packages:
   - { name: "setuptools",                 state: "latest",  umask: "0022" }
@@ -112,7 +118,7 @@ patroni_bootstrap_initdb:
   - { option: "encoding", value: "UTF8" }
   - { option: "data-checksums" }
 
-patroni_bootstrap_pg_hba: []
+#patroni_bootstrap_pg_hba:
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
 #  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
 
