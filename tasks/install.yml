@@ -4,6 +4,7 @@
   stat:
     path: /etc/yum/pluginconf.d/fastestmirror.conf
   register: fastestmirror
+  when: ansible_os_family == "RedHat"
 
 # fastestmirror plugin actually slows down Ansible deployments
 - name: Disable fastestmirror plugin
@@ -13,6 +14,7 @@
     line: "enabled=0"
     state: present
   when: fastestmirror.stat.exists
+  when: ansible_os_family == "RedHat"
 
 - import_tasks: postgresql.yml
   when: not patroni_postgresql_exists

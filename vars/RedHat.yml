@@ -14,3 +14,8 @@ patroni_postgresql_packages:
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-server",  state: "present" }
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-contrib", state: "present" }
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel",   state: "present" }
+
+patroni_el_packages:
+  - { name: "epel-release", state: "present" }
+  - { name: "gcc",          state: "present" }
+  - { name: "python-devel", state: "present" }
