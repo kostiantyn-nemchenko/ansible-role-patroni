@@ -17,7 +17,7 @@ Coming soon.
 ## Dependencies
 
   _Depending on your preferences, you can use one of the following Ansible roles to setup etcd, Consul or ZooKeeper cluster:_
-* [**retr0h.etcd**](https://github.com/retr0h/ansible-etcd)
+* [**andrewrothstein.etcd-cluster**](https://github.com/andrewrothstein/ansible-etcd-cluster)
 * [**brianshumate.consul**](https://github.com/brianshumate/ansible-consul)
 * [**AnsibleShipyard.ansible-zookeeper**](https://github.com/AnsibleShipyard/ansible-zookeeper)
 

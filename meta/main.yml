@@ -29,7 +29,7 @@ dependencies:
   - role: brianshumate.consul
     when: patroni_dcs == "consul" and
           not patroni_dcs_exists
-  - role: retr0h.etcd
+  - role: andrewrothstein.etcd-cluster
     when: patroni_dcs == "etcd" and
           not patroni_dcs_exists
   - role: AnsibleShipyard.ansible-zookeeper
