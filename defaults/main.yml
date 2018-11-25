@@ -112,9 +112,11 @@ patroni_bootstrap_initdb:
   - { option: "encoding", value: "UTF8" }
   - { option: "data-checksums" }
 
-patroni_bootstrap_pg_hba: []
+patroni_bootstrap_pg_hba: 
+  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "10.0.0.0/8", method: "md5" }
+  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "172.16.0.0/12", method: "md5" }
+  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "192.168.0.0/16", method: "md5" }
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
-#  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
 
 patroni_bootstrap_post_bootstrap: "" #TODO
 patroni_bootstrap_post_init: "" #TODO
