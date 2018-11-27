@@ -159,6 +159,8 @@ patroni_postgresql_pg_hba: []
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "md5" }
 #  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
 
+patroni_postgresql_pg_hba_file: /etc/patroni/pg_hba.conf
+
 patroni_postgresql_pg_ctl_timeout: 60
 
 patroni_postgresql_use_pg_rewind: true

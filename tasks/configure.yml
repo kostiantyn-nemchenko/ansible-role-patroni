@@ -28,6 +28,14 @@
     group: root
     mode: 0644
 
+- name: Create pg_hba configuration file
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ patroni_config_dir }}/pg_hba.conf"
+    owner: "{{ patroni_system_user }}"
+    group: "{{ patroni_system_group }}"
+    mode: 0600
+
 - name: Create patroni configuration file
   template:
     src: patroni.yml.j2

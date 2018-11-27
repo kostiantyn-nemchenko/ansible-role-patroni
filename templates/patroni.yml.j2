@@ -148,6 +148,9 @@ postgresql:
     {{ guc.option }}: {{ guc.value }}
   {% endfor %}
 {% endif %}
+  {% if patroni_postgresql_pg_hba_file |d('/etc/patroni/pg_hba.conf', true) %}
+    hba_file: {{ patroni_postgresql_pg_hba_file }}
+  {% endif %}
 {% if patroni_postgresql_pg_hba |d([], true) |length > 0 %}
   pg_hba:
   {% for client in patroni_postgresql_pg_hba %}
