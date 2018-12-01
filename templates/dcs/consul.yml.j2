@@ -29,8 +29,8 @@ consul:
   checks: {{ patroni_consul_checks }}
 {% endif %}
 {% if patroni_consul_register_service |d(None, true) %}
-  register_service: {{ patroni_consul_register_service }}
+  register_service: {{ patroni_consul_register_service |lower }}
 {% endif %}
-{% if patroni_consul_service_check_interval |d(None, true) %}
+{% if patroni_consul_register_service |d(None, true) and patroni_consul_service_check_interval |d(None, true) %}
   service_check_interval: {{ patroni_consul_service_check_interval }}
 {% endif %}
