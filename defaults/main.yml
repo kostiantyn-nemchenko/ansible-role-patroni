@@ -37,6 +37,10 @@ patroni_restapi_keyfile: ""
 patroni_restapi_username: ""
 patroni_restapi_password: ""
 
+patroni_ctl_insecure: false
+patroni_ctl_cacert: ""
+patroni_ctl_certfile: ""
+
 patroni_dcs: etcd
 patroni_dcs_exists: false
 

@@ -16,6 +16,13 @@ restapi:
     password: {{ patroni_restapi_password }}
 {% endif %}
 
+ctl:
+  insecure: {{ patroni_ctl_insecure |d(false, true) |lower }}
+{% if patroni_ctl_cacert |d(None, true) and patroni_ctl_certfile |d(patroni_restapi_certfile, true) %}
+  cacert: {{ patroni_ctl_cacert }}
+  certfile: {{ patroni_ctl_certfile }}
+{% endif %}
+
 {% include 'dcs/' + (patroni_dcs |d('etcd')) + '.yml.j2' %}
 
 bootstrap:
