@@ -141,8 +141,19 @@ patroni_postgresql_callbacks:
   - { event: "on_start",       script: "" }
   - { event: "on_stop",        script: "" }
 
-patroni_postgresql_create_replica_method: basebackup #TODO
-
+patroni_postgresql_create_replica_methods:
+#  - pgbackrest
+#  - wal_e
+  - basebackup
+patroni_postgresql_pgbackrest: []
+#  - { option: "command",   value: "/usr/bin/pgbackrest --stanza=main --delta restore" }
+#  - { option: "keep_data", value: "true" }
+#  - { option: "no_params", value: "true" }
+patroni_postgresql_wal_e: []
+#  - { option: "command",   value: "patroni_wale_restore" }
+#  - { option: "no_master", value: "1" }
+#  - { option: "envdir",    value: "/etc/wal_e/envdir" }
+#  - { option: "use_iam",   value: "1" }
 patroni_postgresql_basebackup: []
 #  - { option: "checkpoint", value: "fast" }
 #  - { option: "max-rate",   value: "100M" }
