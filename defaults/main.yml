@@ -86,6 +86,10 @@ patroni_bootstrap_dcs_synchronous_mode: false
 patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
 patroni_bootstrap_dcs_postgresql_use_slots: true
 
+patroni_bootstrap_dcs_slots: []
+#  - { name: "permanent_physical_1", type: "physical" }
+#  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }
+
 patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "max_connections",           value: "100" }
   - { option: "max_locks_per_transaction", value: "64" }
