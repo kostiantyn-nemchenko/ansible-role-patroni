@@ -121,18 +121,22 @@ postgresql:
     {% endif %}
   {% endfor %}
 {% endif %}
-  create_replica_method:
-    - {{ patroni_postgresql_create_replica_method |d('basebackup', true) }}
-{% if patroni_postgresql_basebackup |d([], true) |length > 0 %}
-  basebackup:
-  {% for item in patroni_postgresql_basebackup %}
-    {% if item.value is undefined %}
-    - {{ item.option }}
-    {% else %}
-    - {{ item.option }}: {{ item.value }}
-    {% endif %}
+  create_replica_methods:
+  {% for create_replica_method in patroni_postgresql_create_replica_methods |d(['basebackup'], true) %}
+    - {{ create_replica_method }}
   {% endfor %}
-{% endif %}
+{% for create_replica_method in patroni_postgresql_create_replica_methods |d(['basebackup'], true) %}
+  {% if (vars['patroni_postgresql_' + create_replica_method]) |d([], true) |length > 0 %}
+  {{ create_replica_method }}:
+{% for item in vars['patroni_postgresql_' + create_replica_method] %}
+  {% if item.value is undefined %}
+    {{ item.option }}
+  {% else %}
+    {{ item.option }}: {{ item.value }}
+  {% endif %}
+{% endfor %}
+  {% endif %}
+{% endfor %}
 {% if patroni_postgresql_recovery_conf |d([], true) |length > 0 %}
   recovery_conf:
   {% for item in patroni_postgresql_recovery_conf %}
