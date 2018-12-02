@@ -102,6 +102,10 @@ patroni_bootstrap_dcs_postgresql_recovery_conf: []
 #  - { option: "standby_mode",    value: "on" }
 #  - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
 
+patroni_bootstrap_dcs_slots: []
+#  - { name: "permanent_physical_1", type: "physical" }
+#  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }
+
 # http://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
 patroni_bootstrap_method_name: ""
 patroni_bootstrap_method_command: ""

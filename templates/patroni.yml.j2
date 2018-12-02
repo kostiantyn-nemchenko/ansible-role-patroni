@@ -41,6 +41,17 @@ bootstrap:
         {{ item.option }}: {{ item.value }}
       {% endfor %}
     {% endif %}
+  {% if patroni_bootstrap_dcs_slots |d([], true) |length > 0 %}
+    slots:
+    {% for slot in patroni_bootstrap_dcs_slots %}
+      {{ slot.name }}:
+        type: {{ slot.type }}
+      {% if slot.type == 'logical' %}
+        database: {{ slot.database }}
+        plugin: {{ slot.plugin }}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% if patroni_bootstrap_method_name |d(None, true) and patroni_bootstrap_method_command |d(None, true) %}
   method: {{ patroni_bootstrap_method_name }}
   {{ patroni_bootstrap_method_name }}:
