@@ -86,10 +86,6 @@ patroni_bootstrap_dcs_synchronous_mode: false
 patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
 patroni_bootstrap_dcs_postgresql_use_slots: true
 
-patroni_bootstrap_dcs_slots: []
-#  - { name: "permanent_physical_1", type: "physical" }
-#  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }
-
 patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "max_connections",           value: "100" }
   - { option: "max_locks_per_transaction", value: "64" }
@@ -105,6 +101,10 @@ patroni_bootstrap_dcs_postgresql_parameters:
 patroni_bootstrap_dcs_postgresql_recovery_conf: []
 #  - { option: "standby_mode",    value: "on" }
 #  - { option: "restore_command", value: "cp ../wal_archive/%f %p" }
+
+patroni_bootstrap_dcs_slots: []
+#  - { name: "permanent_physical_1", type: "physical" }
+#  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }
 
 # http://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
 patroni_bootstrap_method_name: ""
