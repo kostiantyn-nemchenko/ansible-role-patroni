@@ -192,3 +192,4 @@ patroni_tags:
   - { name: "noloadbalance", value: "false" }
   - { name: "clonefrom",     value: "false" }
   - { name: "nosync",        value: "false" }
+  - { name: "replicatefrom", value: ""      }

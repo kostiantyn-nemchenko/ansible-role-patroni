@@ -190,6 +190,8 @@ watchdog:
 {% if patroni_tags |d([], true) |length > 0 %}
 tags:
   {% for tag in patroni_tags %}
+    {% if tag.value |d(None, true) %}
     {{ tag.name }}: {{ tag.value }}
+    {% endif %}
   {% endfor %}
 {% endif %}
