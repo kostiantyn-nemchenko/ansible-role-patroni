@@ -19,7 +19,7 @@ Environment='PATRONI_LOGFORMAT={{ patroni_logformat }}'
 Environment='PATRONI_LOGLEVEL={{ patroni_loglevel }}'
 Environment='PATRONI_REQUESTS_LOGLEVEL={{ patroni_requests_loglevel }}'
 
-ExecStartPre={{ patroni_exec_stat_pre | default('') }}
+ExecStartPre={{ patroni_exec_start_pre | default('') }}
 ExecStart={{ patroni_bin_dir }}/patroni {{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml
 
 # only kill the patroni process, not it's children, so it will gracefully stop postgres
