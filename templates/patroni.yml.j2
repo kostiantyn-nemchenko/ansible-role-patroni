@@ -176,8 +176,7 @@ postgresql:
   {% endfor %}
 {% endif %}
   pg_ctl_timeout: {{ patroni_postgresql_pg_ctl_timeout |d(60, true) |int }}
-{% if patroni_postgresql_use_pg_rewind |bool %}
-  use_pg_rewind: true
+{% if patroni_bootstrap_dcs_postgresql_use_pg_rewind |bool %}
   {% if patroni_superuser_username |d(None, true) and patroni_superuser_password |d(None, true) %}
   pg_rewind:
     username: {{ patroni_superuser_username }}

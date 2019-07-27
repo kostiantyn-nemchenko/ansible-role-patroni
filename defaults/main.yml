@@ -184,7 +184,6 @@ patroni_postgresql_pg_hba: []
 
 patroni_postgresql_pg_ctl_timeout: 60
 
-patroni_postgresql_use_pg_rewind: true
 patroni_postgresql_remove_data_directory_on_rewind_failure: false
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
