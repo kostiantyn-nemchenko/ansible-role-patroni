@@ -183,6 +183,7 @@ postgresql:
     password: {{ patroni_superuser_password }}
   {% endif %}
   remove_data_directory_on_rewind_failure: {{ patroni_postgresql_remove_data_directory_on_rewind_failure |d(false, true) |lower }}
+  remove_data_directory_on_diverged_timelines: {{ patroni_postgresql_remove_data_directory_on_diverged_timelines |d(false, true) |lower }}
 {% endif %}
 
 watchdog:
