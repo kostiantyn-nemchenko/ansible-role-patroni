@@ -85,7 +85,7 @@ patroni_bootstrap_dcs_retry_timeout: 10
 patroni_bootstrap_dcs_maximum_lag_on_failover: 1048576
 patroni_bootstrap_dcs_master_start_timeout: 300
 patroni_bootstrap_dcs_synchronous_mode: false
-patroni_bootstrap_dcs_postgresql_use_pg_rewind: true
+patroni_bootstrap_dcs_postgresql_use_pg_rewind: false
 patroni_bootstrap_dcs_postgresql_use_slots: true
 
 patroni_bootstrap_dcs_postgresql_parameters:
@@ -185,6 +185,7 @@ patroni_postgresql_pg_hba: []
 patroni_postgresql_pg_ctl_timeout: 60
 
 patroni_postgresql_remove_data_directory_on_rewind_failure: false
+patroni_postgresql_remove_data_directory_on_diverged_timelines: false
 
 # http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
 # http://patroni.readthedocs.io/en/latest/watchdog.html
