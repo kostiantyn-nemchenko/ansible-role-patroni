@@ -26,6 +26,7 @@ bootstrap:
     maximum_lag_on_failover: {{ patroni_bootstrap_dcs_maximum_lag_on_failover |d(1048576, true) |int }}
     master_start_timeout: {{ patroni_bootstrap_dcs_master_start_timeout |d(300, true) |int }}
     synchronous_mode: {{ patroni_bootstrap_dcs_synchronous_mode |d(false, true) |lower }}
+    check_timeline: {{ patroni_bootstrap_dcs_check_timeline |d(false, true) |lower }}
     postgresql:
       use_pg_rewind: {{ patroni_bootstrap_dcs_postgresql_use_pg_rewind |string |d(true, true) |replace(None, true) |lower }}
       use_slots: {{ patroni_bootstrap_dcs_postgresql_use_slots |string |d(true, true) |replace(None, true) |lower }}
