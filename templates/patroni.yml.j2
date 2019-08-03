@@ -27,6 +27,12 @@ bootstrap:
     master_start_timeout: {{ patroni_bootstrap_dcs_master_start_timeout |d(300, true) |int }}
     synchronous_mode: {{ patroni_bootstrap_dcs_synchronous_mode |d(false, true) |lower }}
     check_timeline: {{ patroni_bootstrap_dcs_check_timeline |d(false, true) |lower }}
+  {% if patroni_bootstrap_dcs_standby_cluster |map(attribute='value') |join() |trim |length > 0 %}
+    standby_cluster:
+    {% for item in patroni_bootstrap_dcs_standby_cluster %}
+      {{ item.option }}: {{ item.value }}
+    {% endfor %}
+  {% endif %}
     postgresql:
       use_pg_rewind: {{ patroni_bootstrap_dcs_postgresql_use_pg_rewind |string |d(true, true) |replace(None, true) |lower }}
       use_slots: {{ patroni_bootstrap_dcs_postgresql_use_slots |string |d(true, true) |replace(None, true) |lower }}
