@@ -82,9 +82,17 @@ patroni_bootstrap_dcs_maximum_lag_on_failover: 1048576
 patroni_bootstrap_dcs_master_start_timeout: 300
 patroni_bootstrap_dcs_synchronous_mode: false
 patroni_bootstrap_dcs_check_timeline: false
+patroni_bootstrap_dcs_standby_cluster:
+  - { option: "host",                     value: "" }
+  - { option: "port",                     value: "" }
+  - { option: "primary_slot_name",        value: "" }
+  - { option: "create_replica_methods",   value: "" }
+  - { option: "restore_command",          value: "" }
+  - { option: "archive_cleanup_command",  value: "" }
+  - { option: "recovery_min_apply_delay", value: "" }
+
 patroni_bootstrap_dcs_postgresql_use_pg_rewind: false
 patroni_bootstrap_dcs_postgresql_use_slots: true
-
 patroni_bootstrap_dcs_postgresql_parameters:
   - { option: "max_connections",           value: "100" }
   - { option: "max_locks_per_transaction", value: "64" }
