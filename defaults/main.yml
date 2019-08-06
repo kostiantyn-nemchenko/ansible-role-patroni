@@ -65,6 +65,7 @@ patroni_consul_dc: ""
 patroni_consul_checks: ""
 patroni_consul_register_service: false
 patroni_consul_service_check_interval: 5s
+patroni_consul_consistency: default
 
 # http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
 patroni_zookeeper_hosts: 127.0.0.1:2181
