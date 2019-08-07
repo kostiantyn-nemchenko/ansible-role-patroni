@@ -34,3 +34,6 @@ consul:
 {% if patroni_consul_register_service |d(None, true) and patroni_consul_service_check_interval |d(None, true) %}
   service_check_interval: {{ patroni_consul_service_check_interval }}
 {% endif %}
+{% if patroni_consul_consistency |d(None, true) %}
+  consistency: {{ patroni_consul_consistency }}
+{% endif %}
