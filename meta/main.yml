@@ -33,11 +33,5 @@ dependencies:
     when: patroni_dcs == "etcd" and
           not patroni_dcs_exists
   - role: AnsibleShipyard.ansible-zookeeper
-    zookeeper_hosts: "
-      {%- set ips = [] %}
-      {%- for host in groups['zookeepers'] %}
-      {{- ips.append(dict(id=loop.index, host=host, ip=hostvars[host]['ansible_host'])) }}
-      {%- endfor %}
-      {{- ips -}}"
     when: patroni_dcs == "zookeeper" and
           not patroni_dcs_exists

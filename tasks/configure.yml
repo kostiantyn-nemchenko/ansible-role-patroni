@@ -18,7 +18,7 @@
     backup: yes
   with_items:
     - "{{ patroni_postgresql_callbacks }}"
-  when: not( (item.script is none) or (item.script | trim == '') )
+  when: not( (item.script is none) or (item.script | trim | length == 0) )
 
 - name: Create patroni unit file
   template:
