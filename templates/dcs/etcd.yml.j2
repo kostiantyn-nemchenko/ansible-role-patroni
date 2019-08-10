@@ -5,6 +5,9 @@ etcd:
 {% if patroni_etcd_hosts |d(None, true) %}
   hosts: {{ patroni_etcd_hosts }}
 {% endif %}
+{% if patroni_etcd_use_proxies |d(false, true) %}
+  use_proxies: {{ patroni_etcd_use_proxies |lower }}
+{% endif %}
 {% if patroni_etcd_url |d(None, true) %}
   url: {{ patroni_etcd_url }}
 {% endif %}
