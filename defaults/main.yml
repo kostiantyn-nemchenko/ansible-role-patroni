@@ -18,16 +18,25 @@ patroni_replication_password: repuserpasswd
 patroni_superuser_username: postgres
 patroni_superuser_password: supersecretpostgrespasswd
 
-patroni_logformat: "%(asctime)s %(levelname)s: %(message)s"
-patroni_loglevel: INFO
-patroni_requests_loglevel: WARNING
-
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
 patroni_scope: main
 patroni_namespace: /service/
 patroni_name: "{{ inventory_hostname }}"
 
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#log
+patroni_log_destination: stderr
+patroni_log_level: INFO
+patroni_log_format: "%(asctime)s %(levelname)s: %(message)s"
+patroni_log_dateformat: ""
+patroni_log_max_queue_size: 1000
+patroni_log_dir: /var/log/patroni
+patroni_log_file_num: 4
+patroni_log_file_size: 25000000
+patroni_log_loggers:
+  - { module: "patroni.postmaster", level: "WARNING" }
+  - { module: "urllib3",            level: "DEBUG" }
+
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
 patroni_restapi_listen: 0.0.0.0:8008
 patroni_restapi_connect_address: "{{ ansible_host }}:8008"
 patroni_restapi_certfile: ""
@@ -38,7 +47,7 @@ patroni_restapi_password: ""
 patroni_dcs: etcd
 patroni_dcs_exists: true
 
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#etcd
 patroni_etcd_host: ""
 patroni_etcd_hosts: 127.0.0.1:2379
 patroni_etcd_use_proxies: false
@@ -52,7 +61,7 @@ patroni_etcd_cacert: ""
 patroni_etcd_cert: ""
 patroni_etcd_key: ""
 
-# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
+# https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
 patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"
 patroni_consul_port: 8500
 patroni_consul_url: ""
@@ -68,15 +77,15 @@ patroni_consul_register_service: false
 patroni_consul_service_check_interval: 5s
 patroni_consul_consistency: default
 
-# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
+# https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#zookeeper
 patroni_zookeeper_hosts: 127.0.0.1:2181
 
-# http://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#exhibitor
+# https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#exhibitor
 patroni_exhibitor_hosts: "" #TODO
 patroni_exhibitor_port: "" #TODO
 patroni_exhibitor_poll_interval: 300 #TODO
 
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#bootstrap-configuration
 patroni_bootstrap_dcs_ttl: 30
 patroni_bootstrap_dcs_loop_wait: 10
 patroni_bootstrap_dcs_retry_timeout: 10
@@ -119,7 +128,7 @@ patroni_bootstrap_dcs_slots: []
 #  - { name: "permanent_physical_1", type: "physical" }
 #  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }
 
-# http://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
+# https://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
 patroni_bootstrap_method_name: ""
 patroni_bootstrap_method_command: ""
 patroni_bootstrap_method_keep_existing_recovery_conf: false
@@ -146,7 +155,7 @@ patroni_postgresql_use_unix_socket: true
 patroni_postgresql_listen: 0.0.0.0:5432
 patroni_postgresql_connect_address: "{{ ansible_host }}:5432"
 
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#postgresql
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#postgresql
 patroni_postgresql_authentication:
   - { type: "superuser",   username: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}" }
   - { type: "replication", username: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}" }
@@ -194,8 +203,8 @@ patroni_postgresql_pg_ctl_timeout: 60
 patroni_postgresql_remove_data_directory_on_rewind_failure: false
 patroni_postgresql_remove_data_directory_on_diverged_timelines: false
 
-# http://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
-# http://patroni.readthedocs.io/en/latest/watchdog.html
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#watchdog
+# https://patroni.readthedocs.io/en/latest/watchdog.html
 patroni_watchdog_mode: automatic # use quotes for 'off' value
 patroni_watchdog_device: /dev/watchdog
 patroni_watchdog_safety_margin: 5

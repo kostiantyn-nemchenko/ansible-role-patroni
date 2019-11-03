@@ -3,6 +3,23 @@ scope: {{ patroni_scope |d('main', true) }}
 namespace: {{ patroni_namespace |d('/service/', true) }}
 name: {{ patroni_name |d(inventory_hostname, true) }}
 
+{% if patroni_log_destination |d('stderr', true) != 'stderr' %}
+log:
+  level: {{ patroni_log_level |upper }}
+  format: {{ patroni_log_format |quote }}
+  dateformat: {{ patroni_log_dateformat |quote }}
+  max_queue_size: {{ patroni_log_max_queue_size |int }}
+  dir: {{ patroni_log_dir }}
+  file_num: {{ patroni_log_file_num |int }}
+  file_size: {{ patroni_log_file_size |int }}
+{% if patroni_log_loggers |d([], true) |length > 0 %}
+  loggers:
+  {% for logger in patroni_log_loggers %}
+    {{ logger.module }}: {{ logger.level |upper }}
+  {% endfor %}
+{% endif %}
+
+{% endif %}
 restapi:
   listen: {{ patroni_restapi_listen |d('0.0.0.0:8008', true) }}
   connect_address: {{ patroni_restapi_connect_address |d(ansible_host + ':8008', true) }}
