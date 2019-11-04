@@ -8,6 +8,15 @@
     group: "{{ patroni_system_group }}"
     mode: 0750
 
+- name: Create patroni log directory
+  file:
+    path: "{{ patroni_log_dir }}"
+    state: directory
+    owner: "{{ patroni_system_user }}"
+    group: "{{ patroni_system_group }}"
+    mode: 0750
+  when: patroni_log_destination |d('stderr', true) != 'stderr'
+
 - name: Prepare callback scripts
   copy:
     src: "callbacks/{{ item.event }}"
