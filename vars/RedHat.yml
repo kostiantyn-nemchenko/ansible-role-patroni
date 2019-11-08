@@ -18,7 +18,7 @@ patroni_postgresql_packages:
 patroni_system_packages:
   - { name: "epel-release",    state: "present" }
   - { name: "gcc",             state: "present" }
-  - { name: "python-devel",    state: "present" }
-  - { name: "python-psycopg2", state: "present" }
-  - { name: "python-pip",      state: "present" }
+  - { name: "python3-devel",    state: "present" }
+  - { name: "python3-psycopg2", state: "present" }
+  - { name: "python3-pip",      state: "present" }
   - { name: "jq",              state: "present" }
