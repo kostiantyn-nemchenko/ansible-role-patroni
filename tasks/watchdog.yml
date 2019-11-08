@@ -1,10 +1,5 @@
 ---
 
-- name: Create udev rule for watchdog
-  copy:
-    content: 'KERNEL=="{{ patroni_watchdog_device }}", OWNER="{{ patroni_system_user }}", GROUP="{{ patroni_system_group }}", MODE="0600"'
-    dest: /etc/udev/rules.d/60-watchdog.rules
-
 - name: Install watchdog
   package:
     name: watchdog
