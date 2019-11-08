@@ -1,11 +1,7 @@
 ---
 
 - name: Include OS-specific variables
-  include_vars: "{{ lookup('first_found', vars_files) }}"
-  vars:
-    vars_files:
-      - "vars/{{ ansible_distribution_release }}.yml"
-      - "vars/{{ ansible_os_family }}.yml"
+  include_vars: "{{ ansible_os_family }}.yml"
   tags: [patroni, patroni-install, patroni-configure]
 
 - import_tasks: install.yml
