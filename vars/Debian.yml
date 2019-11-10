@@ -16,6 +16,6 @@ patroni_postgresql_packages:
   - { name: "postgresql-server-dev-{{ patroni_postgresql_version }}", state: "present" }
 
 patroni_system_packages:
-  - { name: "python-psycopg2", state: "present" }
-  - { name: "python-pip",      state: "present" }
+  - { name: "python3-psycopg2", state: "present" }
+  - { name: "python3-pip",      state: "present" }
   - { name: "jq",              state: "present" }

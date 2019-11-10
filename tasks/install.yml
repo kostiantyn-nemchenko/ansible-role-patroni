@@ -21,5 +21,6 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     umask: "{{ item.umask }}"
+    executable: "{{ item.executable }}"
   with_items:
     - "{{ patroni_pip_packages }}"

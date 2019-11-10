@@ -7,7 +7,7 @@ patroni_postgresql_data_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/da
 patroni_postgresql_config_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/data"
 patroni_postgresql_bin_dir: "/usr/pgsql-{{ patroni_postgresql_version }}/bin"
 patroni_postgresql_pgpass: /var/lib/pgsql/.pgpass
-patroni_bin_dir: /usr/bin
+patroni_bin_dir: /usr/local/bin
 
 patroni_postgresql_packages:
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}",         state: "present" }
@@ -16,9 +16,9 @@ patroni_postgresql_packages:
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel",   state: "present" }
 
 patroni_system_packages:
-  - { name: "epel-release",    state: "present" }
-  - { name: "gcc",             state: "present" }
-  - { name: "python-devel",    state: "present" }
-  - { name: "python-psycopg2", state: "present" }
-  - { name: "python-pip",      state: "present" }
-  - { name: "jq",              state: "present" }
+  - { name: "epel-release",     state: "present" }
+  - { name: "gcc",              state: "present" }
+  - { name: "python3-devel",    state: "present" }
+  - { name: "python3-psycopg2", state: "present" }
+  - { name: "python3-pip",      state: "present" }
+  - { name: "jq",               state: "present" }
