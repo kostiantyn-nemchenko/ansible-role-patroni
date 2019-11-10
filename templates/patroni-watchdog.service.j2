@@ -8,7 +8,6 @@ Before=patroni.service
 Type=oneshot
 
 ExecStart=/sbin/modprobe softdog
-ExecStart=/bin/chown {{ patroni_system_user }}:{{ patroni_system_group }} {{ patroni_watchdog_device }}
 
 [Install]
 WantedBy=multi-user.target
