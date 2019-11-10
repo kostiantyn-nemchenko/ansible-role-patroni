@@ -16,10 +16,11 @@
   with_items:
     - "{{ patroni_system_packages }}"
 
-- name: Install pip3 packages for patroni
+- name: Install pip packages for patroni
   pip:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     umask: "{{ item.umask }}"
+    executable: "{{ item.executable }}"
   with_items:
-    - "{{ patroni_pip3_packages }}"
+    - "{{ patroni_pip_packages }}"
