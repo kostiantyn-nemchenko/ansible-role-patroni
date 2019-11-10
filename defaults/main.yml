@@ -1,6 +1,6 @@
 ---
 
-patroni_postgresql_version: 10
+patroni_postgresql_version: 11
 patroni_postgresql_exists: false
 
 patroni_config_dir: /etc/patroni
