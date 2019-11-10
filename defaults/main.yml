@@ -9,9 +9,9 @@ patroni_system_group: postgres
 
 patroni_exec_start_pre: "/bin/mkdir -m 2750 -p /var/run/postgresql/{{ patroni_postgresql_version }}-main.pg_stat_tmp"
 
-patroni_pip3_packages:
-  - { name: "setuptools",                 state: "latest",  umask: "0022" }
-  - { name: "patroni[{{ patroni_dcs }}]", state: "present", umask: "0022" }
+patroni_pip_packages:
+  - { name: "setuptools",                 state: "latest",  umask: "0022", executable: "pip3" }
+  - { name: "patroni[{{ patroni_dcs }}]", state: "present", umask: "0022", executable: "pip3" }
 
 patroni_replication_username: replicator
 patroni_replication_password: repuserpasswd
