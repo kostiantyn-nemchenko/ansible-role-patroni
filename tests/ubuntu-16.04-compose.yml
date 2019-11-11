@@ -1,0 +1,24 @@
+version: '2'
+services:
+  ubuntu0:
+    container_name: ubuntu0
+    privileged: true
+    cap_add:
+      - ALL
+    image: ubuntu:16.04
+    command: /lib/systemd/systemd
+    volumes:
+      - /dev:/dev
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe
+  ubuntu1:
+    container_name: ubuntu1
+    privileged: true
+    cap_add:
+      - ALL
+    image: ubuntu:16.04
+    command: /lib/systemd/systemd
+    volumes:
+      - /dev:/dev
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe

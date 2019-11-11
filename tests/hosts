@@ -1,0 +1,13 @@
+[all:vars]
+ansible_connection=docker
+ansible_python_interpreter=/usr/bin/python3
+
+[patroni:children]
+ubuntu
+
+[ubuntu:children]
+ubuntu-16.04
+
+[ubuntu-16.04]
+ubuntu0 ansible_host=ubuntu0
+ubuntu1 ansible_host=ubuntu1
