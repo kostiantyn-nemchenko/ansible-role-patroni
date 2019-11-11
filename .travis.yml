@@ -8,6 +8,7 @@ env:
   - DISTRIBUTION=ubuntu DISTRIBUTION_VERSION=16.04 ANSIBLE_VERSION=2.4 DCS=etcd
 
 install:
+  - ls -alh /dev /lib/modules /sbin/modprobe
   - sudo pip install setuptools docker-compose yamllint ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
   - sudo docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml up -d
 
