@@ -8,7 +8,7 @@ services:
     image: ubuntu:16.04
     command: /lib/systemd/systemd
     volumes:
-      - /dev:/dev
+#      - /dev:/dev
       - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
   ubuntu1:
@@ -19,6 +19,6 @@ services:
     image: ubuntu:16.04
     command: /lib/systemd/systemd
     volumes:
-      - /dev:/dev
+#      - /dev:/dev
       - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
