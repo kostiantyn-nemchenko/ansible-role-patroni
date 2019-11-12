@@ -2,10 +2,13 @@
 - hosts: patroni
   gather_facts: no
   pre_tasks:
-    - raw: apt-get -qq update -y && apt-get -qq install apt-utils python3-minimal sudo ca-certificates -y > /dev/null
+    - raw: test -e /usr/bin/python3 || (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null)
+    - setup:
+    - package:
+        name: ['sudo', 'ca-certificates', 'locales']
     - file:
-        path: /etc/udev/rules.d 
-        state: directory  
+        path: /etc/udev/rules.d
+        state: directory
 
 - hosts: patroni
   roles:
