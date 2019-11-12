@@ -2,6 +2,11 @@
 ansible_connection=docker
 ansible_python_interpreter=/usr/bin/python3
 
+[etcd]
+etcd0 ansible_host=etcd0
+etcd1 ansible_host=etcd1
+etcd2 ansible_host=etcd2
+
 [patroni:children]
 ubuntu
 
