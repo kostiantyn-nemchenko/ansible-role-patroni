@@ -2,6 +2,9 @@ version: '2'
 services:
   ubuntu0:
     container_name: ubuntu0
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
     privileged: true
     cap_add:
       - ALL
@@ -13,6 +16,9 @@ services:
       - /sbin/modprobe:/sbin/modprobe
   ubuntu1:
     container_name: ubuntu1
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
     privileged: true
     cap_add:
       - ALL

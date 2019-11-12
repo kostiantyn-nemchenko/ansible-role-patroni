@@ -4,8 +4,7 @@
   pre_tasks:
     - raw: test -e /usr/bin/python3 || (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null)
     - package:
-        name: ['apt-utils', 'sudo', 'ca-certificates', 'locales']
-    - command: echo -e 'LC_ALL=C.UTF-8\nLANG=C.UTF-8' > /etc/environment
+        name: ['apt-utils', 'sudo', 'ca-certificates']
     - file:
         path: /etc/udev/rules.d
         state: directory
