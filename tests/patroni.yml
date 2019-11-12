@@ -4,7 +4,7 @@
   pre_tasks:
     - raw: test -e /usr/bin/python3 || (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null)
     - package:
-        name: ['apt-utils', 'sudo', 'ca-certificates']
+        name: ['apt-utils', 'sudo', 'ca-certificates', 'curl']
     - file:
         path: /etc/udev/rules.d
         state: directory
