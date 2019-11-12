@@ -14,7 +14,9 @@ install:
 
 before_script:
   - docker ps -a
-  - ansible -i tests/hosts ${DCS} -a "etcdctl cluster-health"
+  - docker exec -t etcd0 /bin/sh -c "etcdctl cluster-health"
+  - docker exec -t etcd1 /bin/sh -c "etcdctl cluster-health"
+  - docker exec -t etcd2 /bin/sh -c "etcdctl cluster-health"
   - ansible-playbook -i tests/hosts tests/patroni.yml --syntax-check
 
 script:
