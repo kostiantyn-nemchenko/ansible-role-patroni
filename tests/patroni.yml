@@ -5,7 +5,7 @@
     - raw: test -e /usr/bin/python3 || (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null)
     - package:
         name: ['apt-utils', 'sudo', 'ca-certificates', 'locales']
-    - command: localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+    - command: echo -e 'LC_ALL=C.UTF-8\nLANG=C.UTF-8' > /etc/environment
     - file:
         path: /etc/udev/rules.d
         state: directory
