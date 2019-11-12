@@ -9,7 +9,7 @@ services:
     command: /lib/systemd/systemd
     volumes:
 ##      - /dev:/dev
-#      - /lib/modules:/lib/modules
+      - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
   ubuntu1:
     container_name: ubuntu1
@@ -20,5 +20,5 @@ services:
     command: /lib/systemd/systemd
     volumes:
 ##      - /dev:/dev
-#      - /lib/modules:/lib/modules
+      - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
