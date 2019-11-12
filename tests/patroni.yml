@@ -8,6 +8,9 @@
     - file:
         path: /etc/udev/rules.d
         state: directory
+    - command: curl -v http://etcd0:2379
+    - command: curl -v http://etcd1:2379
+    - command: curl -v http://etcd2:2379
 
 - hosts: patroni
   roles:
