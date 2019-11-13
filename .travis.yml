@@ -10,13 +10,9 @@ env:
 install:
   - pip install setuptools docker-compose yamllint ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
   - docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml up -d
-  - sleep 5
 
 before_script:
   - docker ps -a
-  - docker exec -t etcd0 /bin/sh -c "etcdctl cluster-health"
-  - docker exec -t etcd1 /bin/sh -c "etcdctl cluster-health"
-  - docker exec -t etcd2 /bin/sh -c "etcdctl cluster-health"
   - ansible-playbook -i tests/hosts tests/patroni.yml --syntax-check
 
 script:
