@@ -18,6 +18,6 @@
       patroni_bootstrap_dcs_postgresql_pg_hba: "
         {%- set pg_hba = [dict(type='local', database='all', user='all', method='md5'), dict(type='host', database='all', user='all', address='0.0.0.0/0', method='md5')] %}
         {%- for host in play_hosts %}
-        {{- pg_hba.append(dict(type='host', database='replication', user=patroni_replication_username, address=hostvars[host]['ansible_host'], method='md5')) }}
+        {{- pg_hba.append(dict(type='host', database='replication', user=patroni_replication_username, address=hostvars[host]['ansible_default_ipv4']['address'] + '/32', method='md5')) }}
         {%- endfor %}
         {{- pg_hba -}}"
