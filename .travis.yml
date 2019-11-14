@@ -16,7 +16,7 @@ before_script:
   - ansible-playbook -i tests/hosts tests/patroni.yml --syntax-check
 
 script:
-  - travis_wait 30 ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
+  - travis_wait 45 ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
 
 after_script:
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml list main"
