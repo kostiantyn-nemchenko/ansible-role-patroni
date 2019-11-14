@@ -8,7 +8,7 @@ env:
   - DISTRIBUTION=ubuntu DISTRIBUTION_VERSION=16.04 ANSIBLE_VERSION=2.4 DCS=etcd
 
 install:
-  - pip install setuptools docker-compose yamllint ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
+  - pip install setuptools docker-compose ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
   - docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml up -d
 
 before_script:
@@ -16,7 +16,7 @@ before_script:
   - ansible-playbook -i tests/hosts tests/patroni.yml --syntax-check
 
 script:
-  - ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
+  - travis_wait 30 ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
 
 after_script:
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml list main"
