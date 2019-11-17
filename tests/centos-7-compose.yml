@@ -1,0 +1,29 @@
+version: '2'
+services:
+  centos0:
+    container_name: centos0
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+    privileged: true
+    cap_add:
+      - ALL
+    image: centos:7
+#    command: /lib/systemd/systemd
+    command: /usr/sbin/init
+    volumes:
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe
+  centos1:
+    container_name: centos1
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+    privileged: true
+    cap_add:
+      - ALL
+    image: centos:7
+#    command: /lib/systemd/systemd
+    volumes:
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe
