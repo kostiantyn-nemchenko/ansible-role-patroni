@@ -19,6 +19,7 @@ script:
   - travis_wait 45 ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
 
 after_script:
+  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "ifconfig"
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml list main"
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml failover main --force"
   - sleep 10
