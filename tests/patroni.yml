@@ -5,7 +5,7 @@
     - raw: >
         test -e /usr/bin/apt-get &&
         (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null) ||
-        (yum -q update -y && yum -q install python3-minimal -y > /dev/null)
+        (yes | yum -q update && yes | yum -q install python3-minimal > /dev/null)
     - package:
         name: ['apt-utils', 'sudo', 'ca-certificates', 'net-tools']
     - file:
