@@ -2,9 +2,9 @@ version: '2'
 services:
   centos0:
     container_name: centos0
-#    environment:
-#      - LC_ALL=C.UTF-8
-#      - LANG=C.UTF-8
+    environment:
+      - LC_ALL=en_US.utf8
+      - LANG=en_US.utf8
     privileged: true
     cap_add:
       - ALL
@@ -15,9 +15,9 @@ services:
       - /sbin/modprobe:/sbin/modprobe
   centos1:
     container_name: centos1
-#    environment:
-#      - LC_ALL=C.UTF-8
-#      - LANG=C.UTF-8
+    environment:
+      - LC_ALL=en_US.utf8
+      - LANG=en_US.utf8
     privileged: true
     cap_add:
       - ALL
