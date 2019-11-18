@@ -9,7 +9,7 @@ services:
     cap_add:
       - ALL
     image: centos:7
-    command: /usr/sbin/init
+    command: /lib/systemd/systemd
     volumes:
       - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
@@ -22,7 +22,7 @@ services:
     cap_add:
       - ALL
     image: centos:7
-    command: /usr/sbin/init
+    command: /lib/systemd/systemd
     volumes:
       - /lib/modules:/lib/modules
       - /sbin/modprobe:/sbin/modprobe
