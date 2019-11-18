@@ -24,7 +24,7 @@ after_script:
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "journalctl -u patroni -n1000 --no-pager"
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "cat /var/log/patroni/patroni.log"
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml list main"
-  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml failover main --force" --limit ${DISTRIBUTION}0
+  - docker exec -t ${DISTRIBUTION}0 /bin/sh -c "patronictl -c /etc/patroni/*.yml failover main --candidate ${DISTRIBUTION}1 --force"
   - sleep 15
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml list main"
   - docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml down
