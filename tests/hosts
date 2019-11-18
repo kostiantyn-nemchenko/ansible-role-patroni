@@ -2,7 +2,7 @@
 ansible_connection=docker
 
 [centos:vars]
-ansible_python_interpreter=/usr/bin/python2
+ansible_python_interpreter=/usr/bin/python3
 
 [ubuntu:vars]
 ansible_python_interpreter=/usr/bin/python3
