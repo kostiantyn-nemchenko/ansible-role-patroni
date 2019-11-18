@@ -1,25 +1,26 @@
 [all:vars]
 ansible_connection=docker
 
-[etcd]
-etcd0 ansible_host=etcd0
-etcd1 ansible_host=etcd1
-etcd2 ansible_host=etcd2
+[centos:vars]
+ansible_python_interpreter=/usr/bin/python2
+
+[ubuntu:vars]
+ansible_python_interpreter=/usr/bin/python3
 
 [patroni:children]
 ubuntu
 centos
 
-[ubuntu:children]
-ubuntu-16.04 ansible_python_interpreter=/usr/bin/python3
-
 [centos:children]
-centos-7 ansible_python_interpreter=/usr/bin/python2
+centos-7
 
-[ubuntu-16.04]
-ubuntu0 ansible_host=ubuntu0
-ubuntu1 ansible_host=ubuntu1
+[ubuntu:children]
+ubuntu-16.04
 
 [centos-7]
 centos0 ansible_host=centos0
 centos1 ansible_host=centos1
+
+[ubuntu-16.04]
+ubuntu0 ansible_host=ubuntu0
+ubuntu1 ansible_host=ubuntu1
