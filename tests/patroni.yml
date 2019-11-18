@@ -6,7 +6,6 @@
         test -e /usr/bin/apt-get &&
         (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null) ||
         (yum -q update -y && yum -q install epel-release -y && yum -q install python3 -y > /dev/null)
-    - setup:
     - package:
         name: ['sudo', 'ca-certificates', 'net-tools', 'apt-utils']
     - file:
