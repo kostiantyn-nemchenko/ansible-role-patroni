@@ -1,6 +1,4 @@
 ---
-#os: linux
-#dist: trusty
 sudo: required
 language: python
 
@@ -9,7 +7,7 @@ env:
   - DISTRIBUTION=centos DISTRIBUTION_VERSION=7     ANSIBLE_VERSION=2.9 DCS=etcd
 
 before_install:
-  - sudo apt -qq update && sudo apt -qq purge erlang-* mongodb-* mysql-* openjdk-* postgresql-* redis-* ruby-* && sudo apt -qq upgrade docker-ce
+  - (sudo apt -qq update && sudo apt -qq purge erlang-* mongodb-* mysql-* openjdk-* postgresql-* redis-* ruby-* && sudo apt -qq upgrade) > /dev/null
 
 install:
   - pip install setuptools docker-compose ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
