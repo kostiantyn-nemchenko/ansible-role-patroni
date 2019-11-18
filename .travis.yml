@@ -8,6 +8,9 @@ env:
   - DISTRIBUTION=ubuntu DISTRIBUTION_VERSION=16.04 ANSIBLE_VERSION=2.4 DCS=etcd
   - DISTRIBUTION=centos DISTRIBUTION_VERSION=7     ANSIBLE_VERSION=2.4 DCS=etcd
 
+before_install:
+  - sudo apt update && sudo apt upgrade docker-ce
+
 install:
   - pip install setuptools docker-compose ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
   - docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml up -d
