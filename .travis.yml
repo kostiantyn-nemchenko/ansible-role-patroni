@@ -8,6 +8,7 @@ env:
 
 before_install:
   - (sudo apt -qq update && sudo apt -qq purge erlang-* mongodb-* mysql-* openjdk-* postgresql-* redis-* ruby-* && sudo apt -qq upgrade) > /dev/null
+  - sudo apt -qq install --reinstall python3-pkg-resources > /dev/null
 
 install:
   - pip install setuptools docker-compose ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
