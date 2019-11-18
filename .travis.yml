@@ -23,10 +23,9 @@ after_script:
   - sleep 10
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "journalctl -u patroni -n1000 --no-pager"
   - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "cat /var/log/patroni/patroni.log"
-  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/${DISTRIBUTION}0.yml list main" --limit ${DISTRIBUTION}0
-  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/${DISTRIBUTION}1.yml list main" --limit ${DISTRIBUTION}1
-  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml failover main --force"
-  - sleep 10
-  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -a "patronictl -c /etc/patroni/*.yml list main"
+  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml list main"
+  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml failover main --force" --limit ${DISTRIBUTION}0
+  - sleep 15
+  - ansible -i tests/hosts ${DISTRIBUTION}-${DISTRIBUTION_VERSION} -m shell -a "patronictl -c /etc/patroni/*.yml list main"
   - docker-compose -f tests/${DISTRIBUTION}-${DISTRIBUTION_VERSION}-compose.yml -f tests/${DCS}-compose.yml down
   - pip uninstall -y setuptools docker-compose ansible==${ANSIBLE_VERSION} -q > /dev/null
