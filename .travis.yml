@@ -4,10 +4,10 @@ language: python
 
 env:
   - DISTRIBUTION=ubuntu DISTRIBUTION_VERSION=16.04 ANSIBLE_VERSION=2.4 DCS=etcd
-  - DISTRIBUTION=centos DISTRIBUTION_VERSION=7     ANSIBLE_VERSION=2.9 DCS=etcd
+  - DISTRIBUTION=centos DISTRIBUTION_VERSION=7     ANSIBLE_VERSION=2.4 DCS=etcd
 
-before_install:
-  - sudo apt -qq install --reinstall python-pkg-resources -y > /dev/null
+#before_install:
+#  - sudo apt -qq install --reinstall python-pkg-resources -y > /dev/null
 #  - (sudo apt -qq update && sudo apt -qq purge erlang-* mongodb-* mysql-* openjdk-* postgresql-* redis-* ruby-* && sudo apt -qq upgrade) > /dev/null
 #  - sudo apt -qq install --reinstall python3-pkg-resources > /dev/null
 
