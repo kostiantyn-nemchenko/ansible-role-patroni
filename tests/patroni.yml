@@ -5,19 +5,10 @@
     - raw: >
         test -e /usr/bin/apt-get &&
         (apt-get -qq update -y && apt-get -qq install python3-minimal -y > /dev/null) ||
-        (yum -q update -y && yum -q install epel-release -y && yum -q install python3 dnf -y > /dev/null)
+        (yum -q update -y && yum -q install epel-release -y && yum -q install python3 -y > /dev/null)
     - setup:
-
-- hosts: patroni
-  vars:
-    ansible_python_interpreter: /usr/bin/python
-  pre_tasks:
-    - apt:
+    - package:
         name: ['sudo', 'ca-certificates', 'net-tools', 'apt-utils']
-      when: ansible_os_family == "Debian"
-    - dnf:
-        name: ['sudo', 'ca-certificates', 'net-tools']
-      when: ansible_os_family == "RedHat"
     - file:
         path: /etc/udev/rules.d
         state: directory
