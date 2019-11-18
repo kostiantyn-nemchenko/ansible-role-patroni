@@ -9,7 +9,7 @@ env:
   - DISTRIBUTION=centos DISTRIBUTION_VERSION=7     ANSIBLE_VERSION=2.4 DCS=etcd
 
 before_install:
-  - apt -qq update && apt -qq purge postgresql-* && apt -qq upgrade docker-ce
+  - sudo apt -qq update && sudo apt -qq purge postgresql-* && sudo apt -qq upgrade docker-ce
 
 install:
   - pip install setuptools docker-compose ansible==${ANSIBLE_VERSION} --upgrade -q > /dev/null
