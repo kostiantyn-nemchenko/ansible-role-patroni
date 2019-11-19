@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   centos0:
     container_name: centos0
