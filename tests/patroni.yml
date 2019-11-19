@@ -4,10 +4,10 @@
   pre_tasks:
     - raw: >
         test -e /usr/bin/apt-get &&
-        (apt-get -qq update -y && apt-get -qq install apt-utils python3-minimal -y > /dev/null) ||
-        (yum -q update -y && yum -q install python3 -y > /dev/null)
+        (apt -qq update -y && apt -qq upgrade -y && apt -qq install apt-utils python3-minimal -y > /dev/null) ||
+        (yum -q update -y && yum -q upgrade -y && yum -q install python3 -y > /dev/null)
     - package:
-        name: ['sudo', 'ca-certificates', 'net-tools']
+        name: ['sudo', 'ca-certificates']
     - file:
         path: /etc/udev/rules.d
         state: directory
