@@ -1,5 +1,6 @@
 # Ansible Role for Patroni
 
+[![Build Status](https://travis-ci.org/kostiantyn-nemchenko/ansible-role-patroni.svg?branch=master)](https://travis-ci.org/kostiantyn-nemchenko/ansible-role-patroni)
 [![Ansible Galaxy](https://img.shields.io/badge/galaxy-kostiantyn--nemchenko.patroni-blue.svg)](https://galaxy.ansible.com/kostiantyn-nemchenko/patroni/)
 
 An Ansible role which installs and configures [Patroni](https://github.com/zalando/patroni/) - HA solution for PostgreSQL.
