@@ -1,0 +1,28 @@
+version: '3'
+services:
+  ubuntu0:
+    container_name: ubuntu0
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+    privileged: true
+    cap_add:
+      - ALL
+    image: ubuntu:16.04
+    command: /lib/systemd/systemd
+    volumes:
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe
+  ubuntu1:
+    container_name: ubuntu1
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+    privileged: true
+    cap_add:
+      - ALL
+    image: ubuntu:16.04
+    command: /lib/systemd/systemd
+    volumes:
+      - /lib/modules:/lib/modules
+      - /sbin/modprobe:/sbin/modprobe
