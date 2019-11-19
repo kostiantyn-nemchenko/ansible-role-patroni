@@ -15,7 +15,7 @@ before_script:
   - ansible-playbook -i tests/hosts tests/patroni.yml --syntax-check
 
 script:
-  - ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
+  - travis_wait ansible-playbook -i tests/hosts tests/patroni.yml -Dvv --limit ${DISTRIBUTION}-${DISTRIBUTION_VERSION} --extra-vars patroni_dcs=${DCS}
 
 after_script:
   - sleep 10
