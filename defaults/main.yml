@@ -125,6 +125,9 @@ patroni_bootstrap_dcs_postgresql_pg_hba: []
 #  - { type: "host", database: "all",         user: "all",                                address: "0.0.0.0/0", method: "ident", options: "map=omicron" }
 #  - { type: "host", database: "replication", user: "{{ patroni_replication_username }}", address: "0.0.0.0/0", method: "md5" }
 
+patroni_bootstrap_dcs_postgresql_pg_ident: []
+#  - { mapname: "omicron", sysuser: "robert", pguser: "bob" }
+
 patroni_bootstrap_dcs_slots: []
 #  - { name: "permanent_physical_1", type: "physical" }
 #  - { name: "permanent_logical_1",  type: "logical", database: "foo", plugin: "pgoutput" }

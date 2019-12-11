@@ -72,6 +72,12 @@ bootstrap:
         - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }} {{ client.options |d(None) }}
       {% endfor %}
     {% endif %}
+    {% if patroni_bootstrap_dcs_postgresql_pg_ident |d([], true) |length > 0 %}
+      pg_ident:
+      {% for map in patroni_bootstrap_dcs_postgresql_pg_ident %}
+        - {{ map.mapname }} {{ map.sysuser }} {{ map.pguser }}
+      {% endfor %}
+    {% endif %}
   {% if patroni_bootstrap_dcs_slots |d([], true) |length > 0 %}
     slots:
     {% for slot in patroni_bootstrap_dcs_slots %}
