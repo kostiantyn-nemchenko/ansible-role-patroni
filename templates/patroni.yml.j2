@@ -43,6 +43,7 @@ bootstrap:
     maximum_lag_on_failover: {{ patroni_bootstrap_dcs_maximum_lag_on_failover |d(1048576, true) |int }}
     master_start_timeout: {{ patroni_bootstrap_dcs_master_start_timeout |d(300, true) |int }}
     synchronous_mode: {{ patroni_bootstrap_dcs_synchronous_mode |d(false, true) |lower }}
+    synchronous_mode_strict: {{ patroni_bootstrap_dcs_synchronous_mode_strict |d(false, true) |lower }}
     check_timeline: {{ patroni_bootstrap_dcs_check_timeline |d(false, true) |lower }}
   {% if patroni_bootstrap_dcs_standby_cluster |map(attribute='value') |join() |trim |length > 0 %}
     standby_cluster:

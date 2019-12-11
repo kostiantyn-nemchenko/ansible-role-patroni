@@ -92,6 +92,7 @@ patroni_bootstrap_dcs_retry_timeout: 10
 patroni_bootstrap_dcs_maximum_lag_on_failover: 1048576
 patroni_bootstrap_dcs_master_start_timeout: 300
 patroni_bootstrap_dcs_synchronous_mode: false
+patroni_bootstrap_dcs_synchronous_mode_strict: false
 patroni_bootstrap_dcs_check_timeline: false
 patroni_bootstrap_dcs_standby_cluster:
   - { option: "host",                     value: "" }
