@@ -69,7 +69,13 @@ bootstrap:
     {% if patroni_bootstrap_dcs_postgresql_pg_hba |d([], true) |length > 0 %}
       pg_hba:
       {% for client in patroni_bootstrap_dcs_postgresql_pg_hba %}
-        - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }}
+        - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }} {{ client.options |d(None) }}
+      {% endfor %}
+    {% endif %}
+    {% if patroni_bootstrap_dcs_postgresql_pg_ident |d([], true) |length > 0 %}
+      pg_ident:
+      {% for map in patroni_bootstrap_dcs_postgresql_pg_ident %}
+        - {{ map.mapname }} {{ map.sysuser }} {{ map.pguser }}
       {% endfor %}
     {% endif %}
   {% if patroni_bootstrap_dcs_slots |d([], true) |length > 0 %}
@@ -108,7 +114,7 @@ bootstrap:
 {% if patroni_bootstrap_pg_hba |d([], true) |length > 0 %}
   pg_hba:
   {% for client in patroni_bootstrap_pg_hba %}
-    - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }}
+    - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }} {{ client.options |d(None) }}
   {% endfor %}
 {% endif %}
 {% if patroni_bootstrap_post_bootstrap |d(None, true) %}
@@ -197,7 +203,13 @@ postgresql:
 {% if patroni_postgresql_pg_hba |d([], true) |length > 0 %}
   pg_hba:
   {% for client in patroni_postgresql_pg_hba %}
-    - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }}
+    - {{ client.type }} {{ client.database }} {{ client.user }} {{ client.address |d(None) }} {{ client.method }} {{ client.options |d(None) }}
+  {% endfor %}
+{% endif %}
+{% if patroni_postgresql_pg_ident |d([], true) |length > 0 %}
+  pg_ident:
+  {% for map in patroni_postgresql_pg_ident %}
+    - {{ map.mapname }} {{ map.sysuser }} {{ map.pguser }}
   {% endfor %}
 {% endif %}
   pg_ctl_timeout: {{ patroni_postgresql_pg_ctl_timeout |d(60, true) |int }}
