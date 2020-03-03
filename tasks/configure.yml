@@ -24,7 +24,7 @@
     owner: "{{ patroni_system_user }}"
     group: "{{ patroni_system_group }}"
     mode: 0750
-    backup: yes
+    backup: "{{ patroni_backup_on_copy }}"
   with_items:
     - "{{ patroni_postgresql_callbacks }}"
   when: not( (item.script is none) or (item.script | trim | length == 0) )

@@ -7,6 +7,9 @@ patroni_config_dir: /etc/patroni
 patroni_system_user: postgres
 patroni_system_group: postgres
 
+# create a backup file before copying files on hosts
+patroni_backup_on_copy: true
+
 patroni_exec_start_pre: "/bin/mkdir -m 2750 -p /var/run/postgresql/{{ patroni_postgresql_version }}-main.pg_stat_tmp"
 
 patroni_pip_packages:
