@@ -167,7 +167,7 @@ patroni_postgresql_authentication:
   - { type: "superuser",   username: "{{ patroni_superuser_username }}",   password: "{{ patroni_superuser_password }}" }
   - { type: "replication", username: "{{ patroni_replication_username }}", password: "{{ patroni_replication_password }}" }
 
-patroni_postgresql_callbacks_dir: "scripts"
+patroni_postgresql_callbacks_dir: callbacks
 patroni_postgresql_callbacks:
   - { event: "on_reload",      script: "" }
   - { event: "on_restart",     script: "" }
