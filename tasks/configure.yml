@@ -20,7 +20,6 @@
 - name: Prepare callback scripts
   copy:
     src: "{{ patroni_postgresql_callbacks_dir }}/{{ item.event }}"
-
     dest: "{{ item.script }}"
     owner: "{{ patroni_system_user }}"
     group: "{{ patroni_system_group }}"
