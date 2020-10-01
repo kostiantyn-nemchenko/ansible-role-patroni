@@ -1,0 +1,72 @@
+---
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: [patroni, patroni-install, patroni-configure]
+
+- name: Define Debian specific facts
+  block:
+    - name: Define postgresql_apt_key_url.
+      set_fact:
+        postgresql_apt_key_url: "{{ __postgresql_apt_key_url }}"
+      when: postgresql_apt_key_url is not defined
+
+    - name: Define postgresql_apt_repo.
+      set_fact:
+        postgresql_apt_repo: "{{ __postgresql_apt_repo }}"
+      when: postgresql_apt_repo is not defined
+  when: ansible_os_family == 'Debian'
+
+- name: Define RedHat specific facts
+  block:
+    - name: Define postgresql_yum_repo_url.
+      set_fact:
+        postgresql_yum_repo_url: "{{ __postgresql_yum_repo_url }}"
+      when: postgresql_yum_repo_url is not defined
+
+    - name: Define postgresql_yum_repo_pkg_name.
+      set_fact:
+        postgresql_yum_repo_pkg_name: "{{ __postgresql_yum_repo_pkg_name }}"
+      when: postgresql_yum_repo_pkg_name is not defined
+
+    - name: Define postgresql_yum_repo_pkg_version.
+      set_fact:
+        postgresql_yum_repo_pkg_version: "{{ __postgresql_yum_repo_pkg_version }}"
+      when: postgresql_yum_repo_pkg_version is not defined
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution != 'Fedora'
+
+- name: Define patroni_postgresql_packages.
+  set_fact:
+    patroni_postgresql_packages: "{{ __patroni_postgresql_packages | list }}"
+  when: patroni_postgresql_packages is not defined
+
+- name: Define patroni_system_packages.
+  set_fact:
+    patroni_system_packages: "{{ __patroni_system_packages | list }}"
+  when: patroni_system_packages is not defined
+
+- name: Define patroni_postgresql_data_dir.
+  set_fact:
+    patroni_postgresql_data_dir: "{{ __patroni_postgresql_data_dir }}"
+  when: patroni_postgresql_data_dir is not defined
+
+- name: Define patroni_postgresql_config_dir.
+  set_fact:
+    patroni_postgresql_config_dir: "{{ __patroni_postgresql_config_dir }}"
+  when: patroni_postgresql_config_dir is not defined
+
+- name: Define patroni_postgresql_bin_dir.
+  set_fact:
+    patroni_postgresql_bin_dir: "{{ __patroni_postgresql_bin_dir }}"
+  when: patroni_postgresql_bin_dir is not defined
+
+- name: Define patroni_postgresql_pgpass.
+  set_fact:
+    patroni_postgresql_pgpass: "{{ __patroni_postgresql_pgpass }}"
+  when: patroni_postgresql_pgpass is not defined
+
+- name: Define patroni_bin_dir.
+  set_fact:
+    patroni_bin_dir: "{{ __patroni_bin_dir }}"
+  when: patroni_bin_dir is not defined

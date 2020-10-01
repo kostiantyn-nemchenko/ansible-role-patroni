@@ -16,7 +16,7 @@ Group={{ patroni_system_group }}
 # StandardOutput=syslog
 
 ExecStartPre={{ patroni_exec_start_pre | default('') }}
-ExecStart={{ patroni_bin_dir }}/patroni {{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml
+ExecStart={{ patroni_bin_dir }}/patroni {{ patroni_config_dir }}/{{ patroni_config_file }}
 
 # only kill the patroni process, not it's children, so it will gracefully stop postgres
 KillMode=process
