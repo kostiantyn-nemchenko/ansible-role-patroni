@@ -40,7 +40,7 @@
 - name: Create patroni configuration file
   template:
     src: patroni.yml.j2
-    dest: "{{ patroni_config_dir }}/{{ patroni_name|default(inventory_hostname) }}.yml"
+    dest: "{{ patroni_config_dir }}/{{ patroni_config_file }}"
     owner: "{{ patroni_system_user }}"
     group: "{{ patroni_system_group }}"
     mode: 0600

@@ -4,6 +4,7 @@ patroni_postgresql_version: 11
 patroni_postgresql_exists: false
 
 patroni_config_dir: /etc/patroni
+patroni_config_file: "{{ inventory_hostname }}.yml"
 patroni_system_user: postgres
 patroni_system_group: postgres
 
