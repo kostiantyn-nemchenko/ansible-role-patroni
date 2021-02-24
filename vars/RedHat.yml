@@ -1,6 +1,6 @@
 ---
 
-__postgresql_yum_repo_url: "https://download.postgresql.org/pub/repos/yum/reporpms/{{ 'F' if ansible_distribution|lower == 'fedora' else 'EL' }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}/{{ postgresql_yum_repo_pkg_name }}"
+__postgresql_yum_repo_url: "https://download.postgresql.org/pub/repos/yum/reporpms/{{ 'F' if ansible_distribution|lower == 'fedora' else 'EL' }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}/{{ __postgresql_yum_repo_pkg_name }}"
 __postgresql_yum_repo_pkg_name: pgdg-redhat-repo-latest.noarch.rpm
 __postgresql_yum_repo_pkg_version: 11.5-1PGDG.rhel7
 
