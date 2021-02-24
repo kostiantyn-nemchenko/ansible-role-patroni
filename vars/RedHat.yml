@@ -17,6 +17,9 @@ __patroni_postgresql_packages:
   - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel-{{ postgresql_yum_repo_pkg_version }}",   state: "present" }
 
 __patroni_system_packages:
+  - { name: "centos-release-scl-rh",  state: "present" }
+  - { name: "llvm-toolset-7-clang",   state: "present" }
+  - { name: "python-setuptools",      state: "present" }
   - { name: "epel-release",     state: "present" }
   - { name: "gcc",              state: "present" }
   - { name: "python3-devel",    state: "present" }
