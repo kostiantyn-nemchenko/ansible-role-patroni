@@ -18,15 +18,16 @@
 
 - name: Define RedHat specific facts
   block:
-    - name: Define postgresql_yum_repo_url.
-      set_fact:
-        postgresql_yum_repo_url: "{{ __postgresql_yum_repo_url }}"
-      when: postgresql_yum_repo_url is not defined
 
     - name: Define postgresql_yum_repo_pkg_name.
       set_fact:
         postgresql_yum_repo_pkg_name: "{{ __postgresql_yum_repo_pkg_name }}"
       when: postgresql_yum_repo_pkg_name is not defined
+
+    - name: Define postgresql_yum_repo_url.
+      set_fact:
+        postgresql_yum_repo_url: "{{ __postgresql_yum_repo_url }}"
+      when: postgresql_yum_repo_url is not defined
 
     - name: Define postgresql_yum_repo_pkg_version.
       set_fact:
