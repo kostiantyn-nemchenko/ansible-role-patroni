@@ -1,6 +1,7 @@
 ---
 
 - import_tasks: user.yml
+  when: patroni_install_from_pip
 
 - import_tasks: postgresql.yml
   when: not patroni_postgresql_exists
@@ -15,6 +16,7 @@
     update_cache: yes
   with_items:
     - "{{ patroni_system_packages }}"
+  when: patroni_install_from_pip
 
 - name: Install pip packages for patroni
   pip:
@@ -24,3 +26,4 @@
     executable: "{{ item.executable }}"
   with_items:
     - "{{ patroni_pip_packages }}"
+  when: patroni_install_from_pip
