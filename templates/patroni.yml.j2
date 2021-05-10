@@ -21,16 +21,34 @@ log:
 
 {% endif %}
 restapi:
-  listen: {{ patroni_restapi_listen |d('0.0.0.0:8008', true) }}
   connect_address: {{ patroni_restapi_connect_address |d(ansible_host + ':8008', true) }}
-{% if patroni_restapi_certfile |d(None, true) and patroni_restapi_keyfile |d(None, true) %}
-  certfile: {{ patroni_restapi_certfile }}
-  keyfile: {{ patroni_restapi_keyfile }}
-{% endif %}
+  listen: {{ patroni_restapi_listen |d('0.0.0.0:8008', true) }}
 {% if patroni_restapi_username |d(None, true) and patroni_restapi_password |d(None, true) %}
   authentication:
     username: {{ patroni_restapi_username }}
     password: {{ patroni_restapi_password }}
+{% endif %}
+{% if patroni_restapi_certfile |d(None, true) and patroni_restapi_keyfile |d(None, true) %}
+  certfile: {{ patroni_restapi_certfile }}
+  keyfile: {{ patroni_restapi_keyfile }}
+{% endif %}
+{% if patroni_restapi_keyfile_password |d(None, true) %}
+  keyfile_password: {{ patroni_restapi_keyfile_password }}
+{% endif %}
+{% if patroni_restapi_cafile |d(None, true) %}
+  cafile: {{ patroni_restapi_cafile }}
+{% endif %}
+{% if patroni_restapi_ciphers |d(None, true) %}
+  ciphers: {{ patroni_restapi_ciphers }}
+{% endif %}
+{% if patroni_restapi_verify_client |d(None, true) %}
+  verify_client: {{ patroni_restapi_verify_client }}
+{% endif %}
+{% if patroni_restapi_http_extra_headers |d(None, true) %}
+  http_extra_headers: {{ patroni_restapi_http_extra_headers }}
+{% endif %}
+{% if patroni_restapi_https_extra_headers |d(None, true) %}
+  https_extra_headers: {{ patroni_restapi_https_extra_headers }}
 {% endif %}
 
 {% include 'dcs/' + (patroni_dcs |d('etcd')) + '.yml.j2' %}
