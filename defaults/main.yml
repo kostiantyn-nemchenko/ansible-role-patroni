@@ -2,6 +2,7 @@
 
 patroni_postgresql_version: 11
 patroni_postgresql_exists: false
+patroni_install_from_pip: true
 
 patroni_config_dir: /etc/patroni
 patroni_config_file: "{{ inventory_hostname }}.yml"
