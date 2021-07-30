@@ -75,4 +75,18 @@
 - name: Define patroni_bin_dir.
   set_fact:
     patroni_bin_dir: "{{ __patroni_bin_dir }}"
-  when: patroni_bin_dir is not defined
+  when:
+    - patroni_bin_dir is not defined
+    - patroni_install_from_pip
+
+- name: Define patroni_bin_dir.
+  set_fact:
+    patroni_bin_dir: "/usr/bin"
+  when:
+    - patroni_bin_dir is not defined
+    - not patroni_install_from_pip
+
+- name: Override patroni_config_file
+  set_fact:
+    patroni_config_file: "config.yml"
+  when: not patroni_install_from_pip

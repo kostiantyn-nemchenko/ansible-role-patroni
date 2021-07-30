@@ -7,6 +7,7 @@
     owner: "{{ patroni_system_user }}"
     group: "{{ patroni_system_group }}"
     mode: 0750
+  when: patroni_install_from_pip
 
 - name: Create patroni log directory
   file:
@@ -36,6 +37,7 @@
     owner: root
     group: root
     mode: 0644
+  when: patroni_install_from_pip
 
 - name: Create patroni configuration file
   template:
