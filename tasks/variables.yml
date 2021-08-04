@@ -17,7 +17,7 @@
 
     - name: Define postgresql_apt_filename.
       set_fact:
-        postgresql_apt_filename: "{{ __postgresql_apt_filename }"
+        postgresql_apt_filename: "{{ __postgresql_apt_filename }}"
       when: postgresql_apt_filename is not defined
   when: ansible_os_family == 'Debian'
 
