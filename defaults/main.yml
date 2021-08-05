@@ -18,6 +18,9 @@ patroni_pip_packages:
   - { name: "setuptools",                 state: "latest",  umask: "0022", executable: "pip3" }
   - { name: "patroni[{{ patroni_dcs }}]", state: "present", umask: "0022", executable: "pip3" }
 
+patroni_repo_packages:
+  - { name: "patroni", state: "present" }
+
 patroni_replication_username: replicator
 patroni_replication_password: repuserpasswd
 patroni_superuser_username: postgres

@@ -27,3 +27,11 @@
   with_items:
     - "{{ patroni_pip_packages }}"
   when: patroni_install_from_pip
+
+- name: Install patroni from repo
+  package:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items:
+    - "{{ patroni_repo_packages }}"
+  when: not patroni_install_from_pip
