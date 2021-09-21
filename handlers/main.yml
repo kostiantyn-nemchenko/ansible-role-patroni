@@ -21,3 +21,10 @@
     state: restarted
     daemon_reload: yes
     enabled: yes
+
+- name: restart haproxy
+  systemd:
+    name: haproxy.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes

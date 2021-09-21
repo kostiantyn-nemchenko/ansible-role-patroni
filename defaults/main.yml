@@ -3,6 +3,7 @@
 patroni_postgresql_version: 11
 patroni_postgresql_exists: false
 patroni_install_from_pip: true
+patroni_install_haproxy: false
 
 patroni_config_dir: /etc/patroni
 patroni_config_file: "{{ inventory_hostname }}.yml"
@@ -227,6 +228,15 @@ patroni_postgresql_remove_data_directory_on_diverged_timelines: false
 patroni_watchdog_mode: automatic # use quotes for 'off' value
 patroni_watchdog_device: /dev/watchdog
 patroni_watchdog_safety_margin: 5
+
+patroni_haproxy_servers: []
+  # - { name: "server1", ip: "10.0.0.1", port: "5432" }
+  # - { name: "server2", ip: "10.0.0.2", port: "5432" }
+  # - { name: "server3", ip: "10.0.0.3", port: "5432" }
+
+patroni_haproxy_leader_listen_port: 5000
+patroni_haproxy_replica_listen_port: 5001
+patroni_haproxy_stats_listen_port: 7000
 
 patroni_tags:
   - { name: "nofailover",    value: "false" }
