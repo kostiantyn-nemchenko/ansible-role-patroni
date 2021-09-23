@@ -25,6 +25,7 @@ galaxy_info:
   - patroni
   - availability
   - failover
+  role_name: patroni
 dependencies: []
 #  - role: brianshumate.consul
 #    when: patroni_dcs == "consul" and
