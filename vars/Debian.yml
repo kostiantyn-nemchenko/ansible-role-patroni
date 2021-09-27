@@ -22,5 +22,5 @@ __patroni_system_packages:
   - { name: "python3-pip",      state: "present" }
   - { name: "jq",              state: "present" }
 
-__patroni_haproxy_package:
+__patroni_haproxy_packages:
   - { name: "haproxy", state: "present" }

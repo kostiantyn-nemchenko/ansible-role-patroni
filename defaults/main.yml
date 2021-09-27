@@ -43,8 +43,9 @@ patroni_log_loggers:
   - { module: "urllib3",            level: "DEBUG" }
 
 # https://patroni.readthedocs.io/en/latest/SETTINGS.html#rest-api
-patroni_restapi_connect_address: "{{ ansible_host }}:8008"
-patroni_restapi_listen: 0.0.0.0:8008
+patroni_restapi_port: 8008
+patroni_restapi_connect_address: "{{ ansible_host }}:{{ patroni_restapi_port }}"
+patroni_restapi_listen: "0.0.0.0:{{ patroni_restapi_port }}"
 patroni_restapi_username: ""
 patroni_restapi_password: ""
 patroni_restapi_certfile: ""
