@@ -16,3 +16,11 @@
     daemon_reload: yes
     enabled: yes
   tags: [patroni]
+
+- name: Ensure haproxy is running
+  systemd:
+    name: haproxy.service
+    state: started
+    daemon_reload: yes
+    enabled: yes
+  when: patroni_install_haproxy

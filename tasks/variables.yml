@@ -52,6 +52,11 @@
     patroni_system_packages: "{{ __patroni_system_packages | list }}"
   when: patroni_system_packages is not defined
 
+- name: Append haproxy to system packages if needed
+  set_fact:
+    patroni_system_packages: "{{ patroni_system_packages + __patroni_haproxy_packages | list }}"
+  when: patroni_install_haproxy
+
 - name: Define patroni_postgresql_data_dir.
   set_fact:
     patroni_postgresql_data_dir: "{{ __patroni_postgresql_data_dir }}"
