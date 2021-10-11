@@ -2,6 +2,7 @@
 
 patroni_postgresql_version: 11
 patroni_postgresql_exists: false
+patroni_postgresql_service_todisable: "postgresql"
 patroni_install_from_pip: true
 patroni_install_haproxy: false
 
