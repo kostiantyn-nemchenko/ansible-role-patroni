@@ -35,3 +35,9 @@
     update_cache: yes
   with_items:
     - "{{ patroni_postgresql_packages }}"
+
+- name: Disable postgresql service
+  service:
+    name: "{{ patroni_postgresql_service_todisable }}"
+    state: stopped
+    enabled: no
