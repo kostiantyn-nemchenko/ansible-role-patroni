@@ -74,6 +74,9 @@ patroni_etcd_cacert: ""
 patroni_etcd_cert: ""
 patroni_etcd_key: ""
 
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#etcdv3
+patroni_etcd_config_section: etcd
+
 # https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
 patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"
 patroni_consul_port: 8500

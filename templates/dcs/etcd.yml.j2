@@ -1,4 +1,4 @@
-etcd:
+{{ patroni_etcd_config_section }}:
 {% if patroni_etcd_host |d(None, true) %}
   host: {{ patroni_etcd_host }}
 {% endif %}
