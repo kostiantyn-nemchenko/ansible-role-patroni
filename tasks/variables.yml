@@ -1,6 +1,6 @@
 ---
 - name: Include OS-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
   tags: [patroni, patroni-install, patroni-configure]
 
 - name: Define Debian specific facts
@@ -23,6 +23,10 @@
 
 - name: Define RedHat specific facts
   block:
+    - name: Define postgresql_yum_repo_gpg_key_url.
+      set_fact:
+        postgresql_yum_repo_gpg_key_url: "{{ __postgresql_yum_repo_gpg_key_url }}"
+      when: postgresql_yum_repo_gpg_key_url is not defined
 
     - name: Define postgresql_yum_repo_pkg_name.
       set_fact:
