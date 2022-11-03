@@ -40,7 +40,6 @@
     package:
       name: "{{ postgresql_yum_repo_url }}"
       state: present
-      use: dnf
   
   - name: Disable postgresql module
     command: "dnf -y module disable postgresql"
