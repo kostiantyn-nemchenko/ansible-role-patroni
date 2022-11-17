@@ -1,0 +1,9 @@
+skip_list:
+  - 'role-name'
+  - 'fqcn-builtins'
+  - 'yaml'
+
+warn_list:
+  - 'experimental'
+  - 'name'
+  - jinja[spacing]
