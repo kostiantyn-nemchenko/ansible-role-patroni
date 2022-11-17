@@ -26,7 +26,7 @@
     - name: Define postgresql_yum_repo_gpg_key_url.
       set_fact:
         postgresql_yum_repo_gpg_key_url: "{{ __postgresql_yum_repo_gpg_key_url }}"
-      when: 
+      when:
         - postgresql_yum_repo_gpg_key_url is not defined
         - ansible_distribution_major_version >= "8"
 
@@ -59,9 +59,9 @@
 - name: Define patroni_postgresql_packages with latest major version.
   set_fact:
     patroni_postgresql_packages: "{{ __patroni_postgresql_packages_latest | list }}"
-  when: 
+  when:
     - patroni_postgresql_packages is not defined
-    - ansible_os_family != 'Debian' 
+    - ansible_os_family != 'Debian'
     - patroni_postgresql_version_latest | bool
 
 - name: Define patroni_system_packages.
