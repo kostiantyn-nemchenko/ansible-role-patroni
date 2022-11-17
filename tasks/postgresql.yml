@@ -26,7 +26,7 @@
 - name: Configure postgresql repository
   package:
     name: "{{ postgresql_yum_repo_url }}"
-  when: 
+  when:
     - ansible_os_family == "RedHat"
     - ansible_distribution_major_version <= "7"
 
@@ -34,7 +34,7 @@
   - name: "Configure postgresql repository key"
     rpm_key:
       state: present
-      key:  "{{ postgresql_yum_repo_gpg_key_url }}"
+      key: "{{ postgresql_yum_repo_gpg_key_url }}"
     when: patroni_install_postgresql_repo | bool
 
   - name: Configure postgresql repository
