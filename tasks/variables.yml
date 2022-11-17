@@ -51,7 +51,7 @@
     patroni_postgresql_packages: "{{ __patroni_postgresql_packages | list }}"
   when:
     patroni_postgresql_packages is not defined and
-    patroni_postgresql_version_latest == false or
+    not patroni_postgresql_version_latest | bool or
     ansible_os_family == 'Debian'
 
 - name: Define patroni_postgresql_packages with latest major version.
@@ -60,7 +60,7 @@
   when:
     - patroni_postgresql_packages_latest is not defined
     - ansible_os_family != 'Debian'
-    - patroni_postgresql_version_latest == true
+    - patroni_postgresql_version_latest | bool
 
 - name: Define patroni_system_packages.
   set_fact:
