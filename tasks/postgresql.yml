@@ -35,12 +35,14 @@
     rpm_key:
       state: present
       key:  "{{ postgresql_yum_repo_gpg_key_url }}"
-  
+    when: patroni_install_postgresql_repo | bool
+
   - name: Configure postgresql repository
     package:
       name: "{{ postgresql_yum_repo_url }}"
       state: present
-  
+    when: patroni_install_postgresql_repo | bool
+
   - name: Disable postgresql module
     command: "dnf -y module disable postgresql"
     changed_when: false
