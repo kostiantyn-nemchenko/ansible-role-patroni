@@ -28,7 +28,7 @@
       rpm_key:
         state: present
         key: "{{ postgresql_yum_repo_gpg_key_url }}"
-      when: 
+      when:
         - patroni_install_postgresql_repo | bool
         - ansible_distribution_major_version >= "8"
 
