@@ -23,32 +23,23 @@
         regexp: ^#?create_main_cluster.*$
   when: ansible_os_family == "Debian"
 
-- name: Configure postgresql repository
-  package:
-    name: "{{ postgresql_yum_repo_url }}"
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version <= "7"
-
 - block:
-  - name: "Configure postgresql repository key"
-    rpm_key:
-      state: present
-      key: "{{ postgresql_yum_repo_gpg_key_url }}"
-    when: patroni_install_postgresql_repo | bool
+    - name: "Configure postgresql repository key"
+      rpm_key:
+        state: present
+        key: "{{ postgresql_yum_repo_gpg_key_url }}"
+      when: patroni_install_postgresql_repo | bool
 
-  - name: Configure postgresql repository
-    package:
-      name: "{{ postgresql_yum_repo_url }}"
-      state: present
-    when: patroni_install_postgresql_repo | bool
+    - name: Configure postgresql repository
+      package:
+        name: "{{ postgresql_yum_repo_url }}"
+      when: patroni_install_postgresql_repo | bool
 
-  - name: Disable postgresql module
-    command: "dnf -y module disable postgresql"
-    changed_when: false
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version >= "8"
+    - name: Disable postgresql module
+      command: "dnf -y module disable postgresql"
+      changed_when: false
+      when: ansible_distribution_major_version >= "8"
+  when: ansible_os_family == "RedHat"
 
 - name: Install postgresql packages
   package:
