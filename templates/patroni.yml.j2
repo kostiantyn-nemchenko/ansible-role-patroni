@@ -75,7 +75,7 @@ bootstrap:
     {% if patroni_bootstrap_dcs_postgresql_parameters |d([], true) |length > 0 %}
       parameters:
       {% for guc in patroni_bootstrap_dcs_postgresql_parameters %}
-        {{ guc.option }}: {{ guc.value }}
+        {{ guc.option }}: "{{ guc.value }}"
       {% endfor %}
     {% endif %}
     {% if patroni_bootstrap_dcs_postgresql_recovery_conf |d([], true) |length > 0 %}
@@ -215,7 +215,7 @@ postgresql:
 {% if patroni_postgresql_parameters |d([], true) |length > 0 %}
   parameters:
   {% for guc in patroni_postgresql_parameters %}
-    {{ guc.option }}: {{ guc.value }}
+    {{ guc.option }}: "{{ guc.value }}"
   {% endfor %}
 {% endif %}
 {% if patroni_postgresql_pg_hba |d([], true) |length > 0 %}
