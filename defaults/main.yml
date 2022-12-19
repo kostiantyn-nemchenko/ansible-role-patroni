@@ -1,9 +1,11 @@
 ---
 
 patroni_postgresql_version: 11
+patroni_postgresql_version_latest: false
 patroni_postgresql_exists: false
 patroni_install_from_pip: true
 patroni_install_haproxy: false
+patroni_install_postgresql_repo: true
 
 patroni_config_dir: /etc/patroni
 patroni_config_file: "{{ inventory_hostname }}.yml"
@@ -46,16 +48,16 @@ patroni_log_loggers:
 patroni_restapi_port: 8008
 patroni_restapi_connect_address: "{{ ansible_host }}:{{ patroni_restapi_port }}"
 patroni_restapi_listen: "0.0.0.0:{{ patroni_restapi_port }}"
-patroni_restapi_username: ""
-patroni_restapi_password: ""
-patroni_restapi_certfile: ""
-patroni_restapi_keyfile: ""
-patroni_restapi_keyfile_password: ""
-patroni_restapi_cafile: ""
-patroni_restapi_ciphers: ""
-patroni_restapi_verify_client: ""
-patroni_restapi_http_extra_headers: ""
-patroni_restapi_https_extra_headers: ""
+# patroni_restapi_username: ""
+# patroni_restapi_password: ""
+# patroni_restapi_certfile: ""
+# patroni_restapi_keyfile: ""
+# patroni_restapi_keyfile_password: ""
+# patroni_restapi_cafile: ""
+# patroni_restapi_ciphers: ""
+# patroni_restapi_verify_client: ""
+# patroni_restapi_http_extra_headers: ""
+# patroni_restapi_https_extra_headers: ""
 
 patroni_dcs: etcd
 patroni_dcs_exists: true
@@ -73,6 +75,9 @@ patroni_etcd_password: ""
 patroni_etcd_cacert: ""
 patroni_etcd_cert: ""
 patroni_etcd_key: ""
+
+# https://patroni.readthedocs.io/en/latest/SETTINGS.html#etcdv3
+patroni_etcd_config_section: etcd
 
 # https://patroni.readthedocs.io/en/latest/ENVIRONMENT.html#consul
 patroni_consul_host: "127.0.0.1:{{ patroni_consul_port | default(8500) }}"

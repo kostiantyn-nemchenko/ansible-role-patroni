@@ -1,8 +1,9 @@
 ---
 
 galaxy_info:
-  author: Kostiantyn Nemchenko
+  author: Kostiantyn Nemchenko / Netways
   description: An Ansible role which installs and configures Patroni - HA solution for PostgreSQL
+  namespace: netways
   company:
   license: MIT
   min_ansible_version: 2.4
