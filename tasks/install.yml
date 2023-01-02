@@ -24,6 +24,7 @@
     state: "{{ item.state }}"
     umask: "{{ item.umask }}"
     executable: "{{ item.executable }}"
+    version: "{{ patroni_binary_version }}"
   with_items:
     - "{{ patroni_pip_packages }}"
   when: patroni_install_from_pip
