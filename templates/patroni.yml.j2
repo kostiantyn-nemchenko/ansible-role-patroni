@@ -177,6 +177,24 @@ postgresql:
     {{ role.type }}:
       username: {{ role.username }}
       password: {{ role.password }}
+      {% if role.sslmode |d(None, true) %}
+      sslmode: {{ role.sslmode }}
+      {% endif %}
+      {% if role.sslkey |d(None, true) %}
+      sslkey: {{ role.sslkey }}
+      {% endif %}
+      {% if role.sslcert |d(None, true) %}
+      sslcert: {{ role.sslcert }}
+      {% endif %}
+      {% if role.sslrootcert |d(None, true) %}
+      sslrootcert: {{ role.sslrootcert }}
+      {% endif %}
+      {% if role.sslcrl |d(None, true) %}
+      sslcrl: {{ role.sslcrl }}
+      {% endif %}
+      {% if role.sslcrldir |d(None, true) %}
+      sslcrldir: {{ role.sslcrldir }}
+      {% endif %}
   {% endfor %}
 {% endif %}
 {% if patroni_postgresql_callbacks |map(attribute='script') |join() |trim |length > 0 %}
