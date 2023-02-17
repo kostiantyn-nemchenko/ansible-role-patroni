@@ -1,0 +1,109 @@
+---
+- name: Prepare
+  hosts: all
+  vars:
+    # Custom variables for readability and bootstrap
+    etcd_certs_dir: "/opt/certs-etcd"
+    patroni_certs_dir: "/opt/certs-patroni"
+    patroni_system_user: postgres
+    patroni_system_group: postgres
+
+    # ca configuration
+    ca_ca_host: "instance-1"
+    ca_client_ca_dir_owner: "{{ patroni_system_user }}"
+    ca_client_ca_dir_group: "{{ patroni_system_group }}"
+    ca_ca_password: false
+    ca_logstash: false
+    ca_keypassphrase: false
+    ca_openssl_cipher: false
+
+    # etcd configuration
+    etcd_version: "3.5.4"
+    etcd_ansible_group: patroni
+    etcd_use_default_ipv4: true
+    etcd_certificates: []
+    etcd_settings_user:
+      "cert-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}-etcd-server.crt"
+      "key-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}.key"
+      "trusted-ca-file": "{{ etcd_certs_dir }}/ca.crt"
+      "peer-cert-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}-etcd.crt"
+      "peer-key-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}.key"
+      "peer-trusted-ca-file": "{{ etcd_certs_dir }}/ca.crt"
+
+  tasks:
+    - name: Refresh package cache
+      package:
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    #- name: Install required packages for EL 7
+    #  package:
+    #    name:
+    #      - openssl11-libs
+    #      - libzstd-devel
+    #  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+    - name: Create /etc/udev/rules.d
+      file:
+        path: /etc/udev/rules.d
+        state: directory
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Install packages for RHEL
+      package:
+        name:
+          - iproute
+          - NetworkManager
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Start NetworkManager
+      service:
+        name: NetworkManager
+        state: started
+        enabled: yes
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Add patroni group
+      group:
+        name: "{{ patroni_system_group }}"
+        state: present
+
+    - name: Add patroni user
+      user:
+        name: "{{ patroni_system_user }}"
+        group: "{{ patroni_system_group }}"
+        system: yes
+
+    - name: Gather facts again to get ansible_default_ipv4
+      setup:
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: "Include netways/ansible-role-ca role"
+      include_role:
+        name: netways.ca
+      vars:
+        ca_etcd: true
+        ca_etcd_group: patroni
+        ca_ca_dir: "/opt/ca-etcd"
+        ca_client_ca_dir: "{{ etcd_certs_dir }}"
+        ca_client_ca_dir_mode: 0755
+
+    - name: Create certificates for patroni
+      ansible.builtin.include_role:
+        name: netways.ca
+      vars:
+        ca_ca_host: "instance-1"
+        ca_ca_dir: "/opt/ca-patroni"
+        ca_client_ca_dir: "{{ patroni_certs_dir }}"
+
+    - name: "Include githubixx/ansible-role-etcd role"
+      include_role:
+        name: githubixx.etcd

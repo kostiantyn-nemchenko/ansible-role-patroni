@@ -1,0 +1,61 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    # Custom variables for readability
+    etcd_certs_dir: "/opt/certs-etcd"
+    patroni_certs_dir: "/opt/certs-patroni"
+
+    # patroni configurations
+    patroni_watchdog_mode: 'off'
+
+    patroni_install_from_pip: true
+    patroni_install_haproxy: true
+
+    patroni_postgresql_version_latest: false
+    patroni_postgresql_exists: false
+    patroni_postgresql_connect_address: "{{ inventory_hostname }}:5432"
+
+    patroni_bootstrap_dcs_postgresql_pg_hba:
+      - { type: "local", database: "all", user: "all", address: "", method: "trust" }
+      - { type: "host", database: "all", user: "all", address: "127.0.0.1/32", method: "trust" }
+      - { type: "host", database: "all", user: "all", address: "::1/128", method: "trust" }
+      - { type: "host", database: "all", user: "replicator", address: "{{ hostvars['instance-1']['ansible_default_ipv4']['address'] }}/32", method: "trust" }
+      - { type: "host", database: "all", user: "replicator", address: "{{ hostvars['instance-2']['ansible_default_ipv4']['address'] }}/32", method: "trust" }
+
+    patroni_dcs: etcd
+
+    patroni_haproxy_servers:
+      - { name: "instance-1", ip: "{{ hostvars['instance-1']['ansible_default_ipv4']['address'] }}", port: "5432" }
+      - { name: "instance-2", ip: "{{ hostvars['instance-2']['ansible_default_ipv4']['address'] }}", port: "5432" }
+
+    patroni_etcd_config_section: etcd
+    patroni_etcd_protocol: https
+    patroni_etcd_cacert: "{{ etcd_certs_dir }}/ca.crt"
+    patroni_etcd_cert: "{{ etcd_certs_dir }}/{{ inventory_hostname }}-server.crt"
+    patroni_etcd_key: "{{ etcd_certs_dir }}/{{ inventory_hostname }}.key"
+
+    patroni_restapi_certfile: "{{ patroni_certs_dir }}/{{ inventory_hostname }}-server.crt"
+    patroni_restapi_keyfile: "{{ patroni_certs_dir }}/{{ inventory_hostname }}.key"
+    patroni_restapi_cafile: "{{ patroni_certs_dir }}/ca.crt"
+    patroni_restapi_connect_address: "{{ inventory_hostname }}:{{ patroni_restapi_port }}"
+
+  tasks:
+    - name: "Set PostgreSQL major version by OS [Debian 9]"
+      set_fact:
+        patroni_postgresql_version: 9
+      when: ansible_os_family == "Debian" and ansible_distribution_major_version == "9"
+
+    - name: "Set PostgreSQL major version by OS [Rockylinux 8]"
+      set_fact:
+        patroni_postgresql_version: 13
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "8"
+
+    - name: "Set PostgreSQL major version by OS [Rockylinux 9]"
+      set_fact:
+        patroni_postgresql_version: 13
+      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: "Include Patroni"
+      include_role:
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"

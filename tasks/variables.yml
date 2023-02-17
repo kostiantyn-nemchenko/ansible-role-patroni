@@ -4,6 +4,7 @@
   tags: [patroni, patroni-install, patroni-configure]
 
 - name: Define Debian specific facts
+  when: ansible_os_family == 'Debian'
   block:
     - name: Define postgresql_apt_key_url.
       set_fact:
@@ -19,9 +20,11 @@
       set_fact:
         postgresql_apt_filename: "{{ __postgresql_apt_filename }}"
       when: postgresql_apt_filename is not defined
-  when: ansible_os_family == 'Debian'
 
 - name: Define RedHat specific facts
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution != 'Fedora'
   block:
     - name: Define postgresql_yum_repo_gpg_key_url.
       set_fact:
@@ -44,9 +47,6 @@
       set_fact:
         postgresql_yum_repo_pkg_version: "{{ __postgresql_yum_repo_pkg_version }}"
       when: postgresql_yum_repo_pkg_version is not defined
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution != 'Fedora'
 
 - name: Define patroni_postgresql_packages.
   set_fact:

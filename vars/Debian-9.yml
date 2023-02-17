@@ -1,4 +1,7 @@
 ---
+# TODO Deprecation note:
+# - PostgreSQL is not offering a repository for Debian Stretch
+#   Check repository server for that: http://apt.postgresql.org/pub/repos/apt/dists/
 
 __postgresql_apt_key_url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 __postgresql_apt_repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"

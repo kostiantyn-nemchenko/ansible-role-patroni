@@ -1,0 +1,137 @@
+---
+- name: Prepare
+  hosts: all
+  vars:
+    # Custom variables for readability and bootstrap
+    etcd_certs_dir: "/opt/certs-etcd"
+    patroni_certs_dir: "/opt/certs-patroni"
+    patroni_system_user: postgres
+    patroni_system_group: postgres
+
+    # ca configuration
+    ca_ca_host: "instance-1"
+    ca_client_ca_dir_owner: "{{ patroni_system_user }}"
+    ca_client_ca_dir_group: "{{ patroni_system_group }}"
+    ca_ca_password: false
+    ca_logstash: false
+    ca_keypassphrase: false
+    ca_openssl_cipher: false
+
+    # etcd configuration
+    etcd_version: "3.2.3"
+    etcd_download_url_checksum: "sha256:da376a4cd75d3b588c55f209f7ffdd4b9280e55d0b0a4bcc2e84a3c92a0a991b"
+    etcd_ansible_group: patroni
+    etcd_use_default_ipv4: true
+    etcd_certificates: []
+    etcd_settings:
+      "name": "{{ ansible_hostname }}"
+      "cert-file": "{{ etcd_conf_dir }}/cert-etcd-server.pem"
+      "key-file": "{{ etcd_conf_dir }}/cert-etcd-server-key.pem"
+      "trusted-ca-file": "{{ etcd_conf_dir }}/ca-etcd.pem"
+      "peer-cert-file": "{{ etcd_conf_dir }}/cert-etcd-peer.pem"
+      "peer-key-file": "{{ etcd_conf_dir }}/cert-etcd-peer-key.pem"
+      "peer-trusted-ca-file": "{{ etcd_conf_dir }}/ca-etcd.pem"
+      "advertise-client-urls": "{{ 'https://' + etcd_ipv4_address + ':' + etcd_client_port }}"
+      "initial-advertise-peer-urls": "{{ 'https://' + etcd_ipv4_address + ':' + etcd_peer_port }}"
+      "listen-peer-urls": "{{ 'https://' + etcd_ipv4_address + ':' + etcd_peer_port }}"
+      "listen-client-urls": "{{ 'https://' + etcd_ipv4_address + ':' + etcd_client_port + ',https://127.0.0.1:' + etcd_client_port }}"
+      "peer-client-cert-auth": "true"            # Enable peer client cert authentication
+      "client-cert-auth": "true"                 # Enable client cert authentication
+      "initial-cluster-token": "etcd-cluster-0"  # Initial cluster token for the etcd cluster during bootstrap.
+      "initial-cluster-state": "new"             # Initial cluster state ('new' or 'existing')
+      "data-dir": "{{ etcd_data_dir }}"          # etcd data directory (etcd database files so to say)
+      "wal-dir": ""                              # Dedicated wal directory ("" means no separated WAL directory)
+      "auto-compaction-retention": "0"           # Auto compaction retention in hour. 0 means disable auto compaction.
+      "snapshot-count": "100000"                 # Number of committed transactions to trigger a snapshot to disk
+      "heartbeat-interval": "100"                # Time (in milliseconds) of a heartbeat interval
+      "election-timeout": "1000"                 # Time (in milliseconds) for an election to timeout. See tuning documentation for details
+      "max-snapshots": "5"                       # Maximum number of snapshot files to retain (0 is unlimited)
+      "max-wals": "5"                            # Maximum number of wal files to retain (0 is unlimited)
+      "quota-backend-bytes": "0"                 # Raise alarms when backend size exceeds the given quota (0 defaults to low space quota)
+      "enable-v2": "true"                        # enable v2 API to stay compatible with previous etcd 3.3.x (needed for flannel e.g.)
+      "discovery-srv": ""                        # Discovery domain to enable DNS SRV discovery, leave empty to disable. If set, will override initial-cluster.
+    etcd_settings_user:
+      "cert-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}-etcd-server.crt"
+      "key-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}.key"
+      "trusted-ca-file": "{{ etcd_certs_dir }}/ca.crt"
+      "peer-cert-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}-etcd.crt"
+      "peer-key-file": "{{ etcd_certs_dir }}/{{ inventory_hostname }}.key"
+      "peer-trusted-ca-file": "{{ etcd_certs_dir }}/ca.crt"
+
+  tasks:
+    - name: Refresh package cache
+      package:
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    #- name: Install required packages for EL 7
+    #  package:
+    #    name:
+    #      - openssl11-libs
+    #      - libzstd-devel
+    #  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+
+    - name: Create /etc/udev/rules.d
+      file:
+        path: /etc/udev/rules.d
+        state: directory
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Install packages for RHEL
+      package:
+        name:
+          - iproute
+          - NetworkManager
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Start NetworkManager
+      service:
+        name: NetworkManager
+        state: started
+        enabled: yes
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: Add patroni group
+      group:
+        name: "{{ patroni_system_group }}"
+        state: present
+
+    - name: Add patroni user
+      user:
+        name: "{{ patroni_system_user }}"
+        group: "{{ patroni_system_group }}"
+        system: yes
+
+    - name: Gather facts again to get ansible_default_ipv4
+      setup:
+      when:
+        - ansible_os_family == "RedHat" and ansible_distribution_major_version == "8" or
+          ansible_os_family == "RedHat" and ansible_distribution_major_version == "9"
+
+    - name: "Include netways/ansible-role-ca role"
+      include_role:
+        name: netways.ca
+      vars:
+        ca_etcd: true
+        ca_etcd_group: patroni
+        ca_ca_dir: "/opt/ca-etcd"
+        ca_client_ca_dir: "{{ etcd_certs_dir }}"
+        ca_client_ca_dir_mode: 0755
+
+    - name: Create certificates for patroni
+      ansible.builtin.include_role:
+        name: netways.ca
+      vars:
+        ca_ca_host: "instance-1"
+        ca_ca_dir: "/opt/ca-patroni"
+        ca_client_ca_dir: "{{ patroni_certs_dir }}"
+
+    - name: "Include githubixx/ansible-role-etcd role"
+      include_role:
+        name: githubixx.etcd

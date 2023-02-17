@@ -1,0 +1,33 @@
+---
+
+__postgresql_yum_repo_url: "https://download.postgresql.org/pub/repos/yum/reporpms/{{ 'F' if ansible_distribution|lower == 'fedora' else 'EL' }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}/{{ postgresql_yum_repo_pkg_name }}"
+__postgresql_yum_repo_pkg_name: "pgdg-redhat-repo-latest.noarch.rpm"
+__postgresql_yum_repo_pkg_version: "13.8-1PGDG.rhel9"
+__postgresql_yum_repo_gpg_key_url: "https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG"
+
+__patroni_postgresql_data_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/data"
+__patroni_postgresql_config_dir: "/var/lib/pgsql/{{ patroni_postgresql_version }}/data"
+__patroni_postgresql_bin_dir: "/usr/pgsql-{{ patroni_postgresql_version }}/bin"
+__patroni_postgresql_pgpass: /var/lib/pgsql/.pgpass
+__patroni_bin_dir: /usr/local/bin
+
+__patroni_postgresql_packages:
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-server-{{ postgresql_yum_repo_pkg_version }}",  state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-contrib-{{ postgresql_yum_repo_pkg_version }}", state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel-{{ postgresql_yum_repo_pkg_version }}",   state: "present" }
+
+__patroni_postgresql_packages_latest:
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-server",  state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-contrib", state: "present" }
+  - { name: "postgresql{{ patroni_postgresql_version|replace('.','') }}-devel",   state: "present" }
+
+__patroni_system_packages:
+  #- { name: "epel-release",     state: "present" }
+  - { name: "gcc",              state: "present" }
+  - { name: "python3-devel",    state: "present" }
+  - { name: "python3-psycopg2", state: "present" }
+  - { name: "python3-pip",      state: "present" }
+  - { name: "jq",               state: "present" }
+
+__patroni_haproxy_packages:
+  - { name: "haproxy", state: "present" }
