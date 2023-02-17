@@ -22,7 +22,7 @@ listen master
         http-check expect status 200
         default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
 {% for server in patroni_haproxy_servers %}
-        server {{ server.name }} {{ server.ip }}:{{ server.port }} maxconn 100 check port {{ patroni_restapi_port }}{% if patroni_restapi_certfile is defined %} check-ssl verify none{% endif +%}
+        server {{ server.name }} {{ server.ip }}:{{ server.port }} maxconn 100 check port {{ patroni_restapi_port }}{% if patroni_restapi_certfile is defined %} check-ssl verify none{% endif %} 
 {% endfor %}
 
 listen replicas
@@ -31,5 +31,5 @@ listen replicas
         http-check expect status 200
         default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
 {% for server in patroni_haproxy_servers %}
-        server {{ server.name }} {{ server.ip }}:{{ server.port }} maxconn 100 check port {{ patroni_restapi_port }}{% if patroni_restapi_certfile is defined %} check-ssl verify none{% endif +%}
+        server {{ server.name }} {{ server.ip }}:{{ server.port }} maxconn 100 check port {{ patroni_restapi_port }}{% if patroni_restapi_certfile is defined %} check-ssl verify none{% endif %} 
 {% endfor %}
