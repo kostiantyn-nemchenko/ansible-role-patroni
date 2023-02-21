@@ -1,6 +1,6 @@
 # Ansible Role for Patroni
 
-![Molecule Test](https://github.com/netways/ansible-role-patroni/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/NETWAYS/ansible-role-patroni/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/NETWAYS/ansible-role-patroni/actions/workflows/ci.yml)
 
 An Ansible role which installs and configures [Patroni](https://github.com/zalando/patroni/) - HA solution for PostgreSQL.
 
