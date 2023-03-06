@@ -8,6 +8,7 @@
   tags: [patroni, patroni-configure]
 
 - meta: flush_handlers
+  when: not patroni_handlers_disable | bool
 
 - name: Ensure patroni is running
   systemd:

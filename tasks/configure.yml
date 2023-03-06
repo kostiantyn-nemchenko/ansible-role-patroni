@@ -46,8 +46,16 @@
     owner: "{{ patroni_system_user }}"
     group: "{{ patroni_system_group }}"
     mode: 0600
+  register: patroni_config
+
+- name: Check if Patroni handler has to be executed
+  debug:
+    msg: "Patroni config file was changed, handler will be triggered."
   notify:
     - restart patroni
+  when:
+    - patroni_config.changed | bool and
+      not patroni_handlers_disable | bool
 
 - name: Create haproxy configuration file
   template:
@@ -56,6 +64,15 @@
     owner: root
     group: root
     mode: 0644
+  register: haproxy_config
+  when: patroni_install_haproxy
+
+- name: Check if HAProxy handler has to be executed
+  debug:
+    msg: "HAProxy config file was changed, handler will be triggered."
   notify:
     - restart haproxy
-  when: patroni_install_haproxy
+  when:
+    - patroni_install_haproxy and
+      haproxy_config.changed | bool and
+      not patroni_handlers_disable | bool

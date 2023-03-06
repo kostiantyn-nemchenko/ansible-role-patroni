@@ -12,6 +12,8 @@ patroni_config_file: "{{ inventory_hostname }}.yml"
 patroni_system_user: postgres
 patroni_system_group: postgres
 
+patroni_handlers_disable: false
+
 # create a backup file before copying files on hosts
 patroni_backup_on_copy: true
 

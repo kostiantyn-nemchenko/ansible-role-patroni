@@ -20,8 +20,16 @@
     owner: root
     group: root
     mode: 0644
+  register: patroni_watchdog_config
+
+- name: Check if watchdog handler has to be executed
+  debug:
+    msg: "Watchdog config file was changed, handler will be triggered."
   notify:
     - restart patroni-watchdog
+  when:
+    - patroni_watchdog_config.changed | bool and
+      not patroni_handlers_disable | bool
 
 # Dirty hack. See https://bugs.launchpad.net/ubuntu/+source/watchdog/+bug/1448924
 - name: Enable watchdog daemon to start on boot
