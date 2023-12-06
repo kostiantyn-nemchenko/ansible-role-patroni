@@ -1,0 +1,15 @@
+name: Feature Request
+description: Request a feature or enhancement
+title: "[Feature]: "
+labels: ["feature", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please try to fill out as much of the information below as you can. Thank you!
+        **Note:** If you want to sponsor new features, contact us at info@netways.de
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature request
+      description: Please provide a concise description of the feature. You can use markdown.
